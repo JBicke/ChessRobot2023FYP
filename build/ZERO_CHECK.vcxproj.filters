@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\c8d12e391ab6fe3293da64d0b1a8cbf3\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{1BF35AAE-C9BE-30A0-B304-8CD83049F7F9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

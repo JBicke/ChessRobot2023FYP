@@ -1,14 +1,17 @@
 #include "opencv2/opencv.hpp"
 #include <iostream>
+#include <array>
 
-int deltaInterp(cv::Mat deltaMatrix) {
+using namespace std;
+
+array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	int previousRow = 0;
 	int previousCol = 0;
 	int newRow = 0;
 	int newCol = 0;
 	bool previousFound = false;
 	bool newFound = false;
-	std::cout << "delta = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
+	cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			if((previousFound == false) && (deltaMatrix.at<float>(i,j) == -1)) {
@@ -23,9 +26,11 @@ int deltaInterp(cv::Mat deltaMatrix) {
 		}
 	}
 	
-	std::cout << "Found -1 at row " << previousRow << " and column " << previousCol << std::endl;
-	std::cout << "Found 1 at row " << newRow << " and column " << newCol << std::endl;
+	// std::cout << "Found -1 at row " << previousRow << " and column " << previousCol << std::endl;
+	// std::cout << "Found 1 at row " << newRow << " and column " << newCol << std::endl;
 
+	array<int,4> positions = {previousRow, previousCol, newRow, newCol};
 	
-	return previousRow+previousCol;
+	
+	return positions;
 }

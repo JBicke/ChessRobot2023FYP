@@ -1,6 +1,6 @@
 // Code to Capture an Image
 
-#include <cstdlib> //Needed for system
+#include <cstdlib>
 #include <iostream>
 
 using namespace std;

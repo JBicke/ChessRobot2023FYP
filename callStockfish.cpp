@@ -4,6 +4,9 @@
 #include <unistd.h>
 #include <sys/wait.h>
 #include <cstring>
+#include <string>
+#include <iostream>
+#include <vector>
 
 /**
  * Creates two pipes, forks, and runns the given command.  One pipe is
@@ -111,20 +114,27 @@ int bi_popen(const char* const command, FILE** const in, FILE** const out)
     return -1;
 }
 
-int main(void)
+std::string runStock(std::vector<std::string> moves)
 {
     FILE* in = NULL;
     FILE* out = NULL;
     char* line = NULL;
     size_t size = 0;
+    std::string outputMove;
 
     const int pid = bi_popen("stockfish", &in, &out);
     if (pid < 0) {
         perror("bi_popen");
-        return 1;
+        return "Error";
     }
-
-    fprintf(out, "position startpos moves e2e4 c7c5\n");
+    
+    std::string moveInput;
+    for (const auto& move : moves) {
+        moveInput += move + " ";
+    }
+    
+    
+    fprintf(out, "position startpos moves %s\n", moveInput.c_str());
     fprintf(out, "go depth 10 \n");
     
     
@@ -132,7 +142,10 @@ int main(void)
     for(int i = 1; i<20;i++) {		
 		getline(&line, &size, in);
 		if (strncmp(line, "bestmove", 8) == 0) {
-            printf("%s", line);
+            std::string str(line);
+            std::string output = str.substr(9,4);
+            outputMove = output;
+            // printf("%s\n", output.c_str());
             break;
         }
 	}
@@ -145,5 +158,5 @@ int main(void)
     fclose(in);
     fclose(out);
 
-    return 0;
+    return outputMove;
 }

@@ -1,9 +1,0 @@
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/Experimental.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/Nightly.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/Continuous.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/NightlyMemoryCheck.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/learn.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/PACKAGE.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/RUN_TESTS.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/ALL_BUILD.dir
-C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/ZERO_CHECK.dir

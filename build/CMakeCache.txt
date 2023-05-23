@@ -83,7 +83,7 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=TRUE
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/pkgRedirects
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files/gettingtowork
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files/opencvtest
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.35.32215/bin/Hostx64/x64/link.exe
@@ -263,15 +263,6 @@ OpenCV_DIR:PATH=C:/opencv/build/x64/vc16/lib
 
 //Name of the computer/site where compile is being run
 SITE:STRING=DESKTOP-F9UG9N2
-
-//Value Computed by CMake
-gettingtowork_BINARY_DIR:STATIC=C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build
-
-//Value Computed by CMake
-gettingtowork_IS_TOP_LEVEL:STATIC=ON
-
-//Value Computed by CMake
-gettingtowork_SOURCE_DIR:STATIC=C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP
 
 //Value Computed by CMake
 opencvtest_BINARY_DIR:STATIC=C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build

@@ -25,7 +25,7 @@ set(CPACK_DEFAULT_PACKAGE_DESCRIPTION_FILE "C:/Program Files/CMake/share/cmake-3
 set(CPACK_DEFAULT_PACKAGE_DESCRIPTION_SUMMARY "opencvtest built using CMake")
 set(CPACK_GENERATOR "NSIS")
 set(CPACK_INSTALL_CMAKE_PROJECTS "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build;opencvtest;ALL;/")
-set(CPACK_INSTALL_PREFIX "C:/Program Files/gettingtowork")
+set(CPACK_INSTALL_PREFIX "C:/Program Files/opencvtest")
 set(CPACK_MODULE_PATH "")
 set(CPACK_NSIS_DISPLAY_NAME "opencvtest 0.1.0")
 set(CPACK_NSIS_INSTALLER_ICON_CODE "")

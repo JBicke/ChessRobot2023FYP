@@ -105,6 +105,7 @@ int main(int argc, char** argv)
     }
     // Show results
     imshow("Source", src);
+    imshow("Canny", dst);
     imshow("Detected Lines (in red) - Standard Hough Line Transform", cdst);
     imshow("Detected Lines (in red) - Probabilistic Line Transform", cdstP);
     // Wait and Exit

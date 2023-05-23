@@ -24,7 +24,7 @@ events:
       The output was:
       0
       MSBuild version 17.5.1+f6fdcf537 for .NET Framework
-      Build started 30/04/2023 9:49:13 PM.
+      Build started 23/05/2023 12:38:10 AM.
       Included response file: C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.rsp
       
       Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\3.26.3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
@@ -52,7 +52,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:02.00
+      Time Elapsed 00:00:01.61
       
       
       Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
@@ -78,7 +78,7 @@ events:
       The output was:
       0
       MSBuild version 17.5.1+f6fdcf537 for .NET Framework
-      Build started 30/04/2023 9:49:15 PM.
+      Build started 23/05/2023 12:38:13 AM.
       Included response file: C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.rsp
       
       Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\3.26.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
@@ -106,7 +106,7 @@ events:
           0 Warning(s)
           0 Error(s)
       
-      Time Elapsed 00:00:01.84
+      Time Elapsed 00:00:00.71
       
       
       Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
@@ -125,46 +125,46 @@ events:
     checks:
       - "Detecting C compiler ABI info"
     directories:
-      source: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5c7jh4"
-      binary: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5c7jh4"
+      source: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5njfc9"
+      binary: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5njfc9"
     cmakeVariables:
       CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS /W3"
     buildResult:
       variable: "CMAKE_C_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5c7jh4
+        Change Dir: C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5njfc9
         
-        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_6a15e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.5.1+f6fdcf537 for .NET Framework
-        Build started 30/04/2023 9:49:18 PM.
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_3e3ab.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.5.1+f6fdcf537 for .NET Framework
+        Build started 23/05/2023 12:38:14 AM.
         Included response file: C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.rsp
         
-        Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5c7jh4\\cmTC_6a15e.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5njfc9\\cmTC_3e3ab.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_6a15e.dir\\Debug\\".
-          Creating directory "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5c7jh4\\Debug\\".
-          Creating directory "cmTC_6a15e.dir\\Debug\\cmTC_6a15e.tlog\\".
+          Creating directory "cmTC_3e3ab.dir\\Debug\\".
+          Creating directory "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5njfc9\\Debug\\".
+          Creating directory "cmTC_3e3ab.dir\\Debug\\cmTC_3e3ab.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_6a15e.dir\\Debug\\cmTC_6a15e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Creating "cmTC_3e3ab.dir\\Debug\\cmTC_3e3ab.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6a15e.dir\\Debug\\\\" /Fd"cmTC_6a15e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3e3ab.dir\\Debug\\\\" /Fd"cmTC_3e3ab.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.35.32217.1 for x64
-          Copyright (C) Microsoft Corporation.  All rights reserved.
           CMakeCCompilerABI.c
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_6a15e.dir\\Debug\\\\" /Fd"cmTC_6a15e.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_3e3ab.dir\\Debug\\\\" /Fd"cmTC_3e3ab.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TC /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCCompilerABI.c"
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5c7jh4\\Debug\\cmTC_6a15e.exe" /INCREMENTAL /ILK:"cmTC_6a15e.dir\\Debug\\cmTC_6a15e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5c7jh4/Debug/cmTC_6a15e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5c7jh4/Debug/cmTC_6a15e.lib" /MACHINE:X64  /machine:x64 cmTC_6a15e.dir\\Debug\\CMakeCCompilerABI.obj
-          cmTC_6a15e.vcxproj -> C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5c7jh4\\Debug\\cmTC_6a15e.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5njfc9\\Debug\\cmTC_3e3ab.exe" /INCREMENTAL /ILK:"cmTC_3e3ab.dir\\Debug\\cmTC_3e3ab.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5njfc9/Debug/cmTC_3e3ab.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-5njfc9/Debug/cmTC_3e3ab.lib" /MACHINE:X64  /machine:x64 cmTC_3e3ab.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_3e3ab.vcxproj -> C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5njfc9\\Debug\\cmTC_3e3ab.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_6a15e.dir\\Debug\\cmTC_6a15e.tlog\\unsuccessfulbuild".
-          Touching "cmTC_6a15e.dir\\Debug\\cmTC_6a15e.tlog\\cmTC_6a15e.lastbuildstate".
-        Done Building Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5c7jh4\\cmTC_6a15e.vcxproj" (default targets).
+          Deleting file "cmTC_3e3ab.dir\\Debug\\cmTC_3e3ab.tlog\\unsuccessfulbuild".
+          Touching "cmTC_3e3ab.dir\\Debug\\cmTC_3e3ab.tlog\\cmTC_3e3ab.lastbuildstate".
+        Done Building Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-5njfc9\\cmTC_3e3ab.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.77
+        Time Elapsed 00:00:00.70
         
       exitCode: 0
   -
@@ -176,46 +176,46 @@ events:
     checks:
       - "Detecting CXX compiler ABI info"
     directories:
-      source: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-ebi8j7"
-      binary: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-ebi8j7"
+      source: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-u59i52"
+      binary: "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-u59i52"
     cmakeVariables:
       CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /W3 /GR /EHsc"
     buildResult:
       variable: "CMAKE_CXX_ABI_COMPILED"
       cached: true
       stdout: |
-        Change Dir: C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-ebi8j7
+        Change Dir: C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-u59i52
         
-        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_57d18.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.5.1+f6fdcf537 for .NET Framework
-        Build started 30/04/2023 9:49:20 PM.
+        Run Build Command(s):C:/Program Files/Microsoft Visual Studio/2022/Community/MSBuild/Current/Bin/amd64/MSBuild.exe cmTC_b890a.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n && MSBuild version 17.5.1+f6fdcf537 for .NET Framework
+        Build started 23/05/2023 12:38:16 AM.
         Included response file: C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\MSBuild\\Current\\Bin\\amd64\\MSBuild.rsp
         
-        Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ebi8j7\\cmTC_57d18.vcxproj" on node 1 (default targets).
+        Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u59i52\\cmTC_b890a.vcxproj" on node 1 (default targets).
         PrepareForBuild:
-          Creating directory "cmTC_57d18.dir\\Debug\\".
-          Creating directory "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ebi8j7\\Debug\\".
-          Creating directory "cmTC_57d18.dir\\Debug\\cmTC_57d18.tlog\\".
+          Creating directory "cmTC_b890a.dir\\Debug\\".
+          Creating directory "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u59i52\\Debug\\".
+          Creating directory "cmTC_b890a.dir\\Debug\\cmTC_b890a.tlog\\".
         InitializeBuildStatus:
-          Creating "cmTC_57d18.dir\\Debug\\cmTC_57d18.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Creating "cmTC_b890a.dir\\Debug\\cmTC_b890a.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
         ClCompile:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_57d18.dir\\Debug\\\\" /Fd"cmTC_57d18.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\CL.exe /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_b890a.dir\\Debug\\\\" /Fd"cmTC_b890a.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
           Microsoft (R) C/C++ Optimizing Compiler Version 19.35.32217.1 for x64
-          Copyright (C) Microsoft Corporation.  All rights reserved.
           CMakeCXXCompilerABI.cpp
-          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_57d18.dir\\Debug\\\\" /Fd"cmTC_57d18.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W3 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_b890a.dir\\Debug\\\\" /Fd"cmTC_b890a.dir\\Debug\\vc143.pdb" /external:W3 /Gd /TP /errorReport:queue "C:\\Program Files\\CMake\\share\\cmake-3.26\\Modules\\CMakeCXXCompilerABI.cpp"
         Link:
-          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ebi8j7\\Debug\\cmTC_57d18.exe" /INCREMENTAL /ILK:"cmTC_57d18.dir\\Debug\\cmTC_57d18.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-ebi8j7/Debug/cmTC_57d18.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-ebi8j7/Debug/cmTC_57d18.lib" /MACHINE:X64  /machine:x64 cmTC_57d18.dir\\Debug\\CMakeCXXCompilerABI.obj
-          cmTC_57d18.vcxproj -> C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ebi8j7\\Debug\\cmTC_57d18.exe
+          C:\\Program Files\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.35.32215\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u59i52\\Debug\\cmTC_b890a.exe" /INCREMENTAL /ILK:"cmTC_b890a.dir\\Debug\\cmTC_b890a.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-u59i52/Debug/cmTC_b890a.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/CMakeFiles/CMakeScratch/TryCompile-u59i52/Debug/cmTC_b890a.lib" /MACHINE:X64  /machine:x64 cmTC_b890a.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_b890a.vcxproj -> C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u59i52\\Debug\\cmTC_b890a.exe
         FinalizeBuildStatus:
-          Deleting file "cmTC_57d18.dir\\Debug\\cmTC_57d18.tlog\\unsuccessfulbuild".
-          Touching "cmTC_57d18.dir\\Debug\\cmTC_57d18.tlog\\cmTC_57d18.lastbuildstate".
-        Done Building Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-ebi8j7\\cmTC_57d18.vcxproj" (default targets).
+          Deleting file "cmTC_b890a.dir\\Debug\\cmTC_b890a.tlog\\unsuccessfulbuild".
+          Touching "cmTC_b890a.dir\\Debug\\cmTC_b890a.tlog\\cmTC_b890a.lastbuildstate".
+        Done Building Project "C:\\Users\\James\\Documents\\Uni Units\\FYP Project\\ChessRobot2023FYP\\build\\CMakeFiles\\CMakeScratch\\TryCompile-u59i52\\cmTC_b890a.vcxproj" (default targets).
         
         Build succeeded.
             0 Warning(s)
             0 Error(s)
         
-        Time Elapsed 00:00:01.80
+        Time Elapsed 00:00:00.69
         
       exitCode: 0
 ...

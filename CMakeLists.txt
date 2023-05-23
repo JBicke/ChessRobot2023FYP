@@ -7,9 +7,9 @@ enable_testing()
 find_package( OpenCV REQUIRED )
 include_directories( ${OpenCV_INCLUDE_DIRS} )
 
-add_executable(opencvtest OpenCV_Testing.cpp)
+add_executable(learn CVTest15.cpp)
 
-target_link_libraries( opencvtest ${OpenCV_LIBS} )
+target_link_libraries( learn ${OpenCV_LIBS} )
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})

@@ -1,4 +1,4 @@
-# Install script for directory: E:/UNI/ece4078/ChessRobot2023FYP
+# Install script for directory: C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -40,5 +40,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "E:/UNI/ece4078/ChessRobot2023FYP/build/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "C:/Users/James/Documents/Uni Units/FYP Project/ChessRobot2023FYP/build/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")

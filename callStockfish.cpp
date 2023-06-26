@@ -198,6 +198,7 @@ std::string runStock(std::vector<std::string> moves)
     FILE* out = NULL; // Pointer to FILE Structure to write data to the pipe
     char* line = NULL; // Pointer to character array to store output from Stockfish 
     size_t size = 0;
+    std::string previousLine;
     std::string outputMove;
 
     const int pid = bi_popen("stockfish", &in, &out); //And operator obtains memory address of variables in and out
@@ -222,15 +223,32 @@ std::string runStock(std::vector<std::string> moves)
     
     
     
-    for(int i = 1; i<20;i++) {		
-		getline(&line, &size, in);
+    for(int i = 1; i<20;i++) {
+        
+        std::string currentLine;
+        		
+		getline(&line, &size, in); // reads the output from the in file
+        currentLine = line;
+        
 		if (strncmp(line, "bestmove", 8) == 0) {
-            std::string str(line);
+            std::string str(currentLine);
+            std::string strPrev(previousLine);
+            
             std::string output = str.substr(9,4);
             outputMove = output;
+            
+            size_t pos = strPrev.find("cp");
+            
+            if (pos != std::string::npos) {
+                outputMove = outputMove + " cp " + strPrev.substr(pos+3,3);
+                 
+            }
+            
             // printf("%s\n", output.c_str());
             break;
         }
+        
+        previousLine = currentLine;
 	}
     
     // Since in this case we can tell the child to terminate, we'll do so

@@ -1,13 +1,15 @@
 #include <iostream>
-#include "opencv2/imgcodecs.hpp"
-#include "opencv2/highgui.hpp"
-#include "opencv2/imgproc.hpp"
+//#include "opencv2/imgcodecs.hpp"
+//#include "opencv2/highgui.hpp"
+//#include "opencv2/imgproc.hpp"
+#include <opencv2/opencv.hpp>
 
 
 using namespace cv;
 using namespace std;
 int main(int argc, char** argv)
 {
+    printf("test");
     // Declare the output variables
     Mat dst, cdst, cdstP;
     const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1.jpg";

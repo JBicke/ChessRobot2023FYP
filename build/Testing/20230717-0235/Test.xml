@@ -3,7 +3,7 @@
 	BuildStamp="20230717-0235-Experimental"
 	Name="Jackson-PC"
 	Generator="ctest-3.26.3"
-	CompilerName="D:/Visual Studios/VC/Tools/MSVC/14.31.31103/bin/Hostx86/x86/cl.exe"
+	CompilerName="D:/Visual Studios/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64/cl.exe"
 	CompilerVersion="19.31.31104.0"
 	OSName="Windows"
 	Hostname="Jackson-PC"
@@ -24,11 +24,11 @@
 	ProcessorClockFrequency="3800"
 	>
 	<Testing>
-		<StartDateTime>Jul 17 12:56 AUS Eastern Standard Time</StartDateTime>
-		<StartTestTime>1689562603</StartTestTime>
+		<StartDateTime>Jul 17 13:31 AUS Eastern Standard Time</StartDateTime>
+		<StartTestTime>1689564697</StartTestTime>
 		<TestList/>
-		<EndDateTime>Jul 17 12:56 AUS Eastern Standard Time</EndDateTime>
-		<EndTestTime>1689562603</EndTestTime>
+		<EndDateTime>Jul 17 13:31 AUS Eastern Standard Time</EndDateTime>
+		<EndTestTime>1689564697</EndTestTime>
 		<ElapsedMinutes>0</ElapsedMinutes>
 	</Testing>
 </Site>

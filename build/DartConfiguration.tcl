@@ -63,7 +63,7 @@ UpdateOptions:
 UpdateType: git
 
 # Compiler info
-Compiler: D:/Visual Studios/VC/Tools/MSVC/14.31.31103/bin/Hostx86/x86/cl.exe
+Compiler: D:/Visual Studios/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64/cl.exe
 CompilerVersion: 19.31.31104.0
 
 # Dynamic analysis (MemCheck)

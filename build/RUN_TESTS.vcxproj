@@ -1,51 +1,51 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
-    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+    <PreferredToolArchitecture>x86</PreferredToolArchitecture>
   </PropertyGroup>
   <ItemGroup Label="ProjectConfigurations">
-    <ProjectConfiguration Include="Debug|x64">
+    <ProjectConfiguration Include="Debug|win32">
       <Configuration>Debug</Configuration>
-      <Platform>x64</Platform>
+      <Platform>win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="Release|x64">
+    <ProjectConfiguration Include="Release|win32">
       <Configuration>Release</Configuration>
-      <Platform>x64</Platform>
+      <Platform>win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="MinSizeRel|x64">
+    <ProjectConfiguration Include="MinSizeRel|win32">
       <Configuration>MinSizeRel</Configuration>
-      <Platform>x64</Platform>
+      <Platform>win32</Platform>
     </ProjectConfiguration>
-    <ProjectConfiguration Include="RelWithDebInfo|x64">
+    <ProjectConfiguration Include="RelWithDebInfo|win32">
       <Configuration>RelWithDebInfo</Configuration>
-      <Platform>x64</Platform>
+      <Platform>win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{DA77BFAA-5D00-3E44-8AFB-BB5BF4F1127D}</ProjectGuid>
+    <ProjectGuid>{81C8D61A-1210-3644-A24F-2F236E8873D8}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>10.0.22000.0</WindowsTargetPlatformVersion>
-    <Platform>x64</Platform>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <Platform>win32</Platform>
     <ProjectName>RUN_TESTS</ProjectName>
     <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'" Label="Configuration">
     <ConfigurationType>Utility</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
     <PlatformToolset>v143</PlatformToolset>
@@ -59,12 +59,12 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
-    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
@@ -78,7 +78,7 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|win32'">
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
@@ -92,7 +92,7 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
@@ -106,7 +106,7 @@ exit /b %1
 if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">
     <PostBuildEvent>
       <Message></Message>
       <Command>setlocal
@@ -121,9 +121,9 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <CustomBuild Include="C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\c8d12e391ab6fe3293da64d0b1a8cbf3\RUN_TESTS_force.rule">
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"> </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+    <CustomBuild Include="E:\UNI\ece4078\ChessRobot2023FYP\build\CMakeFiles\2c6d5f437e2c1573a764b7469227a63f\RUN_TESTS_force.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|win32'"> </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">setlocal
 cd .
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -132,12 +132,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
-      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'"> </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">E:\UNI\ece4078\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|win32'"> </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|win32'">setlocal
 cd .
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -146,12 +146,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
-      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</VerifyInputsAndOutputsExist>
-      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'"> </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|win32'">E:\UNI\ece4078\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Release|win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'"> </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">setlocal
 cd .
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -160,12 +160,12 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
-      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</VerifyInputsAndOutputsExist>
-      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'"> </Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">E:\UNI\ece4078\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|win32'">false</VerifyInputsAndOutputsExist>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'"> </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">setlocal
 cd .
 if %errorlevel% neq 0 goto :cmEnd
 :cmEnd
@@ -174,15 +174,15 @@ endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
 exit /b %1
 :cmDone
 if %errorlevel% neq 0 goto :VCEnd</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">%(AdditionalInputs)</AdditionalInputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
-      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
-      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</VerifyInputsAndOutputsExist>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">E:\UNI\ece4078\ChessRobot2023FYP\build\CMakeFiles\RUN_TESTS_force</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|win32'">false</VerifyInputsAndOutputsExist>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="C:\Users\James\Documents\Uni Units\FYP Project\ChessRobot2023FYP\build\ZERO_CHECK.vcxproj">
-      <Project>{A8869474-CBA3-3023-B7D4-F8A2AA60DF2E}</Project>
+    <ProjectReference Include="E:\UNI\ece4078\ChessRobot2023FYP\build\ZERO_CHECK.vcxproj">
+      <Project>{0A6E8818-7746-3F54-899F-3DA56349AF0E}</Project>
       <Name>ZERO_CHECK</Name>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>

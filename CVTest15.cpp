@@ -1,7 +1,8 @@
+#include <iostream>
 #include "opencv2/imgcodecs.hpp"
 #include "opencv2/highgui.hpp"
 #include "opencv2/imgproc.hpp"
-#include <iostream>
+
 
 using namespace cv;
 using namespace std;
@@ -9,7 +10,7 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file = "1.jpg";
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ), IMREAD_GRAYSCALE );

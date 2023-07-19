@@ -39,7 +39,7 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1.jpg";
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/4.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -50,14 +50,60 @@ int main(int argc, char** argv)
         return -1;
     }
 
-    src_gray = cvtColor(src, COLOR_BGR2GRAY)
+    cv::Mat src_gray;
+
+    cvtColor(src, src_gray, COLOR_BGR2GRAY);    
+
+    //colour detection
+
+    //convert image to HSV
+    cv::Mat hsvImage;
+    cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
+
+    //define colour ranges for pink and blue
+    cv::Scalar lowerPink(140,50,50);
+    cv::Scalar upperPink(170, 255, 255);
+
+    cv::Scalar lowerBlue(90,50,50);
+    cv::Scalar upperBlue(130,255,255);
+    
+    //perform masking for both blue and pink intensities
+    cv::Mat pinkMask;
+    cv::Mat blueMask;
+
+    cv::inRange(hsvImage, lowerPink, upperPink, pinkMask);
+    cv::inRange(hsvImage, lowerBlue, upperBlue, blueMask);
+
+    cv::Mat resultMask = pinkMask | blueMask;
+
+    // Perform morphological operations on the combined mask
+    int morphSize = 3;  // Adjust the size as per your requirement
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(morphSize, morphSize));
+    cv::morphologyEx(resultMask, resultMask, cv::MORPH_OPEN, kernel);
+
+    // Find contours in the combined mask
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+    cv::findContours(resultMask, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+
+    // Draw bounding rectangles around the detected contours
+    cv::Mat resultImage = src.clone();
+    cv::Scalar contourColor(0, 255, 0);  // Green color for contour bounding boxes
+    for (size_t i = 0; i < contours.size(); ++i) {
+        cv::Rect boundingRect = cv::boundingRect(contours[i]);
+        cv::rectangle(resultImage, boundingRect, contourColor, 2);
+    }
+    
+    cv::imshow( "HSV Image", resultImage);
+    
+
 
     //corner detection
     int blockSize = 2;
     int apertureSize = 3;
     double k = 0.04;
-    cv::Mat dst_corner = cv::Mat::zeros( src.size(), CV_32FC1 );
-    cv::cornerHarris( src, dst_corner, blockSize, apertureSize, k );
+    cv::Mat dst_corner = cv::Mat::zeros( src_gray.size(), CV_32FC1 );
+    cv::cornerHarris( src_gray, dst_corner, blockSize, apertureSize, k );
     cv::Mat dst_norm, dst_norm_scaled;
     cv::normalize( dst_corner, dst_norm, 0, 255, cv::NORM_MINMAX, CV_32FC1, cv::Mat() );
     cv::convertScaleAbs( dst_norm, dst_norm_scaled );
@@ -81,7 +127,7 @@ int main(int argc, char** argv)
     // Mat src = srcPre(roi);
     
     // Edge detection
-    Canny(src, dst, 100, 150, 3);
+    Canny(src_gray, dst, 100, 150, 3);
 
     
 

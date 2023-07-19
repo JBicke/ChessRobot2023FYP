@@ -66,13 +66,18 @@ int main(int argc, char** argv)
 
     cv::Scalar lowerBlue(90,50,50);
     cv::Scalar upperBlue(130,255,255);
+
+    //cv::Scalar lowerBlack(0,0,0);
+    //cv::Scalar upperBlack(255, 255, 30);
     
     //perform masking for both blue and pink intensities
     cv::Mat pinkMask;
     cv::Mat blueMask;
+    //cv::Mat blackMask;
 
     cv::inRange(hsvImage, lowerPink, upperPink, pinkMask);
     cv::inRange(hsvImage, lowerBlue, upperBlue, blueMask);
+    //cv::inRange(hsvImage, lowerBlack, upperBlack, blackMask);
 
     cv::Mat resultMask = pinkMask | blueMask;
 
@@ -93,7 +98,7 @@ int main(int argc, char** argv)
         cv::Rect boundingRect = cv::boundingRect(contours[i]);
         cv::rectangle(resultImage, boundingRect, contourColor, 2);
     }
-    
+
     cv::imshow( "HSV Image", resultImage);
     
 

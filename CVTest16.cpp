@@ -93,11 +93,18 @@ int main(int argc, char** argv)
 
     // Draw bounding rectangles around the detected contours
     cv::Mat resultImage = src.clone();
-    cv::Scalar contourColor(0, 255, 0);  // Green color for contour bounding boxes
+    cv::Scalar contourColour;
+    cv::Scalar pinkColour(255, 0, 255);  // Green color for contour bounding boxes
+    cv::Scalar blueColour(255,0,0);
     for (size_t i = 0; i < contours.size(); ++i) {
         cv::Rect boundingRect = cv::boundingRect(contours[i]);
-        cv::rectangle(resultImage, boundingRect, contourColor, 2);
+        if (cv::countNonZero(pinkMask(boundingRect)) > 0)
+            contourColour = pinkColour;
+        else
+            contourColour = blueColour;
+        cv::rectangle(resultImage, boundingRect, contourColour, 2);
     }
+    
 
     cv::imshow( "HSV Image", resultImage);
     

@@ -12,7 +12,7 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/4.jpg";
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chessboard.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -27,17 +27,18 @@ int main(int argc, char** argv)
     cvtColor(src, src_gray, COLOR_BGR2GRAY); 
     cv::Mat src_binary;
 
-    /*
+    
     cvtColor(src, src_gray, COLOR_BGR2GRAY); 
     cv::adaptiveThreshold(src_gray, src_binary, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 11, 2);
 
-    imshow("binary image", src_binary);
+    imshow("binary image", src_gray);
 
+    
     //find chessboard corners
     std::vector<cv::Point2f> corners;
-    cv::Size boardSize(8,8);
-    bool found = cv::findChessboardCorners(src_binary, boardSize, corners, cv::CALIB_CB_ADAPTIVE_THRESH + cv::CALIB_CB_NORMALIZE_IMAGE);
-
+    cv::Size boardSize(7,7);
+    int found = cv::findChessboardCorners(src_gray, boardSize, corners );
+    cout<< corners << endl;
     if (found){
         cv::cornerSubPix(src_binary, corners, cv::Size(5, 5), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
 
@@ -64,8 +65,8 @@ int main(int argc, char** argv)
     else {
         cout << "found not found" << endl;
     }
-    */
-
+    
+  
     
     //convert image to HSV
     cv::Mat hsvImage;
@@ -78,7 +79,7 @@ int main(int argc, char** argv)
     //colour detection
     //define colour ranges for pink and blue
     cv::Scalar lowerPink(140,50,50);
-    cv::Scalar upperPink(170, 255, 255);
+    cv::Scalar upperPink(180, 255, 255);
 
     cv::Scalar lowerBlue(90,50,50);
     cv::Scalar upperBlue(130,255,255);
@@ -127,11 +128,12 @@ int main(int argc, char** argv)
     cv::Mat adaptiveThreshold;
     cv::adaptiveThreshold(src_gray, adaptiveThreshold, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY_INV, 11, 2);
 
-    cv::Mat c_cannyEdges;
+    cv::Mat c_cannyEdges, p_cannyEdges;
     cv::Mat cannyEdges;
     Canny(src_gray, cannyEdges, 100, 150, 3);
 
     cvtColor(cannyEdges, c_cannyEdges, COLOR_GRAY2BGR);
+    p_cannyEdges = cannyEdges.clone();
 
     vector<Vec2f> lines; // will hold the results of the detection
     HoughLines(cannyEdges, lines, 1, CV_PI/180, 150, 0, 0 ); // runs the actual detection
@@ -152,6 +154,7 @@ int main(int argc, char** argv)
     }
 
     cv::imshow("Canny EDges Hough", c_cannyEdges);
+
 
     cv::Mat blackSquareEdges = adaptiveThreshold & ~resultMask;
 

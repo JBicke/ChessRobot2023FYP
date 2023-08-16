@@ -26,7 +26,7 @@ import serial
 import time
 import sys
 from binascii import b2a_hex
-from .ax12 import *
+from ax12 import *
 import logging
 
 class Driver:
@@ -47,15 +47,13 @@ class Driver:
 
     def execute(self, index, ins, params):
         """ Send an instruction to a device. """
-        print(params)
         self.ser.flushInput()
         length = 2 + len(params)
         checksum = 255 - ((index + length + ins + sum(params))%256)
-        """self.ser.write(chr(0xFF)+chr(0xFF)+chr(index)+chr(length)+chr(ins))"""
-        self.ser.write(bytes([0xFF,0xFF,index,length,ins]))
+        self.ser.write(chr(0xFF)+chr(0xFF)+chr(index)+chr(length)+chr(ins))
         for val in params:
-            self.ser.write(bytes([val]))
-        self.ser.write(bytes([checksum]))
+            self.ser.write(chr(val))
+        self.ser.write(chr(checksum))
         return self.getPacket(0)
 
     def setReg(self, index, regstart, values):
@@ -68,30 +66,27 @@ class Driver:
         """ Read a return packet, iterative attempt """
         # need a positive byte
         d = self.ser.read()
-        print(d)
-        if d != b'':
-            print(ord(d))
-        if d == b'':
+        if d == '':
             self.logger.debug("Fail Read")
             return None
 
         # now process our byte
         if mode == 0:           # get our first 0xFF
-            if ord(d) == 255:
+            if ord(d) == 0xff:
                 self.logger.debug("Oxff found")
                 return self.getPacket(1)
             else:
                 self.logger.debug("Oxff NOT found, restart: " + str(ord(d)))
                 return self.getPacket(0)
         elif mode == 1:         # get our second 0xFF
-            if ord(d) == 255:
+            if ord(d) == 0xff:
                 self.logger.debug("Oxff found")
                 return self.getPacket(2)
             else:
                 self.logger.debug("Oxff NOT found, restart: " + str(ord(d)))
                 return self.getPacket(0)
         elif mode == 2:         # get id
-            if ord(d) != 255:
+            if d != 0xff:
                 self.logger.debug("ID found: " + str(ord(d)))
                 return self.getPacket(3, ord(d))
             else:

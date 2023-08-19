@@ -92,6 +92,53 @@ cv::Mat cannyEdgeDetection(const cv::Mat& image){
     return c_cannyEdges;
 }
 
+cv::Mat processAndShowContours(const cv::Mat& src) {
+    cv::Mat hsvImage;
+    cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
+    cv::imshow("HSV Image", hsvImage);
+
+    cv::Scalar lowerRed1(0, 50, 50);
+    cv::Scalar upperRed1(10, 255, 255);
+
+    cv::Scalar lowerRed2(160, 50, 50);
+    cv::Scalar upperRed2(179, 255, 255);
+
+    cv::Scalar lowerBlue(90, 50, 50);
+    cv::Scalar upperBlue(130, 255, 255);
+
+    cv::Mat redMask;
+    cv::Mat blueMask;
+
+    cv::inRange(hsvImage, lowerRed1, upperRed1, redMask);
+    cv::inRange(hsvImage, lowerRed2, upperRed2, redMask);
+    cv::inRange(hsvImage, lowerBlue, upperBlue, blueMask);
+
+    cv::Mat resultMask = redMask | blueMask;
+
+    int morphSize = 3;
+    cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(morphSize, morphSize));
+    cv::morphologyEx(resultMask, resultMask, cv::MORPH_OPEN, kernel);
+
+    std::vector<std::vector<cv::Point>> contours;
+    std::vector<cv::Vec4i> hierarchy;
+    cv::findContours(resultMask, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+
+    cv::Mat resultImage = src.clone();
+    cv::Scalar contourColour;
+    cv::Scalar pinkColour(255, 0, 255);
+    cv::Scalar blueColour(255, 0, 0);
+    for (size_t i = 0; i < contours.size(); ++i) {
+        cv::Rect boundingRect = cv::boundingRect(contours[i]);
+        if (cv::countNonZero(redMask(boundingRect)) > 0)
+            contourColour = pinkColour;
+        else
+            contourColour = blueColour;
+        cv::rectangle(resultImage, boundingRect, contourColour, 2);
+    }
+
+    return resultImage;
+}
+
 cv::Mat probEdgeDetection(const cv::Mat& image){
     cv::Mat probDetection;
     vector<Vec4i> linesP; // will hold the results of the detection
@@ -124,7 +171,7 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chess_board_photos/chess_board_4.jpg";
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chess_board_photos/chess_board_7.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -147,8 +194,14 @@ int main(int argc, char** argv)
     // rotate image
     cv::Mat rotatedImage = rotateImageToStraight(src, point1, point2);
     
+    int Rwidth = rotatedImage.cols;
+    int Rheight = rotatedImage.rows;
+
+    std::cout << "Width: " << Rwidth << std::endl;
+    std::cout << "Height: " << Rheight << std::endl;
+
     //display rotated image
-    //cv::imshow("Rotated Image", rotatedImage);
+    cv::imshow("Rotated Image", rotatedImage);
     
     //locate green squares in rotated image
     std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
@@ -160,22 +213,52 @@ int main(int argc, char** argv)
     }
 
     //finding positions of chess board corners
-    int position1_x = greenSquarePositions[2].x;
-    int position1_y = greenSquarePositions[2].y;
+    int position1_x = greenSquarePositions[0].x;
+    int position1_y = greenSquarePositions[0].y;
 
-    int position4_x = greenSquarePositions[1].x;
-    int position4_y = greenSquarePositions[1].y;
+    int position2_x = greenSquarePositions[1].x;
+    int position2_y = greenSquarePositions[1].y;
 
-    int width = position4_x - position1_x;
-    int height = position4_y - position1_y;
+    int position3_x = greenSquarePositions[2].x;
+    int position3_y = greenSquarePositions[2].y;
 
-    cout << position1_x << " " << position1_y << " " << position4_x << " " << position4_y << " " << width << " " << height << endl;
+    int position4_x = greenSquarePositions[3].x;
+    int position4_y = greenSquarePositions[3].y;
 
-    cv::Rect crop_region(position1_x, position1_y, width, height);
+    int width = 0;
+    int height = 0;
+    int temp_width, temp_height;
+
+    for (int i=0; i<4; i++){
+        temp_width = greenSquarePositions[0].x - greenSquarePositions[i].x;
+        temp_height = greenSquarePositions[0].y - greenSquarePositions[i].y;
+
+        if (temp_width < 0){
+            temp_width = temp_width * -1;
+        }
+
+        if (temp_height < 0){
+            temp_height = temp_height * -1;
+        }
+
+        if (temp_width > width){
+            width = temp_width;
+        }
+
+        if (temp_height > height){
+            height = temp_height;
+        }
+    }
+
     
-    Mat croppedImage = rotatedImage(crop_region);
 
-    //cv::imshow("Cropped Image", croppedImage);
+    cout << position1_x << " " << position1_y << " " << position3_x << " " << position3_y << " " << width << " " << height << endl;
+
+    cv::Rect crop_region(position3_x, position3_y, width, height);
+
+    cv::Mat croppedImage = rotatedImage(crop_region);
+
+    cv::imshow("Cropped Image", croppedImage);
     
     //convert to gray_scale
     cv::Mat src_gray;
@@ -186,6 +269,7 @@ int main(int argc, char** argv)
     cv::adaptiveThreshold(src_gray, src_binary, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 11, 2);
     //imshow("binary", src_binary);
 
+    /*
     //find chessboard corners
     std::vector<cv::Point2f> corners;
     cv::Size boardSize(7,7);
@@ -217,20 +301,15 @@ int main(int argc, char** argv)
     else {
         cout << "found not found" << endl;
     }
-    
+    */
+
     //canny edge detection
     cv::Mat cannyEdges = cannyEdgeDetection(src_gray); 
     cv::imshow("Canny Edges Hough", cannyEdges);
 
-    //prob edge detection
-    cv::Mat probEdges = probEdgeDetection(src_gray);
-    cv::imshow("Prob Edges Hough", probEdges);
 
-
-
-
-
-
+    cv::Mat maskImage = processAndShowContours(croppedImage);
+    cv::imshow("Mask Image", maskImage);
 
     cv::waitKey(0);
 

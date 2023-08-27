@@ -56,7 +56,7 @@ class Driver:
             self.ser.write(bytes([val]))
         self.ser.write(bytes([checksum]))
         print("OK")
-        # return self.getPacket(0)
+        return self.getPacket(0)
         return None
 
 
@@ -66,10 +66,23 @@ class Driver:
         # self.execute(index, AX_WRITE_DATA, [regstart] + values)
         # return self.error
 
-    # def getPacket(self, mode, id=-1, leng=-1, error=-1, params = None):
-        # """ Read a return packet, iterative attempt """
-        # # need a positive byte
-        # d = self.ser.read()
+    def getPacket(self, mode, id=-1, leng=-1, error=-1, params = None):
+        """ Read a return packet, iterative attempt """
+        # need a positive byte
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
+        d = self.ser.read()
+        print(d);
         # if d == '':
             # self.logger.debug("Fail Read")
             # return None
@@ -122,7 +135,7 @@ class Driver:
                 # return None
             # return params
         # # fail
-        # return None
+        return None
 
     def getReg(self, index, regstart, rlength):
         """ Get the value of registers, should be called as such:

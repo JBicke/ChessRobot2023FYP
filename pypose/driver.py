@@ -53,9 +53,12 @@ class Driver:
         checksum = 255 - ((index + length + ins + sum(params))%256)
         """self.ser.write(chr(0xFF)+chr(0xFF)+chr(index)+chr(length)+chr(ins))"""
         self.ser.write(bytes([0xFF,0xFF,index,length,ins]))
+        print(bytes([0xFF,0xFF,index,length,ins]))
         for val in params:
             self.ser.write(bytes([val]))
+            print(bytes([val]))
         self.ser.write(bytes([checksum]))
+        print(bytes([checksum]))
         return self.getPacket(0)
 
     def setReg(self, index, regstart, values):

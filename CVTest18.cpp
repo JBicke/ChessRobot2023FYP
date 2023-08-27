@@ -8,6 +8,16 @@
 using namespace cv;
 using namespace std;
 
+struct CenterPoints {
+    std::vector<cv::Point> pink;
+    std::vector<cv::Point> blue;
+};
+
+struct FilteredPoints {
+    std::vector<int> x;
+    std::vector<int> y;
+};
+
 std::vector<cv::Point> locateGreenSquares(const cv::Mat& inputImage)
 {
     std::vector<cv::Point> greenSquarePositions;
@@ -63,39 +73,112 @@ cv::Mat rotateImageToStraight(const cv::Mat& image, cv::Point2f point1, cv::Poin
     return rotatedImage;
 }
 
-cv::Mat cannyEdgeDetection(const cv::Mat& image){
+FilteredPoints cannyEdgeDetection(const cv::Mat& image){
     cv::Mat c_cannyEdges, p_cannyEdges;
     cv::Mat cannyEdges;
     Canny(image, cannyEdges, 100, 150, 3);
-
+    //imshow("edges", cannyEdges);
     cvtColor(cannyEdges, c_cannyEdges, COLOR_GRAY2BGR);
     p_cannyEdges = cannyEdges.clone();
 
     vector<Vec2f> lines; // will hold the results of the detection
-    HoughLines(cannyEdges, lines, 1, CV_PI/180, 150, 0, 0 ); // runs the actual detection
-    // Draw the lines
-    for( size_t i = 0; i < lines.size(); i++ )
-    {
-        float rho = lines[i][0], theta = lines[i][1];
+
+    // Run Hough Line Transform for horizontal lines
+    HoughLines(cannyEdges, lines, 1, CV_PI / 180, 150);
+    
+    vector<double> x_points;
+    vector<double> y_points;
+
+    // Draw the detected horizontal lines on the original image
+    for (size_t i = 0; i < lines.size(); ++i) {
+        float rho = lines[i][0];
+        float theta = lines[i][1];
         
-        Point pt1, pt2;
-        double a = cos(theta), b = sin(theta);
-        double x0 = a*rho, y0 = b*rho;
-        pt1.x = cvRound(x0 + 1000*(-b));
-        pt1.y = cvRound(y0 + 1000*(a));
-        pt2.x = cvRound(x0 - 1000*(-b));
-        pt2.y = cvRound(y0 - 1000*(a));
-        //cout << "Point 1: "<< pt1.x << " " << pt1.y << " Point 2: " << pt2.x << " " << pt2.y << endl;
-        line( c_cannyEdges, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
+        double a = cos(theta);
+        double b = sin(theta);
+        double x0 = a * rho;
+        double y0 = b * rho;
+        
+        x_points.push_back(x0);
+        y_points.push_back(y0);
     }
 
-    return c_cannyEdges;
+    for (auto it = x_points.begin(); it != x_points.end();) {
+        if (*it < 10) {
+            it = x_points.erase(it);
+        } else {
+            ++it;
+        }
+    }
+
+    for (auto it = y_points.begin(); it != y_points.end();) {
+        if (*it < 10) {
+            it = y_points.erase(it);
+        } else {
+            ++it;
+        }
+    }
+    
+    std::vector<int> filtered_x_points;
+
+    for (int x : x_points) {
+        bool shouldAdd = true;
+
+        for (int filtered_x : filtered_x_points) {
+            if (std::abs(x - filtered_x) <= 40) {
+                shouldAdd = false;
+                break;
+            }
+        }
+
+        if (shouldAdd) {
+            filtered_x_points.push_back(x);
+        }
+    }
+    std::sort(filtered_x_points.begin(), filtered_x_points.end());
+    // Print the filtered x_points
+    std::cout << "Filtered x_points: ";
+    for (int x : filtered_x_points) {
+        std::cout << x << " ";
+    }
+    cout << endl;
+
+    std::vector<int> filtered_y_points;
+
+    for (int y : y_points) {
+        bool shouldAdd = true;
+
+        for (int filtered_y : filtered_y_points) {
+            if (std::abs(y - filtered_y) <= 40) {
+                shouldAdd = false;
+                break;
+            }
+        }
+
+        if (shouldAdd) {
+            filtered_y_points.push_back(y);
+        }
+    }
+    std::sort(filtered_y_points.begin(), filtered_y_points.end());
+    // Print the filtered x_points
+    std::cout << "Filtered y_points: ";
+    for (int y : filtered_y_points) {
+        std::cout << y << " ";
+    }
+    cout << endl;
+
+    FilteredPoints filteredPoints;
+
+    filteredPoints.x = filtered_x_points;
+    filteredPoints.y = filtered_y_points;
+
+    return filteredPoints;
 }
 
-cv::Mat processAndShowContours(const cv::Mat& src) {
+CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::Mat hsvImage;
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
-    cv::imshow("HSV Image", hsvImage);
+    //cv::imshow("HSV Image", hsvImage);
 
     cv::Scalar lowerRed1(0, 50, 50);
     cv::Scalar upperRed1(10, 255, 255);
@@ -127,51 +210,76 @@ cv::Mat processAndShowContours(const cv::Mat& src) {
     cv::Scalar contourColour;
     cv::Scalar pinkColour(255, 0, 255);
     cv::Scalar blueColour(255, 0, 0);
+
+    vector<cv::Point> pinkCenterPoints;
+    vector<cv::Point> blueCenterPoints;
+
     for (size_t i = 0; i < contours.size(); ++i) {
         cv::Rect boundingRect = cv::boundingRect(contours[i]);
+        
+        // Calculate center point
+        int centerX = (boundingRect.x + boundingRect.x + boundingRect.width) / 2;
+        int centerY = (boundingRect.y + boundingRect.y + boundingRect.height) / 2;
+
+        // Determine the contour color based on the region
         if (cv::countNonZero(redMask(boundingRect)) > 0)
             contourColour = pinkColour;
         else
             contourColour = blueColour;
+
+        // Draw rectangle and center point
         cv::rectangle(resultImage, boundingRect, contourColour, 2);
-    }
+        cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
 
-    return resultImage;
-}
-
-cv::Mat probEdgeDetection(const cv::Mat& image){
-    cv::Mat probDetection;
-    vector<Vec4i> linesP; // will hold the results of the detection
-    HoughLinesP(image, linesP, 1, CV_PI/180, 20, 50, 20 ); // runs the actual detection
-    // Draw the lines
-    for( size_t i = 0; i < linesP.size(); i++ )
-    {
-        Vec4i l = linesP[i];
-        line( probDetection, Point(l[0], l[1]), Point(l[2], l[3]), Scalar(0,0,255), 3, LINE_AA);
-    }
-
-    for ( size_t i = 0; i < linesP.size(); i++){
-        for ( size_t j = i + 1; j < linesP.size(); j++){
-
-            cv::Vec4i line1 = linesP[i];
-			cv::Vec4i line2 = linesP[j];
-			cv::Point pt1_1(line1[0], line1[1]);
-			cv::Point pt1_2(line1[2], line1[3]);
-			cv::Point pt2_1(line2[0], line2[1]);
-			cv::Point pt2_2(line2[2], line2[3]);
-            
-            //cout << line1 << line2 << endl;
+        // Store center point in the appropriate vector
+        if (contourColour == pinkColour) {
+            pinkCenterPoints.push_back(cv::Point(centerX, centerY));
+        } else {
+            blueCenterPoints.push_back(cv::Point(centerX, centerY));
         }
+    }
+    std::cout << "Pink Center Points:" << std::endl;
+for (const cv::Point& center : pinkCenterPoints) {
+    int centerX = center.x;
+    int centerY = center.y;
+    std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+}
 
+std::cout << "Blue Center Points:" << std::endl;
+for (const cv::Point& center : blueCenterPoints) {
+    int centerX = center.x;
+    int centerY = center.y;
+    std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+}
+
+    CenterPoints centerPoints;
+    
+    centerPoints.pink = pinkCenterPoints;
+    centerPoints.blue = blueCenterPoints;
+
+    return centerPoints;
+}
+
+std::vector<std::vector<int>> transposeMatrix(const std::vector<std::vector<int>>& matrix) {
+    int rows = matrix.size();
+    int cols = matrix[0].size();
+
+    std::vector<std::vector<int>> transposed(cols, std::vector<int>(rows, 0));
+
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            transposed[j][i] = matrix[i][j];
+        }
     }
 
-    return probDetection;
+    return transposed;
 }
+
 int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chess_board_photos/chess_board_7.jpg";
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chess_board_photos/chess_board_9.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -184,15 +292,37 @@ int main(int argc, char** argv)
     
     // Locate green square positions
     std::vector<cv::Point> crop_points = locateGreenSquares(src);
-
+    
     //finding points
     cv::Point2f  point1 = crop_points[0];
     cv::Point2f  point2 = crop_points[1];
+    cv::Point2f  point3 = crop_points[2];
+    cv::Point2f  point4 = crop_points[3];
+    cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
 
-    cout << point1 << " " << point2 << endl;
+    int min_crop_point = 10000; 
+int min_crop_point_ind = 0;
+int two_min_crop_point = 10000;
+int two_min_crop_point_ind = 0;
 
+for(int i = 0; i < 4; i++) {
+    if(crop_points[i].y < min_crop_point) {
+        min_crop_point = crop_points[i].y;
+        min_crop_point_ind = i;
+    }
+}
+
+
+for(int i = 0; i < 4; i++) {
+    if((crop_points[i].y < two_min_crop_point) && (i != min_crop_point_ind)) {
+        two_min_crop_point = crop_points[i].y;
+        two_min_crop_point_ind = i;  
+    }
+}
+
+    cout << crop_points[min_crop_point_ind] << " " << crop_points[two_min_crop_point_ind] << endl;
     // rotate image
-    cv::Mat rotatedImage = rotateImageToStraight(src, point1, point2);
+    cv::Mat rotatedImage = rotateImageToStraight(src, crop_points[min_crop_point_ind], crop_points[two_min_crop_point_ind]);
     
     int Rwidth = rotatedImage.cols;
     int Rheight = rotatedImage.rows;
@@ -201,7 +331,7 @@ int main(int argc, char** argv)
     std::cout << "Height: " << Rheight << std::endl;
 
     //display rotated image
-    cv::imshow("Rotated Image", rotatedImage);
+    //cv::imshow("Rotated Image", rotatedImage);
     
     //locate green squares in rotated image
     std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
@@ -250,67 +380,122 @@ int main(int argc, char** argv)
         }
     }
 
+    int min_x = 10000;
+    int min_y = 10000;
+
+    for (int i=0; i<4; i++){
+        if(greenSquarePositions[i].x < min_x)
+            min_x = greenSquarePositions[i].x;
+        
+        if(greenSquarePositions[i].y < min_y)
+            min_y = greenSquarePositions[i].y;
+    }
     
 
-    cout << position1_x << " " << position1_y << " " << position3_x << " " << position3_y << " " << width << " " << height << endl;
+    cout << min_x << " " << min_y << " " << width << " " << height << endl;
 
-    cv::Rect crop_region(position3_x, position3_y, width, height);
+    cv::Rect crop_region(min_x, min_y, width, height);
 
     cv::Mat croppedImage = rotatedImage(crop_region);
 
-    cv::imshow("Cropped Image", croppedImage);
+    //cv::imshow("Cropped Image", croppedImage);
     
     //convert to gray_scale
     cv::Mat src_gray;
     cvtColor(croppedImage, src_gray, COLOR_BGR2GRAY);
     
-    //convert to binary
-    cv::Mat src_binary;
-    cv::adaptiveThreshold(src_gray, src_binary, 255, cv::ADAPTIVE_THRESH_GAUSSIAN_C, cv::THRESH_BINARY, 11, 2);
-    //imshow("binary", src_binary);
-
-    /*
-    //find chessboard corners
-    std::vector<cv::Point2f> corners;
-    cv::Size boardSize(7,7);
-    int found = cv::findChessboardCorners(src_gray, boardSize, corners, cv::CALIB_CB_ADAPTIVE_THRESH + cv::CALIB_CB_NORMALIZE_IMAGE );
-    //cout<< corners << endl;
-    if (found){
-        cv::cornerSubPix(src_binary, corners, cv::Size(5, 5), cv::Size(-1, -1), cv::TermCriteria(cv::TermCriteria::EPS + cv::TermCriteria::COUNT, 30, 0.1));
-
-        cv::Mat mask = cv::Mat::zeros(src.size(), CV_8U);
-        std::vector<cv::Point> polyCorners;
-        polyCorners.push_back(corners[0]);
-        polyCorners.push_back(corners[boardSize.width - 1]);
-        polyCorners.push_back(corners[boardSize.width * (boardSize.height - 1)]);
-        polyCorners.push_back(corners[boardSize.width * boardSize.height - 1]);
-        cv::fillConvexPoly(mask, polyCorners, cv::Scalar(255));
-
-        // Find contours in the mask
-        std::vector<std::vector<cv::Point>> contours;
-        cv::findContours(mask, contours, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-
-        // Draw the outlines of each square
-        cv::Mat resultImage = croppedImage.clone();
-        cv::Scalar outlineColor(0, 255, 0); // Green color for contours
-        cv::drawContours(resultImage, contours, -1, outlineColor, 2);
-
-        // Display the resulting image with square outlines
-        imshow("Result", resultImage);
-    }
-    else {
-        cout << "found not found" << endl;
-    }
-    */
-
     //canny edge detection
-    cv::Mat cannyEdges = cannyEdgeDetection(src_gray); 
-    cv::imshow("Canny Edges Hough", cannyEdges);
+    FilteredPoints filteredPoints = cannyEdgeDetection(src_gray);
+
+    std::vector<int> filtered_x_points = filteredPoints.x;
+    std::vector<int> filtered_y_points = filteredPoints.y;
+
+    std::cout << "Filtered y_points : ";
+    for (int y : filtered_y_points) {
+        std::cout << y << " ";
+    }
+    cout << endl;
 
 
-    cv::Mat maskImage = processAndShowContours(croppedImage);
-    cv::imshow("Mask Image", maskImage);
+    CenterPoints centerPoints = processAndShowContours(croppedImage);
 
+    std::vector<cv::Point> pinkCenterPoints = centerPoints.pink;
+    std::vector<cv::Point> blueCenterPoints = centerPoints.blue;
+
+
+    std::cout << "Blue Center Points :" << std::endl;
+    for (const cv::Point& center : pinkCenterPoints) {
+        int centerX = center.x;
+        int centerY = center.y;
+        std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+    }
+
+    int chessboardPosition[8][8] = {0};
+
+    //pink chessboard positions
+
+    for(int i=0; i<pinkCenterPoints.size(); ++i){
+        int pos_x_point_p = pinkCenterPoints[i].x;
+        int pos_y_point_p = pinkCenterPoints[i].y;
+
+        // Find the insertion position in the sorted vector
+        auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
+
+        // Calculate the index where the point would sit
+        int index_x_p = std::distance(filtered_x_points.begin(), it_x_p);
+
+        // Find the insertion position in the sorted vector
+        auto it_y_p = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_p);
+
+        // Calculate the index where the point would sit
+        int index_y_p = std::distance(filtered_y_points.begin(), it_y_p);
+
+        cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
+
+        chessboardPosition[index_x_p - 1][index_y_p - 1] = -1;
+    }
+
+    //blue chessboard positions
+    int pos_x_point_b = 0;
+    int pos_y_point_b = 0;
+    int index_x_b = 0;
+    int index_y_b = 0;
+
+    for(int i=0; i<blueCenterPoints.size(); ++i){
+        pos_x_point_b = blueCenterPoints[i].x;
+        pos_y_point_b = blueCenterPoints[i].y;
+
+        // Find the insertion position in the sorted vector
+        auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
+
+        // Calculate the index where the point would sit
+        int index_x_b = std::distance(filtered_x_points.begin(), it_x_b);
+
+        // Find the insertion position in the sorted vector
+        auto it_y_b = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_b);
+
+        // Calculate the index where the point would sit
+        int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
+
+        cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+
+        chessboardPosition[index_x_b - 1][index_y_b - 1] = 1;
+    }
+    int chessboardPositionFinal[8][8] = {0};
+
+    for (int i = 0; i < 8; ++i)
+      for (int j = 0; j < 8; ++j) {
+         chessboardPositionFinal[j][i] = chessboardPosition[i][j];
+      }
+
+    // Print the array
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            std::cout << chessboardPositionFinal[i][j] << "\t";
+        }
+        std::cout << "\n";
+    }
+    cout << "finished" << endl;
     cv::waitKey(0);
 
     return 0;

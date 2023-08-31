@@ -230,7 +230,8 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Draw rectangle and center point
         cv::rectangle(resultImage, boundingRect, contourColour, 2);
         cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-
+        imshow("Result", resultImage);
+        
         // Store center point in the appropriate vector
         if (contourColour == pinkColour) {
             pinkCenterPoints.push_back(cv::Point(centerX, centerY));
@@ -279,7 +280,7 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/chess_board_photos/chess_board_9.jpg";
+    const char* default_file ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -331,7 +332,7 @@ for(int i = 0; i < 4; i++) {
     std::cout << "Height: " << Rheight << std::endl;
 
     //display rotated image
-    //cv::imshow("Rotated Image", rotatedImage);
+    cv::imshow("Rotated Image", rotatedImage);
     
     //locate green squares in rotated image
     std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
@@ -398,7 +399,7 @@ for(int i = 0; i < 4; i++) {
 
     cv::Mat croppedImage = rotatedImage(crop_region);
 
-    //cv::imshow("Cropped Image", croppedImage);
+    cv::imshow("Cropped Image", croppedImage);
     
     //convert to gray_scale
     cv::Mat src_gray;

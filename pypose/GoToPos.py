@@ -24,8 +24,8 @@ driver.setReg(1,P_GOAL_SPEED_L, [speed1%256,speed1>>8])
 driver.setReg(2,P_GOAL_SPEED_L, [speed2%256,speed2>>8])
 
 
-p1 = 200
-p2 = 505
+p1 = 600
+p2 = 700
 
 driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
 driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])

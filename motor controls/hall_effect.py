@@ -11,5 +11,6 @@ hallpin = 17
 GPIO.setup(hallpin, GPIO.IN)
 
 while True:
+	
 	if (GPIO.input(hallpin) == False):
 		print("Magnet Detected")

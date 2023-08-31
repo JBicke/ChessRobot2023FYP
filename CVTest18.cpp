@@ -186,7 +186,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::Scalar lowerRed2(160, 50, 50);
     cv::Scalar upperRed2(179, 255, 255);
 
-    cv::Scalar lowerBlue(90, 50, 50);
+    cv::Scalar lowerBlue(100, 100, 100);
     cv::Scalar upperBlue(130, 255, 255);
 
     cv::Mat redMask;
@@ -231,7 +231,10 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         cv::rectangle(resultImage, boundingRect, contourColour, 2);
         cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
         imshow("Result", resultImage);
+<<<<<<< HEAD
         
+=======
+>>>>>>> 26066980009ab8ec05a448f32f7bdc7916a36d1d
         // Store center point in the appropriate vector
         if (contourColour == pinkColour) {
             pinkCenterPoints.push_back(cv::Point(centerX, centerY));
@@ -280,7 +283,11 @@ int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
+<<<<<<< HEAD
     const char* default_file ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
+=======
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1001.jpg";
+>>>>>>> 26066980009ab8ec05a448f32f7bdc7916a36d1d
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));

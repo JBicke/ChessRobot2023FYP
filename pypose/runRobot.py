@@ -22,8 +22,37 @@ driver = Driver(port='/dev/ttyUSB0')
 #record = driver.getReg(1,P_ID,1)
 #print(record)
 
-def movePiece():
 
+servo_angles_matrix = []
+x=1
+y=40
+
+for _ in range(8):
+	row = []
+	for _ in range(8):
+		square_angles = [x, y]
+		x=x+2
+		y=y+1
+		row.append(square_angles)
+	servo_angles_matrix.append(row)
+
+print(servo_angles_matrix)
+
+
+
+def movePiece(move):
+	
+	moveNumber = convertToNumber(move)
+	print(moveNumber)
+	row1, col1, row2, col2 = moveNumber
+	row1 = int(row1)
+	col1 = int(col1)	
+	row2 = int(row2)
+	col2 = int(col2)		
+	servo1_angle1, servo1_angle2 = servo_angles_matrix[row1-1][col1-1]
+	servo2_angle1, servo2_angle2 = servo_angles_matrix[row2-1][col2-1]
+	
+	print(str(servo1_angle1) + " " + str(servo1_angle2) + " " + str(servo2_angle1) + " " + str(servo2_angle2))
 	GPIO.output(motorDownPin, GPIO.LOW)
 	GPIO.output(motorUpPin, GPIO.HIGH)
 
@@ -86,3 +115,15 @@ def motorDown():
 	GPIO.output(motorDownPin, GPIO.HIGH)
 	GPIO.output(motorUpPin, GPIO.LOW)
 	time.sleep(3)
+
+
+def convertToNumber(input_string):
+	result = ""
+    
+	for char in input_string:
+		if char.isalpha():
+			result += str(ord(char.lower()) - ord('a') + 1)
+		else:
+			result += char # Add any remaining numbers to the result
+			
+	return result

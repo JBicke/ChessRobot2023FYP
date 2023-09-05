@@ -28,6 +28,10 @@ string chessNotation(int row, int col) {
 
 int main() {
 	
+	//Take the input
+	std::string message;
+	std::getline(std::cin, message);
+	
 	// Create Example Board
 	cv::Mat board(8,8,CV_32F,cv::Scalar(0));
 	
@@ -39,7 +43,7 @@ int main() {
 	}
 	
 	// Print Example Board
-	cout << "M = " << endl << " " << board << endl << endl;
+	// cout << "M = " << endl << " " << board << endl << endl;
 	
 	// Create Sample Move
 	
@@ -56,7 +60,7 @@ int main() {
 	boardnew.at<float>(4,1) = 0;
 	
 	// Print Example Move
-	std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;
+	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;
 	
 	// Calculate the move from the moves
 	cv::Mat deltaMatrix = deltaCalc(board, boardnew);
@@ -81,19 +85,21 @@ int main() {
 	string moveNew = chessNotation(chessRowNew,chessColNew);
 	
 	// Print the move in chess notatin
-	cout << moveOld << moveNew << endl;
+	// cout << moveOld << moveNew << endl;
 	
 	string move = moveOld+moveNew;
 	
 	vector<string> moves;
 	
 	moves.push_back(move);
-	moves.push_back("c7c5");
-	moves.push_back("d2d4");
-	moves.push_back("d7d5");
+	// moves.push_back("c7c5");
+	// moves.push_back("d2d4");
+	// moves.push_back("d7d5");
 	
-	// Provide the output move
-	string outputMove = runStock(moves);
+	// Provide the output move (Should say moves)
+	vector<string> messages;
+	messages.push_back(message);
+	string outputMove = runStock(messages);
 	
 	cout << outputMove << endl;
 }

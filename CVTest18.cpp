@@ -488,13 +488,15 @@ for(int i = 0; i < 4; i++) {
          chessboardPositionFinal[j][i] = chessboardPosition[i][j];
       }
 
-    // Print the array
+    cv::Mat chessboardMat(8, 8, CV_32S);
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            std::cout << chessboardPositionFinal[i][j] << "\t";
+            chessboardMat.at<int>(i, j) = chessboardPositionFinal[i][j];
         }
-        std::cout << "\n";
     }
+
+    // Print the array
+    std::cout << chessboardMat << std::endl;
     cout << "finished" << endl;
     cv::waitKey(0);
 

@@ -6,9 +6,14 @@ GPIO.setmode(GPIO.BCM)
 time.sleep(2)
 GPIO.setup(4, GPIO.OUT)
 
-GPIO.setup(21, GPIO.OUT)
-GPIO.setup(20, GPIO.OUT)
-GPIO.setup(26, GPIO.OUT)
+magnetPin = 20;
+motorDownPin = 21;
+motorUpPin = 26;
+
+
+GPIO.setup(motorDownPin, GPIO.OUT)
+GPIO.setup(magnetPin, GPIO.OUT)
+GPIO.setup(motorUpPin, GPIO.OUT)
 
 # GPIO.output(4, GPIO.HIGH)
 # time.sleep(2)
@@ -29,31 +34,39 @@ GPIO.setup(26, GPIO.OUT)
 # GPIO.output(26, GPIO.LOW)
 # time.sleep(2)
 
-GPIO.output(21, GPIO.HIGH)
-GPIO.output(26, GPIO.LOW)
+GPIO.output(motorDownPin, GPIO.HIGH)
+GPIO.output(motorUpPin, GPIO.LOW)
 time.sleep(2)
 
-GPIO.output(20, GPIO.HIGH)
-time.sleep(2)
-
-
-GPIO.output(21, GPIO.LOW)
-GPIO.output(26, GPIO.HIGH)
+GPIO.output(magnetPin, GPIO.HIGH)
 time.sleep(2)
 
 
-
-GPIO.output(21, GPIO.HIGH)
-GPIO.output(26, GPIO.LOW)
+GPIO.output(motorDownPin, GPIO.LOW)
+GPIO.output(motorUpPin, GPIO.HIGH)
 time.sleep(2)
 
-GPIO.output(20, GPIO.LOW)
+
+
+GPIO.output(motorDownPin, GPIO.HIGH)
+GPIO.output(motorUpPin, GPIO.LOW)
 time.sleep(2)
 
-GPIO.output(21, GPIO.LOW)
-GPIO.output(26, GPIO.HIGH)
+GPIO.output(magnetPin, GPIO.LOW)
+time.sleep(2)
+
+GPIO.output(motorDownPin, GPIO.LOW)
+GPIO.output(motorUpPin, GPIO.HIGH)
 time.sleep(2)
 
 GPIO.cleanup()
 
 print("ran")
+
+def move_Down():
+	GPIO.output(motorDownPin, GPIO.LOW)
+	GPIO.output(motorUpPin, GPIO.HIGH)
+	time.sleep(2)
+	
+def move_Up():
+	

@@ -11,7 +11,7 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	int newCol = 0;
 	bool previousFound = false;
 	bool newFound = false;
-	cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
+	// cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			if((previousFound == false) && (deltaMatrix.at<float>(i,j) == -1)) {

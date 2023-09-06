@@ -26,7 +26,7 @@ import serial
 import time
 import sys
 from binascii import b2a_hex
-from ax12 import *
+from pypose.ax12 import *
 import logging
 
 class Driver:
@@ -56,10 +56,10 @@ class Driver:
         for val in params:
             self.ser.write(bytes([val]))
         self.ser.write(bytes([checksum]))
-        print(bytes([0xFF,0xFF,index,length,ins]))
-        for val in params:
-            print(bytes([val]))
-        print(bytes([checksum]))
+        #print(bytes([0xFF,0xFF,index,length,ins]))
+        #for val in params:
+            #print(bytes([val]))
+        #print(bytes([checksum]))
         return self.getPacket(0)
 
     def setReg(self, index, regstart, values):
@@ -72,21 +72,21 @@ class Driver:
         """ Read a return packet, iterative attempt """
         # need a positive byte
         d = self.ser.read()
-        print(d)
+        #print(d)
         if d != b'':
             print(ord(d))
         if d == b'':
-            print("Fail Read")
+            #print("Fail Read")
             return None
 
         # now process our byte
         if mode == 0:           # get our first 0xFF
             if ord(d) == 255:
-                print("Oxff found")
+                #print("Oxff found")
                 return self.getPacket(1)
             else:
-                print("Oxff NOT found, restart: " + str(ord(d)))
-                print("Oxff NOT found, restart: " + str(ord(d)))
+                #print("Oxff NOT found, restart: " + str(ord(d)))
+                #print("Oxff NOT found, restart: " + str(ord(d)))
                 return self.getPacket(0)
         elif mode == 1:         # get our second 0xFF
             if ord(d) == 255:

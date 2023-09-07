@@ -22,6 +22,7 @@ while True:
 	
 	# Comment for now while testing
 	final = runRobot.movePiece(fakeUserMove)
+	runRobot.movePiece(response_from_cpp[:4])
 
 	print(final)
 

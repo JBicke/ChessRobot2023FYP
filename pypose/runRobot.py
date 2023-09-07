@@ -23,36 +23,55 @@ driver = Driver(port='/dev/ttyUSB0')
 #print(record)
 
 
+
+matrix1 = [
+    [646, 783, 889, 960, 1002, 1023, 1026, 1018],
+    [571, 683, 774, 842, 888, 915, 926, 925],
+    [506, 600, 679, 741, 787, 816, 832, 835],
+    [446, 527, 596, 653, 696, 725, 743, 748],
+    [388, 458, 520, 571, 611, 639, 657, 663],
+    [330, 393, 447, 494, 530, 556, 572, 578],
+    [270, 326, 376, 417, 450, 474, 488, 491],
+    [207, 258, 303, 340, 369, 389, 400, 400]
+]
+
+matrix2 = [
+    [734, 732, 723, 710, 692, 671, 647, 622],
+    [706, 704, 697, 685, 669, 650, 629, 604],
+    [677, 676, 670, 659, 645, 628, 607, 584],
+    [648, 646, 641, 632, 619, 602, 583, 561],
+    [617, 616, 611, 603, 590, 575, 556, 534],
+    [585, 584, 580, 572, 560, 545, 527, 505],
+    [552, 551, 546, 538, 527, 512, 493, 471],
+    [515, 514, 509, 501, 490, 475, 455, 431]
+]
+
 servo_angles_matrix = []
-x=1
-y=40
 
-for _ in range(8):
-	row = []
-	for _ in range(8):
-		square_angles = [x, y]
-		x=x+2
-		y=y+1
-		row.append(square_angles)
-	servo_angles_matrix.append(row)
-
-print(servo_angles_matrix)
-
-
+for i in range(8):
+    row = []
+    for j in range(8):
+        entry = [matrix1[i][j], matrix2[i][j]]
+        row.append(entry)
+    servo_angles_matrix.append(row)
 
 def movePiece(move):
 	
 	moveNumber = convertToNumber(move)
 	print(moveNumber)
-	row1, col1, row2, col2 = moveNumber
+	col1, row1, col2, row2 = moveNumber
 	row1 = int(row1)
 	col1 = int(col1)	
 	row2 = int(row2)
-	col2 = int(col2)		
-	servo1_angle1, servo1_angle2 = servo_angles_matrix[row1-1][col1-1]
-	servo2_angle1, servo2_angle2 = servo_angles_matrix[row2-1][col2-1]
+	col2 = int(col2)
 	
-	print(str(servo1_angle1) + " " + str(servo1_angle2) + " " + str(servo2_angle1) + " " + str(servo2_angle2))
+	row1 = 9-row1
+	row2 = 9-row2
+			
+	servo1_angle1, servo2_angle1 = servo_angles_matrix[row1-1][col1-1]
+	servo1_angle2, servo2_angle2 = servo_angles_matrix[row2-1][col2-1]
+	
+	print(str(servo1_angle1) + " " + str(servo2_angle1) + " " + str(servo1_angle2) + " " + str(servo2_angle2))
 	GPIO.output(motorDownPin, GPIO.LOW)
 	GPIO.output(motorUpPin, GPIO.HIGH)
 
@@ -66,8 +85,8 @@ def movePiece(move):
 	driver.setReg(2,P_GOAL_SPEED_L, [speed2%256,speed2>>8])
 
 
-	p1 = 200
-	p2 = 505
+	p1 = servo1_angle1
+	p2 = servo2_angle1
 
 	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
 	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
@@ -87,8 +106,8 @@ def movePiece(move):
 
 	#Piece is picked up
 
-	p1 = 360
-	p2 = 575
+	p1 = servo1_angle2
+	p2 = servo2_angle2
 
 	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
 	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])

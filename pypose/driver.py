@@ -47,7 +47,7 @@ class Driver:
 
     def execute(self, index, ins, params):
         """ Send an instruction to a device. """
-        print(params)
+        #print(params)
         self.ser.flushInput()
         length = 2 + len(params)
         checksum = 255 - ((index + length + ins + sum(params))%256)
@@ -74,7 +74,8 @@ class Driver:
         d = self.ser.read()
         #print(d)
         if d != b'':
-            print(ord(d))
+            self.logger.debug(ord(d))
+            #print(ord(d))
         if d == b'':
             #print("Fail Read")
             return None
@@ -90,7 +91,7 @@ class Driver:
                 return self.getPacket(0)
         elif mode == 1:         # get our second 0xFF
             if ord(d) == 255:
-                print("Oxff found")
+                #print("Oxff found")
                 return self.getPacket(2)
             else:
                 self.logger.debug("Oxff NOT found, restart: " + str(ord(d)))

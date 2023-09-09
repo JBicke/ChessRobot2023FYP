@@ -1,7 +1,16 @@
 from guizero import App, PushButton, Slider, Text, Box
+import subprocess
 
 def button_clicked():
-	print("Button Clicked")
+    try:
+        subprocess.run(["jupyter", "nbconvert", "--to", "notebook", "--execute", r"C:\Users\Jackson\playing_screen.ipynb"], check=True)
+        app.destroy()
+    except subprocess.CalledProcessError as e:
+        print(f"Error running the script: {e}")
+    else:
+        print("Script executed successfully")
+    
+    
 
 def slider_changed(slider_value):
 	print(f"Slider value cahnged to {slider_value}")

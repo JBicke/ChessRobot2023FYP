@@ -317,7 +317,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="E:\UNI\ece4078\ChessRobot2023FYP\CVTest18.cpp" />
+    <ClCompile Include="E:\UNI\ece4078\ChessRobot2023FYP\CVTest19.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="E:\UNI\ece4078\ChessRobot2023FYP\build\ZERO_CHECK.vcxproj">

@@ -27,8 +27,8 @@ std::vector<cv::Point> locateGreenSquares(const cv::Mat& inputImage)
     cv::cvtColor(inputImage, hsvImage, cv::COLOR_BGR2HSV);
 
     // Define lower and upper bounds for green color (in HSV)
-    cv::Scalar lowerGreen(35, 50, 50);
-    cv::Scalar upperGreen(85, 255, 255);
+    cv::Scalar lowerGreen(30, 50, 50);
+    cv::Scalar upperGreen(65, 255, 255);
 
     // Create a mask for the green color range
     cv::Mat greenMask;
@@ -50,7 +50,7 @@ std::vector<cv::Point> locateGreenSquares(const cv::Mat& inputImage)
             {
                 cv::Point centroid(moments.m10 / moments.m00, moments.m01 / moments.m00);
                 greenSquarePositions.push_back(centroid);
-   
+
             }
         }
     }
@@ -231,10 +231,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         cv::rectangle(resultImage, boundingRect, contourColour, 2);
         cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
         imshow("Result", resultImage);
-<<<<<<< HEAD
         
-=======
->>>>>>> 26066980009ab8ec05a448f32f7bdc7916a36d1d
         // Store center point in the appropriate vector
         if (contourColour == pinkColour) {
             pinkCenterPoints.push_back(cv::Point(centerX, centerY));
@@ -279,15 +276,18 @@ std::vector<std::vector<int>> transposeMatrix(const std::vector<std::vector<int>
     return transposed;
 }
 
+double calculateDistance(const cv::Point& point1, const cv::Point& point2) {
+    double dx = point1.x - point2.x;
+    double dy = point1.y - point2.y;
+    return std::sqrt(dx * dx + dy * dy);
+}
+
 int main(int argc, char** argv)
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
-<<<<<<< HEAD
-    const char* default_file ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
-=======
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1001.jpg";
->>>>>>> 26066980009ab8ec05a448f32f7bdc7916a36d1d
+
+    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/Pictures/1001.jpg";
     const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
@@ -297,39 +297,84 @@ int main(int argc, char** argv)
         printf(" Program Arguments: [image_name -- default %s] \n", default_file);
         return -1;
     }
-    
+    imshow("src", src);
     // Locate green square positions
     std::vector<cv::Point> crop_points = locateGreenSquares(src);
-    
+    int numberOfGreenSquares = crop_points.size();
+
+    for (const cv::Point& point : crop_points) {
+    std::cout << "Point: (" << point.x << ", " << point.y << ")" << std::endl;
+}   
+    cout << numberOfGreenSquares << endl;
+
+    std::vector<cv::Point> filteredCropPoints;
+
+    double minDistance = 100.0; // Points within 100 pixels of each other
+    double maxDistance = 500.0;
+
+   //filtering out unnecessary points
+   for(size_t i=0; i<crop_points.size(); i++){
+        if (crop_points[i].y > 100 && crop_points[i].x > 100){
+            for (const cv::Point& point1 : crop_points) {
+                bool keepPoint = true;
+
+                for (const cv::Point& point2 : filteredCropPoints) {
+                    double distance = calculateDistance(point1, point2);
+
+                    if (distance < minDistance) {
+                        // If the point is within 100 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    } else if (distance < maxDistance) {
+                        // If the point is within 500 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    }
+                }
+
+                if (keepPoint) {
+                    filteredCropPoints.push_back(point1);
+                }
+            }
+        }
+   }
+
+    // Print the filtered points
+    for (const cv::Point& point : filteredCropPoints) {
+        std::cout << "Point: (" << point.x << ", " << point.y << ")" << std::endl;
+    }
+
     //finding points
-    cv::Point2f  point1 = crop_points[0];
-    cv::Point2f  point2 = crop_points[1];
-    cv::Point2f  point3 = crop_points[2];
-    cv::Point2f  point4 = crop_points[3];
+    cv::Point2f  point1 = filteredCropPoints[0];
+    cv::Point2f  point2 = filteredCropPoints[1];
+    cv::Point2f  point3 = filteredCropPoints[2];
+    cv::Point2f  point4 = filteredCropPoints[3];
     cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
 
     int min_crop_point = 10000; 
-int min_crop_point_ind = 0;
-int two_min_crop_point = 10000;
-int two_min_crop_point_ind = 0;
+    int min_crop_point_ind = 0;
+    int two_min_crop_point = 10000;
+    int two_min_crop_point_ind = 0;
 
-for(int i = 0; i < 4; i++) {
-    if(crop_points[i].y < min_crop_point) {
-        min_crop_point = crop_points[i].y;
-        min_crop_point_ind = i;
+    for(int i = 0; i < 4; i++) {
+        if(filteredCropPoints[i].y < min_crop_point) {
+            min_crop_point = filteredCropPoints[i].y;
+            min_crop_point_ind = i;
+        }
     }
-}
 
 
-for(int i = 0; i < 4; i++) {
-    if((crop_points[i].y < two_min_crop_point) && (i != min_crop_point_ind)) {
-        two_min_crop_point = crop_points[i].y;
-        two_min_crop_point_ind = i;  
+    for(int i = 0; i < 4; i++) {
+        if((filteredCropPoints[i].y < two_min_crop_point) && (i != min_crop_point_ind)) {
+            two_min_crop_point = filteredCropPoints[i].y;
+            two_min_crop_point_ind = i;  
+        }
     }
-}
 
-    cout << crop_points[min_crop_point_ind] << " " << crop_points[two_min_crop_point_ind] << endl;
+    cout << min_crop_point_ind << " " << two_min_crop_point_ind << endl;
+    cout << crop_points[min_crop_point_ind + 1] << " " << crop_points[two_min_crop_point_ind + 1] << endl;
     // rotate image
+    
     cv::Mat rotatedImage = rotateImageToStraight(src, crop_points[min_crop_point_ind], crop_points[two_min_crop_point_ind]);
     
     int Rwidth = rotatedImage.cols;

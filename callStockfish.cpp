@@ -251,6 +251,15 @@ std::string runStock(std::vector<std::string> moves)
         previousLine = currentLine;
 	}
     
+    fprintf(out, "d\n");
+    for(int i = 1; i<21;i++) {
+		getline(&line, &size, in);
+    }
+    getline(&line, &size, in);
+    std::string FEN = line;
+    
+    outputMove = outputMove + " " + FEN;
+    
     // Since in this case we can tell the child to terminate, we'll do so
     // and wait for it to terminate before we close down.
     fprintf(out, "quit\n");
@@ -258,6 +267,7 @@ std::string runStock(std::vector<std::string> moves)
 
     fclose(in);
     fclose(out);
+    
 
     return outputMove;
 }

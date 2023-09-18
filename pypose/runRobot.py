@@ -18,6 +18,9 @@ GPIO.setup(motorUpPin, GPIO.OUT)
 
 driver = Driver(port='/dev/ttyUSB0')
 
+servo1_angle_graveyard = 600
+servo2_angle_graveyard = 400
+
 
 #record = driver.getReg(1,P_ID,1)
 #print(record)
@@ -25,7 +28,7 @@ driver = Driver(port='/dev/ttyUSB0')
 
 
 matrix1 = [
-    [646, 783, 889, 960, 1002, 1023, 1026, 1018],
+    [646, 783, 889, 960, 1002, 1023, 1023, 1018],
     [571, 683, 774, 842, 888, 915, 926, 925],
     [506, 600, 679, 741, 787, 816, 832, 835],
     [446, 527, 596, 653, 696, 725, 743, 748],
@@ -144,5 +147,81 @@ def convertToNumber(input_string):
 			result += str(ord(char.lower()) - ord('a') + 1)
 		else:
 			result += char # Add any remaining numbers to the result
-			
 	return result
+
+
+def takePiece(row,col):
+	row = int(row)
+	col = int(col)	
+			
+	servo1_angle, servo2_angle = servo_angles_matrix[row-1][col-1]
+	
+	GPIO.output(motorDownPin, GPIO.LOW)
+	GPIO.output(motorUpPin, GPIO.HIGH)
+
+	time.sleep(2)
+
+	is_moving = driver.getReg(1, P_MOVING,1)
+
+	speed1 = 50
+	speed2 = 30
+	driver.setReg(1,P_GOAL_SPEED_L, [speed1%256,speed1>>8])
+	driver.setReg(2,P_GOAL_SPEED_L, [speed2%256,speed2>>8])
+
+
+	p1 = servo1_angle
+	p2 = servo2_angle
+
+	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
+
+
+	time.sleep(5)
+
+	# This move down and pick up
+
+	motorDown()
+
+	GPIO.output(magnetPin, GPIO.HIGH)
+
+	time.sleep(2)
+
+	motorUp()
+
+	#Piece is picked up
+
+	p1 = servo1_angle_graveyard
+	p2 = servo2_angle_graveyard
+
+	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
+
+	time.sleep(5)
+
+	GPIO.output(magnetPin, GPIO.LOW)
+	
+	time.sleep(1)
+	##Drop Piece
+
+	# motorDown()
+
+	# GPIO.output(magnetPin, GPIO.LOW)
+
+	# time.sleep(2)
+
+	# motorUp()
+	
+	
+	return "Take Completed"
+	
+def extract_FEN(input_string):
+    fen_index = input_string.find("FEN: ")
+
+    if fen_index != -1:
+        # Add the length of "FEN: " to get the starting index of the desired text
+        start_index = fen_index + len("Fen: ")
+        # Extract the text after "FEN: "
+        extracted_text = input_string[start_index:]
+        return extracted_text.strip()  # Remove leading/trailing whitespaces
+    else:
+        return None  # "FEN: " not found in the string

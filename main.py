@@ -10,6 +10,11 @@ piece_Matrix[6] = [1]*8 # Row 2
 piece_Matrix[7] = [1]*8 # Row 1 
 collision = False
 
+W_Castle_K = True
+W_Castle_Q = True
+B_Castle_K = True
+B_Castle_Q = True
+
 
 while True:
 	fakeUserMove = input("Make a move:")
@@ -25,10 +30,62 @@ while True:
 	response_from_cpp = cpp_process.stdout.readline()
 	print("Python received:", response_from_cpp)
 	
-	message_to_cpp = message_to_cpp + " " + response_from_cpp[:4] + " "
+	stockMove = response_from_cpp[:4]
 	
-	FEN = runRobot.extract_FEN(response_from_cpp)
+	message_to_cpp = message_to_cpp + " " + stockMove + " "
+	
+	
+	FEN = runRobot.extract_Text(response_from_cpp,"Fen: ")
+	
 	print(FEN)
+	
+	Line1 = runRobot.extract_Text(FEN," ")
+	
+	print(Line1)
+	
+	Line2 = runRobot.extract_Text(Line1," ")
+	
+	print(Line2)
+
+	Castle_Fen = runRobot.del_Text_After(Line2," ")
+	
+	print(Castle_Fen)
+	
+	if Castle_Fen.find('K') != -1:
+		W_Castle_K = True
+	else:
+		W_Castle_K = False
+	
+	if Castle_Fen.find('Q') != -1:
+		W_Castle_Q = True
+	else:
+		W_Castle_Q = False
+	
+	if Castle_Fen.find('k') != -1:
+		B_Castle_K = True
+	else:
+		B_Castle_K = False
+	
+	if Castle_Fen.find('q') != -1:
+		B_Castle_Q = True
+	else:
+		B_Castle_Q = False
+	
+	if stockMove = "e1g1":
+		if W_Castle_K == True:
+			#Call Castle Function	
+	if stockMove = "e1c1":
+		if W_Castle_Q == True:
+			#Call Castle Function
+		
+	if stockMove = "e8g8":
+		if B_Castle_K == True:
+			#Call Castle Function			
+		
+	if stockMove = "e8c8":
+		if B_Castle_Q == True:
+			#Call Castle Function			
+	
 	
 	# Comment for now while testing
 	
@@ -57,7 +114,7 @@ while True:
 	
 	final = runRobot.movePiece(fakeUserMove)
 	
-	moveLocations = runRobot.convertToNumber(response_from_cpp[:4])
+	moveLocations = runRobot.convertToNumber(stockMove)
 	
 	col1, row1, col2, row2 = moveLocations
 	row1 = int(row1)
@@ -80,7 +137,7 @@ while True:
 	
 	print(piece_Matrix)
 	
-	runRobot.movePiece(response_from_cpp[:4])
+	runRobot.movePiece(stockMove)
 	
 
 	print(final)

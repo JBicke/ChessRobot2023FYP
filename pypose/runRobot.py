@@ -214,14 +214,24 @@ def takePiece(row,col):
 	
 	return "Take Completed"
 	
-def extract_FEN(input_string):
-    fen_index = input_string.find("FEN: ")
+def extract_Text(input_string, text):
+    fen_index = input_string.find(text)
 
     if fen_index != -1:
         # Add the length of "FEN: " to get the starting index of the desired text
-        start_index = fen_index + len("Fen: ")
+        start_index = fen_index + len(text)
         # Extract the text after "FEN: "
         extracted_text = input_string[start_index:]
         return extracted_text.strip()  # Remove leading/trailing whitespaces
     else:
         return None  # "FEN: " not found in the string
+        
+def del_Text_After(input_string, character):
+    index = input_string.find(character)
+
+    if index != -1:
+        # Slice the string up to the specified character (excluding the character itself)
+        modified_string = input_string[:index]
+        return modified_string
+    else:
+        return input_string  # Character not found, return the original string

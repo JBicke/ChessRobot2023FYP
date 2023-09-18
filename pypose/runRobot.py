@@ -21,35 +21,40 @@ driver = Driver(port='/dev/ttyUSB0')
 servo1_angle_graveyard = 600
 servo2_angle_graveyard = 400
 
-
+castle_p1 = ""
+castle_p2 = ""
+	
 #record = driver.getReg(1,P_ID,1)
 #print(record)
 
 
 
 matrix1 = [
-    [646, 783, 889, 960, 1002, 1023, 1023, 1018],
-    [571, 683, 774, 842, 888, 915, 926, 925],
-    [506, 600, 679, 741, 787, 816, 832, 835],
-    [446, 527, 596, 653, 696, 725, 743, 748],
-    [388, 458, 520, 571, 611, 639, 657, 663],
-    [330, 393, 447, 494, 530, 556, 572, 578],
-    [270, 326, 376, 417, 450, 474, 488, 491],
-    [207, 258, 303, 340, 369, 389, 400, 400]
+    [601, 739, 850, 928, 977, 1003, 1012, 1007],
+    [535, 647, 741, 813, 864, 895, 911, 913],
+    [475, 569, 650, 716, 764, 797, 816, 823],
+    [419, 499, 570, 629, 675, 707, 727, 736],
+    [363, 434, 497, 549, 591, 622, 641, 650],
+    [306, 370, 426, 473, 511, 539, 558, 566],
+    [248, 305, 355, 398, 432, 457, 473, 479],
+    [185, 237, 283, 321, 351, 373, 385, 387]
 ]
 
 matrix2 = [
-    [734, 732, 723, 710, 692, 671, 647, 622],
-    [706, 704, 697, 685, 669, 650, 629, 604],
-    [677, 676, 670, 659, 645, 628, 607, 584],
-    [648, 646, 641, 632, 619, 602, 583, 561],
-    [617, 616, 611, 603, 590, 575, 556, 534],
-    [585, 584, 580, 572, 560, 545, 527, 505],
-    [552, 551, 546, 538, 527, 512, 493, 471],
-    [515, 514, 509, 501, 490, 475, 455, 431]
+    [729, 729, 722, 710, 693, 673, 650, 625],
+    [701, 701, 695, 685, 670, 652, 631, 607],
+    [672, 672, 667, 658, 645, 628, 609, 586],
+    [643, 643, 638, 630, 618, 603, 584, 563],
+    [613, 612, 608, 601, 589, 575, 557, 536],
+    [580, 580, 576, 569, 558, 544, 527, 505],
+    [546, 546, 542, 535, 525, 510, 493, 471],
+    [509, 509, 505, 498, 487, 473, 454, 431]
 ]
 
 servo_angles_matrix = []
+
+promotion = False
+promoted_Piece = ''
 
 for i in range(8):
     row = []
@@ -59,7 +64,10 @@ for i in range(8):
     servo_angles_matrix.append(row)
 
 def movePiece(move):
-	
+	if len(move) == 5:
+		promoted_Piece = move[4]
+		promotion = True
+		move = move[:4]
 	moveNumber = convertToNumber(move)
 	print(moveNumber)
 	col1, row1, col2, row2 = moveNumber
@@ -235,3 +243,23 @@ def del_Text_After(input_string, character):
         return modified_string
     else:
         return input_string  # Character not found, return the original string
+
+
+def castle(location):
+	print(location)
+	if location == "K":
+		castle_p1 = "h1"
+		castle_p2 = "f1"
+	if location == "Q":
+		castle_p1 = "a1"
+		castle_p2 = "d1"
+	if location == "k":
+		castle_p1 = "h8"
+		castle_p2 = "f8"
+	if location == "q":
+		castle_p1 = "a8"
+		castle_p2 = "d8"
+	
+	print(castle_p1+castle_p2)
+	movePiece(castle_p1+castle_p2)
+	return "Castle Complete"

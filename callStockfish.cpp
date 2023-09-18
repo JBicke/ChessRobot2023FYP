@@ -233,8 +233,12 @@ std::string runStock(std::vector<std::string> moves)
 		if (strncmp(line, "bestmove", 8) == 0) {
             std::string str(currentLine);
             std::string strPrev(previousLine);
-            
-            std::string output = str.substr(9,4);
+            std::string output;
+            if (str.substr(14,1) == " ") {
+                output = str.substr(9,5);
+            } else {
+                output = str.substr(9,4);
+            }
             outputMove = output;
             
             size_t pos = strPrev.find("cp");

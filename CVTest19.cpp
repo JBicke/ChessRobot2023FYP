@@ -86,6 +86,23 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
     // Run Hough Line Transform for horizontal lines
     HoughLines(cannyEdges, lines, 1, CV_PI / 180, 150);
     
+    for( size_t i = 0; i < lines.size(); i++ )
+    {
+        float rho = lines[i][0], theta = lines[i][1];
+        
+        Point pt1, pt2;
+        double a = cos(theta), b = sin(theta);
+        double x0 = a*rho, y0 = b*rho;
+        pt1.x = cvRound(x0 + 1000*(-b));
+        pt1.y = cvRound(y0 + 1000*(a));
+        pt2.x = cvRound(x0 - 1000*(-b));
+        pt2.y = cvRound(y0 - 1000*(a));
+        cout << "Point 1: "<< pt1.x << " " << pt1.y << " Point 2: " << pt2.x << " " << pt2.y << endl;
+        line( c_cannyEdges, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
+    }
+
+    imshow("Canny edges", c_cannyEdges);
+
     vector<double> x_points;
     vector<double> y_points;
 
@@ -282,6 +299,34 @@ double calculateDistance(const cv::Point& point1, const cv::Point& point2) {
     return std::sqrt(dx * dx + dy * dy);
 }
 
+void rotateChessboard(int chessboard[8][8]) {
+    int temp[8][8];
+
+    // Copy the original chessboard to a temporary matrix
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            temp[i][j] = chessboard[i][j];
+        }
+    }
+
+    // Rotate the chessboard 90 degrees counterclockwise
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8; ++j) {
+            chessboard[i][j] = temp[j][8 - 1 - i];
+        }
+    }
+}
+
+void reflectYAxis(int chessboard[8][8]) {
+    for (int i = 0; i < 8; ++i) {
+        for (int j = 0; j < 8 / 2; ++j) {
+            // Swap elements across the y-axis (columns)
+            std::swap(chessboard[i][j], chessboard[i][8 - 1 - j]);
+        }
+    }
+}
+
+
 int main(int argc, char** argv)
 {
     // Declare the output variables
@@ -302,10 +347,12 @@ int main(int argc, char** argv)
     std::vector<cv::Point> crop_points = locateGreenSquares(src);
     int numberOfGreenSquares = crop_points.size();
 
+    /*
     for (const cv::Point& point : crop_points) {
         std::cout << "Points: (" << point.x << ", " << point.y << ")" << std::endl;
     }   
     //cout << numberOfGreenSquares << endl;
+    */
 
     std::vector<cv::Point> filteredCropPoints;
     std::vector<cv::Point> filteredGreenPoints;
@@ -353,7 +400,7 @@ int main(int argc, char** argv)
     cv::Point2f  point2 = filteredCropPoints[1];
     cv::Point2f  point3 = filteredCropPoints[2];
     cv::Point2f  point4 = filteredCropPoints[3];
-    cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
+    //cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
 
     // Initialize min_crop_point and min_crop_point_ind with large values
     int min_crop_point = INT_MAX;
@@ -378,8 +425,8 @@ int main(int argc, char** argv)
             two_min_crop_point_ind = i;
         }
     }
-    cout << min_crop_point_ind << " " << two_min_crop_point_ind << endl;
-    cout << crop_points[min_crop_point_ind + 1] << " " << crop_points[two_min_crop_point_ind + 1] << endl;
+    //cout << min_crop_point_ind << " " << two_min_crop_point_ind << endl;
+    //cout << crop_points[min_crop_point_ind + 1] << " " << crop_points[two_min_crop_point_ind + 1] << endl;
     
      // rotate image
     
@@ -388,24 +435,25 @@ int main(int argc, char** argv)
     int Rwidth = rotatedImage.cols;
     int Rheight = rotatedImage.rows;
 
-    std::cout << "Width: " << Rwidth << std::endl;
-    std::cout << "Height: " << Rheight << std::endl;
+    //std::cout << "Width: " << Rwidth << std::endl;
+    //std::cout << "Height: " << Rheight << std::endl;
 
     //display rotated image
-    cv::imshow("Rotated Image", rotatedImage);
+    //cv::imshow("Rotated Image", rotatedImage);
     
     //locate green squares in rotated image
     std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
 
-    // Display the detected green square positions
+    /* Display the detected green square positions
     for (const auto& position : greenSquarePositions)
     {
         std::cout << "Green square position: (" << position.x << ", " << position.y << ")" << std::endl;
     }
+    */
 
     //filtering out unnecessary points
     for (const Point& point1 : greenSquarePositions) {
-        if (point1.x > minDistance && point1.y > minDistance) {
+        if (point1.x > 200 && point1.y > 100) {
             bool keepPoint = true;
 
             for (const Point& filteredGPoint : filteredGreenPoints) {
@@ -424,7 +472,7 @@ int main(int argc, char** argv)
 
             if (keepPoint) {
                 filteredGreenPoints.push_back(point1);
-                std::cout << "Saved point: (" << point1.x << ", " << point1.y << ")" << std::endl;
+                //std::cout << "Saved point: (" << point1.x << ", " << point1.y << ")" << std::endl;
             }
         }
     }
@@ -479,13 +527,13 @@ int main(int argc, char** argv)
     }
     
 
-    cout << min_x << " " << min_y << " " << width << " " << height << endl;
+    //cout << min_x << " " << min_y << " " << width << " " << height << endl;
 
     cv::Rect crop_region(min_x, min_y, width, height);
 
     cv::Mat croppedImage = rotatedImage(crop_region);
 
-    cv::imshow("Cropped Image", croppedImage);
+    //cv::imshow("Cropped Image", croppedImage);
     
     //convert to gray_scale
     cv::Mat src_gray;
@@ -521,9 +569,9 @@ int main(int argc, char** argv)
 
     //pink chessboard positions
 
-    for(int i=0; i<pinkCenterPoints.size(); ++i){
-        int pos_x_point_p = pinkCenterPoints[i].x;
-        int pos_y_point_p = pinkCenterPoints[i].y;
+    for(int i=0; i<pinkCenterPoints.size(); i++){
+        int pos_x_point_p = pinkCenterPoints.at(i).x;
+        int pos_y_point_p = pinkCenterPoints.at(i).y;
 
         // Find the insertion position in the sorted vector
         auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
@@ -539,7 +587,9 @@ int main(int argc, char** argv)
 
         cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
 
-        chessboardPosition[index_x_p-1][index_y_p-1] = -1;
+        if(index_x_p > 0 && index_y_p > 0){
+            chessboardPosition[index_x_p-1][index_y_p-1] = -1;
+        }
     }
 
     //blue chessboard positions
@@ -565,20 +615,28 @@ int main(int argc, char** argv)
         int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
 
         cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
-
-        chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+        if(index_x_b > 0 && index_y_b > 0){
+            chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+        }
     }
     int chessboardPositionFinal[8][8] = {0};
+    int chessboardPositionTemp[8][8] = {0};
+    int chessboardPositionTemp2[8][8] = {0};
 
-    for (int i = 0; i < 8; ++i)
+    for (int i = 0; i < 8; ++i){
       for (int j = 0; j < 8; ++j) {
-         chessboardPositionFinal[j][i] = chessboardPosition[i][j];
+         chessboardPositionFinal[i][j] = chessboardPosition[i][j];
       }
+    }
+
+    rotateChessboard(chessboardPosition);
+    reflectYAxis(chessboardPosition);
+
 
     cv::Mat chessboardMat(8, 8, CV_32S);
     for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
-            chessboardMat.at<int>(i, j) = chessboardPositionFinal[i][j];
+            chessboardMat.at<int>(i, j) = chessboardPosition[i][j];
         }
     }
 

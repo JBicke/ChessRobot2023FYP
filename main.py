@@ -2,14 +2,26 @@ from pypose import runRobot
 import subprocess
 
 # Run the C++ program as a subprocess
-# message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
-message_to_cpp = "g2g4 h7h5 h2h3 h5g4 h1h2 g4h3 h2g2 h3h2 "
+message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
+# message_to_cpp = "g2g4 h7h5 h2h3 h5g4 h1h2 g4h3 h2g2 h3h2 "
 # message_to_cpp = ""
 piece_Matrix =  [[0 for _ in range(8)] for _ in range(8)]
-piece_Matrix[0] = [1]*8 # Row 8
-piece_Matrix[1] = [1]*8 # Row 7
-piece_Matrix[6] = [1]*8 # Row 2
-piece_Matrix[7] = [1]*8 # Row 1 
+#piece_Matrix[0] = [1]*8 # Row 8
+#piece_Matrix[1] = [1]*8 # Row 7
+#piece_Matrix[6] = [1]*8 # Row 2
+#piece_Matrix[7] = [1]*8 # Row 1 
+
+piece_Matrix = [
+    [1, 1, 1, 1, 1, 1, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [0, 0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [1, 1, 1, 1, 1, 1, 1, 1],
+    [1, 1, 1, 1, 1, 1, 1, 0]
+]
+
 collision = False
 
 W_Castle_K = True
@@ -17,9 +29,10 @@ W_Castle_Q = True
 B_Castle_K = True
 B_Castle_Q = True
 
-promotion = False
-promoted_Piece = ''
-
+W_promotion = False
+B_promotion = False
+W_promoted_Piece = ''
+B_promoted_Piece = ''
 
 while True:
 	fakeUserMove = input("Make a move:")
@@ -31,10 +44,13 @@ while True:
 	cpp_process.stdin.flush()
 	response_from_cpp = cpp_process.stdout.readline()
 	
+	#fake user move is length 4 or 5 if promotion
+	#playerMove is length 4 always
+	
 	playerMove = fakeUserMove
 	if len(playerMove) == 5:
-		promoted_Piece = playerMove[4]
-		promotion = True
+		W_promoted_Piece = playerMove[4]
+		W_promotion = True
 		playerMove = playerMove[:4]
 	
 	FEN_Player = runRobot.extract_Text(response_from_cpp,"Fen: ")
@@ -51,7 +67,6 @@ while True:
 
 	Castle_Player_Fen = runRobot.del_Text_After(Line2," ")
 	
-	print(Castle_Player_Fen)
 	
 	cpp_process.stdin.close()
 	cpp_process.stdout.close()
@@ -73,6 +88,9 @@ while True:
 		stockMove = response_from_cpp[:4]
 	else:
 		stockMove = response_from_cpp[:5]
+		print("Promotion Detected")
+		B_promoted_Piece = stockMove[4]
+		B_promotion = True
 		
 	message_to_cpp = message_to_cpp + " " + stockMove + " "
 	
@@ -91,15 +109,13 @@ while True:
 
 	Castle_Fen = runRobot.del_Text_After(Line2," ")
 	
-	print(Castle_Fen)
-	
 			
 	
 	
 	# Comment for now while testing
 	
-	moveLocations = runRobot.convertToNumber(fakeUserMove[:4])
-	print(fakeUserMove)
+	moveLocations = runRobot.convertToNumber(playerMove)
+	print(playerMove)
 	print(moveLocations)
 	col1, row1, col2, row2 = moveLocations
 	row1 = int(row1)
@@ -122,7 +138,7 @@ while True:
 	
 	#print(piece_Matrix)
 	
-	final = runRobot.movePiece(fakeUserMove)
+	final = runRobot.movePiece(playerMove)
 	
 	if Castle_Player_Fen.find('K') != -1:
 		W_Castle_K = True
@@ -170,17 +186,19 @@ while True:
 			piece_Matrix[0][0] = piece_Matrix[0][0] - 1
 			piece_Matrix[0][3] = piece_Matrix[0][3] + 1
 	
+	if W_promotion == True:
+		runRobot.promotion(playerMove[2:4],'w'+W_promoted_Piece)
 	
 	moveLocations = runRobot.convertToNumber(stockMove)
 	
 	print(stockMove)
 	print(moveLocations)
 	
-	col1, row1, col2, row2 = moveLocations[:4]
+	col1, row1, col2f, row2f = moveLocations[:4]
 	row1 = int(row1)
 	col1 = int(col1)	
-	row2 = int(row2)
-	col2 = int(col2)
+	row2 = int(row2f)
+	col2 = int(col2f)
 	
 	row1 = 9-row1
 	row2 = 9-row2
@@ -242,7 +260,14 @@ while True:
 			piece_Matrix[0][0] = piece_Matrix[0][0] - 1
 			piece_Matrix[0][3] = piece_Matrix[0][3] + 1
 	
-
+	if B_promotion == True:
+		runRobot.promotion(stockMove[2:4],'b'+B_promoted_Piece)
+	
+	W_promotion = False
+	B_promotion = False
+	W_promoted_Piece = ''
+	B_promoted_Piece = ''
+	
 	print(final)
 
 	# Close the subprocess

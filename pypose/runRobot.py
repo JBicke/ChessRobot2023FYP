@@ -21,8 +21,28 @@ driver = Driver(port='/dev/ttyUSB0')
 servo1_angle_graveyard = 600
 servo2_angle_graveyard = 400
 
+servo1_angle_WQ = 649
+servo1_angle_WR = 563
+servo1_angle_WB = 474
+servo1_angle_WN = 376
+servo1_angle_BQ = 734
+servo1_angle_BR = 818
+servo1_angle_BN = 905
+servo1_angle_BB = 992
+
+servo2_angle_WQ = 511
+servo2_angle_WR = 481
+servo2_angle_WB = 445
+servo2_angle_WN = 402
+servo2_angle_BQ = 538
+servo2_angle_BR = 561
+servo2_angle_BN = 581
+servo2_angle_BB = 599
+
 castle_p1 = ""
 castle_p2 = ""
+	
+promotion_colour = ''
 	
 #record = driver.getReg(1,P_ID,1)
 #print(record)
@@ -82,7 +102,7 @@ def movePiece(move):
 	servo1_angle1, servo2_angle1 = servo_angles_matrix[row1-1][col1-1]
 	servo1_angle2, servo2_angle2 = servo_angles_matrix[row2-1][col2-1]
 	
-	print(str(servo1_angle1) + " " + str(servo2_angle1) + " " + str(servo1_angle2) + " " + str(servo2_angle2))
+	# print(str(servo1_angle1) + " " + str(servo2_angle1) + " " + str(servo1_angle2) + " " + str(servo2_angle2))
 	GPIO.output(motorDownPin, GPIO.LOW)
 	GPIO.output(motorUpPin, GPIO.HIGH)
 
@@ -263,3 +283,113 @@ def castle(location):
 	print(castle_p1+castle_p2)
 	movePiece(castle_p1+castle_p2)
 	return "Castle Complete"
+
+
+def promotion(square, piece):
+	squareNumber = convertToNumber(square)
+	col, row = squareNumber
+	row = int(row)
+	col = int(col)	
+	
+	row = 9-row
+	
+			
+	servo1_return, servo2_return = servo_angles_matrix[row-1][col-1]
+		
+	if piece == "wq":
+		p1 = servo1_angle_WQ
+		p2 = servo2_angle_WQ
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "wr":
+		p1 = servo1_angle_WR
+		p2 = servo2_angle_WR
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "wn":
+		p1 = servo1_angle_WN
+		p2 = servo2_angle_WN
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "wb":
+		p1 = servo1_angle_WB
+		p2 = servo2_angle_WB
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "bq":
+		p1 = servo1_angle_BQ
+		p2 = servo2_angle_BQ
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "br":
+		p1 = servo1_angle_BR
+		p2 = servo2_angle_BR
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "bn":
+		p1 = servo1_angle_BN
+		p2 = servo2_angle_BN
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+	elif piece == "bb":
+		p1 = servo1_angle_BB
+		p2 = servo2_angle_BB
+		pickUpPromote(p1,p2,servo1_return,servo2_return)
+		
+	
+def pickUpPromote(p1,p2,servo1_togoback,servo2_togoback):
+	
+	motorDown()
+
+	GPIO.output(magnetPin, GPIO.HIGH)
+
+	time.sleep(2)
+
+	motorUp()
+
+	#Piece is picked up
+
+	pg1 = servo1_angle_graveyard
+	pg2 = servo2_angle_graveyard
+
+	driver.setReg(1,P_GOAL_POSITION_L, [pg1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [pg2%256,p2>>8])
+
+	time.sleep(5)
+
+	GPIO.output(magnetPin, GPIO.LOW)
+	
+	time.sleep(1)
+	
+	GPIO.output(motorDownPin, GPIO.LOW)
+	GPIO.output(motorUpPin, GPIO.HIGH)
+
+	time.sleep(2)
+
+	
+	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
+	
+	time.sleep(5)
+
+	# This move down and pick up
+
+	motorDown()
+
+	GPIO.output(magnetPin, GPIO.HIGH)
+
+	time.sleep(2)
+
+	motorUp()
+
+	#Piece is picked up
+	
+	p1 = servo1_togoback
+	p2 = servo2_togoback
+	
+	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
+	
+	time.sleep(5)
+	
+	motorDown()
+	
+	GPIO.output(magnetPin, GPIO.LOW)
+
+	time.sleep(2)
+
+	motorUp()
+	

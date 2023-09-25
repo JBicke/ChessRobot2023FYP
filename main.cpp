@@ -1,6 +1,7 @@
 // -I/usr/include/opencv4 `pkg-config --cflags --libs opencv4`
 // g++ -o chessRobot main.cpp deltaInterpretation.cpp callStockfish.cpp -I/usr/include/opencv4 `pkg-config --cflags --libs opencv4`
 #include "deltaInterpretation.h"
+#include "Vision.h"
 #include "opencv2/opencv.hpp"
 #include <iostream>
 #include <string>
@@ -30,17 +31,15 @@ int main() {
 	
 	//Take the input
 	std::string message;
+	
+	
+	
 	std::getline(std::cin, message);
 	
 	// Create Example Board
-	cv::Mat board(8,8,CV_32F,cv::Scalar(0));
+	cv::Mat board = CVRunMain();
 	
-	for (int i =0; i< 8; i++) {
-		board.at<float>(i,0) = 1;
-		board.at<float>(i,1) = 1;
-		board.at<float>(i,6) = -1;
-		board.at<float>(i,7) = -1;
-	}
+	std::cout << board << std::endl;
 	
 	// Print Example Board
 	// cout << "M = " << endl << " " << board << endl << endl;

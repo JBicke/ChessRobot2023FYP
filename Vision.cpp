@@ -97,11 +97,11 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
         pt1.y = cvRound(y0 + 1000*(a));
         pt2.x = cvRound(x0 - 1000*(-b));
         pt2.y = cvRound(y0 - 1000*(a));
-        cout << "Point 1: "<< pt1.x << " " << pt1.y << " Point 2: " << pt2.x << " " << pt2.y << endl;
+        //cout << "Point 1: "<< pt1.x << " " << pt1.y << " Point 2: " << pt2.x << " " << pt2.y << endl;
         line( c_cannyEdges, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
     }
 
-    imshow("Canny edges", c_cannyEdges);
+    //imshow("Canny edges", c_cannyEdges);
 
     vector<double> x_points;
     vector<double> y_points;
@@ -154,12 +154,12 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
         }
     }
     std::sort(filtered_x_points.begin(), filtered_x_points.end());
-    // Print the filtered x_points
+    /* Print the filtered x_points
     std::cout << "Filtered x_points: ";
     for (int x : filtered_x_points) {
         std::cout << x << " ";
     }
-
+    */
     std::vector<int> filtered_y_points;
 
     for (int y : y_points) {
@@ -177,13 +177,13 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
         }
     }
     std::sort(filtered_y_points.begin(), filtered_y_points.end());
-    // Print the filtered x_points
+    /* Print the filtered x_points
     std::cout << "Filtered y_points: ";
     for (int y : filtered_y_points) {
         std::cout << y << " ";
     }
-    cout << endl;
-
+    //cout << endl;
+    */
     FilteredPoints filteredPoints;
 
     filteredPoints.x = filtered_x_points;
@@ -247,7 +247,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Draw rectangle and center point
         cv::rectangle(resultImage, boundingRect, contourColour, 2);
         cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-        imshow("Result", resultImage);
+        //imshow("Result", resultImage);
         
         // Store center point in the appropriate vector
         if (contourColour == pinkColour) {
@@ -256,14 +256,14 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
             blueCenterPoints.push_back(cv::Point(centerX, centerY));
         }
     }
-    std::cout << "Pink Center Points:" << std::endl;
+    //std::cout << "Pink Center Points:" << std::endl;
 for (const cv::Point& center : pinkCenterPoints) {
     int centerX = center.x;
     int centerY = center.y;
     //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
 }
 
-std::cout << "Blue Center Points:" << std::endl;
+//std::cout << "Blue Center Points:" << std::endl;
 for (const cv::Point& center : blueCenterPoints) {
     int centerX = center.x;
     int centerY = center.y;
@@ -327,22 +327,22 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-int main(int argc, char** argv)
+cv::Mat CVRunMain()
 {
     // Declare the output variables
     Mat dst, cdst, cdstP;
 
-    const char* default_file ="E:/UNI/ece4078/ChessRobot2023FYP/1001.jpg";
-    const char* filename = argc >=2 ? argv[1] : default_file;
+    const char* filename ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
+    // const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
     // Check if image is loaded fine
     if(src.empty()){
         printf(" Error opening image\n");
-        printf(" Program Arguments: [image_name -- default %s] \n", default_file);
-        return -1;
+        printf(" Program Arguments: [image_name -- default %s] \n", filename);
+        //return 0;
     }
-    imshow("src", src);
+    //imshow("src", src);
     // Locate green square positions
     std::vector<cv::Point> crop_points = locateGreenSquares(src);
     int numberOfGreenSquares = crop_points.size();
@@ -545,11 +545,11 @@ int main(int argc, char** argv)
     std::vector<int> filtered_x_points = filteredPoints.x;
     std::vector<int> filtered_y_points = filteredPoints.y;
     
-    std::cout << "Filtered y_points : ";
+    /*std::cout << "Filtered y_points : ";
     for (int y : filtered_y_points) {
         std::cout << y << " ";
     }
-
+    */
 
 
     CenterPoints centerPoints = processAndShowContours(croppedImage);
@@ -558,11 +558,11 @@ int main(int argc, char** argv)
     std::vector<cv::Point> blueCenterPoints = centerPoints.blue;
 
 
-    std::cout << "Blue Center Points :" << std::endl;
+    //std::cout << "Blue Center Points :" << std::endl;
     for (const cv::Point& center : pinkCenterPoints) {
         int centerX = center.x;
         int centerY = center.y;
-        std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+        //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
     }
 
     int chessboardPosition[8][8] = {0};
@@ -572,7 +572,9 @@ int main(int argc, char** argv)
     for(int i=0; i<pinkCenterPoints.size(); i++){
         int pos_x_point_p = pinkCenterPoints.at(i).x;
         int pos_y_point_p = pinkCenterPoints.at(i).y;
-
+        
+        
+        //cout << "index x:" << pos_x_point_p << " index y: " << pos_y_point_p << endl;
         // Find the insertion position in the sorted vector
         auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
 
@@ -585,9 +587,10 @@ int main(int argc, char** argv)
         // Calculate the index where the point would sit
         int index_y_p = std::distance(filtered_y_points.begin(), it_y_p);
 
-        cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
+        //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
 
-        if(index_x_p > 0 && index_y_p > 0){
+        if(index_x_p > 0 && index_y_p > 0 && index_y_p < 10 && index_x_p < 10){
+            //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
             chessboardPosition[index_x_p-1][index_y_p-1] = -1;
         }
     }
@@ -601,24 +604,31 @@ int main(int argc, char** argv)
     for(int i=0; i<blueCenterPoints.size(); ++i){
         pos_x_point_b = blueCenterPoints[i].x;
         pos_y_point_b = blueCenterPoints[i].y;
+        
+        if (pos_x_point_b > 0 && pos_x_point_b < 10000 && pos_y_point_b > 0 && pos_y_point_b < 10000){
+        
+            cout << " x:" << pos_x_point_b << "  y: " << pos_y_point_b << endl;
+            
+            // Find the insertion position in the sorted vector
+            auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
 
-        // Find the insertion position in the sorted vector
-        auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
+            // Calculate the index where the point would sit
+            int index_x_b = std::distance(filtered_x_points.begin(), it_x_b);
 
-        // Calculate the index where the point would sit
-        int index_x_b = std::distance(filtered_x_points.begin(), it_x_b);
+            // Find the insertion position in the sorted vector
+            auto it_y_b = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_b);
 
-        // Find the insertion position in the sorted vector
-        auto it_y_b = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_b);
+            // Calculate the index where the point would sit
+            int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
 
-        // Calculate the index where the point would sit
-        int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
-
-        cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
-        if(index_x_b > 0 && index_y_b > 0){
-            chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+            //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+            if(index_x_b > 0 && index_y_b > 0 && index_y_b < 10 && index_x_b < 10){
+                cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+                chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+            }
         }
     }
+    
     int chessboardPositionFinal[8][8] = {0};
     int chessboardPositionTemp[8][8] = {0};
     int chessboardPositionTemp2[8][8] = {0};
@@ -641,9 +651,9 @@ int main(int argc, char** argv)
     }
 
     // Print the array
-    std::cout << chessboardMat << std::endl;
-    cout << "finished" << endl;
-    cv::waitKey(0);
+    // std::cout << chessboardMat << std::endl;
+    //cout << "finished" << endl;
+    // cv::waitKey(0);
 
-    return 0;
+    return chessboardMat;
 }

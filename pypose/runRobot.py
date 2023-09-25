@@ -1,5 +1,6 @@
 from pypose.driver import Driver
 import time
+import re
 import RPi.GPIO as GPIO
 from pypose.ax12 import P_MOVING, P_GOAL_SPEED_L, P_GOAL_POSITION_L, P_BAUD_RATE, P_ID
 
@@ -89,7 +90,7 @@ def movePiece(move):
 		promotion = True
 		move = move[:4]
 	moveNumber = convertToNumber(move)
-	print(moveNumber)
+	# print(moveNumber)
 	col1, row1, col2, row2 = moveNumber
 	row1 = int(row1)
 	col1 = int(col1)	
@@ -266,7 +267,7 @@ def del_Text_After(input_string, character):
 
 
 def castle(location):
-	print(location)
+	# print(location)
 	if location == "K":
 		castle_p1 = "h1"
 		castle_p2 = "f1"
@@ -393,3 +394,8 @@ def pickUpPromote(p1,p2,servo1_togoback,servo2_togoback):
 
 	motorUp()
 	
+
+def extract_eP(text):
+	words = text.split()
+	return words[-3]
+		

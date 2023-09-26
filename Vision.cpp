@@ -333,7 +333,7 @@ cv::Mat CVRunMain()
     Mat dst, cdst, cdstP;
 
     const char* filename ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
-    // const char* filename = argc >=2 ? argv[1] : default_file;
+    //const char* filename = argc >=2 ? argv[1] : default_file;
     // Loads an image
     Mat src = imread( samples::findFile( filename ));
     // Check if image is loaded fine
@@ -378,7 +378,7 @@ cv::Mat CVRunMain()
                     break; // No need to check other points
                 }
             }
-
+ 
             if (keepPoint) {
                 filteredCropPoints.push_back(point);
                 //std::cout << "Saved point: (" << point.x << ", " << point.y << ")" << std::endl;
@@ -444,7 +444,7 @@ cv::Mat CVRunMain()
     //locate green squares in rotated image
     std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
 
-    /* Display the detected green square positions
+    /*Display the detected green square positions
     for (const auto& position : greenSquarePositions)
     {
         std::cout << "Green square position: (" << position.x << ", " << position.y << ")" << std::endl;
@@ -573,7 +573,6 @@ cv::Mat CVRunMain()
         int pos_x_point_p = pinkCenterPoints.at(i).x;
         int pos_y_point_p = pinkCenterPoints.at(i).y;
         
-        
         //cout << "index x:" << pos_x_point_p << " index y: " << pos_y_point_p << endl;
         // Find the insertion position in the sorted vector
         auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
@@ -589,7 +588,7 @@ cv::Mat CVRunMain()
 
         //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
 
-        if(index_x_p > 0 && index_y_p > 0 && index_y_p < 10 && index_x_p < 10){
+        if(index_x_p > 0 && index_y_p > 0 && index_y_p < 9 && index_x_p < 9){
             //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
             chessboardPosition[index_x_p-1][index_y_p-1] = -1;
         }
@@ -607,7 +606,7 @@ cv::Mat CVRunMain()
         
         if (pos_x_point_b > 0 && pos_x_point_b < 10000 && pos_y_point_b > 0 && pos_y_point_b < 10000){
         
-            cout << " x:" << pos_x_point_b << "  y: " << pos_y_point_b << endl;
+            //cout << " x:" << pos_x_point_b << "  y: " << pos_y_point_b << endl;
             
             // Find the insertion position in the sorted vector
             auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
@@ -622,8 +621,8 @@ cv::Mat CVRunMain()
             int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
 
             //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
-            if(index_x_b > 0 && index_y_b > 0 && index_y_b < 10 && index_x_b < 10){
-                cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+            if(index_x_b > 0 && index_y_b > 0 && index_y_b < 9 && index_x_b < 9){
+                //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
                 chessboardPosition[index_x_b-1][index_y_b-1] = 1;
             }
         }
@@ -651,9 +650,9 @@ cv::Mat CVRunMain()
     }
 
     // Print the array
-    // std::cout << chessboardMat << std::endl;
+    std::cout << chessboardMat << std::endl;
     //cout << "finished" << endl;
     // cv::waitKey(0);
-
+    //return 0;
     return chessboardMat;
 }

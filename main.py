@@ -63,7 +63,7 @@ while True:
 	
 	FEN_Player = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-	# print(FEN_Player)
+	print(FEN_Player)
 	
 	Line1 = runRobot.extract_Text(FEN_Player," ")
 	
@@ -107,7 +107,7 @@ while True:
 	
 	FEN_Stock = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-	#print(FEN_Stock)
+	print(FEN_Stock)
 	
 	Line1 = runRobot.extract_Text(FEN_Stock," ")
 	
@@ -130,36 +130,16 @@ while True:
 	# turns the player ove into the correct matrix references
 	row1, row2, col1, col2 = operations.orientSquares(playerMove)
 	
-	
+	print(piece_Matrix)
+
 	if piece_Matrix[row1-1][col1-1] == 2:
 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
 		pawn_Move = True
-	else:
-		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
+
+	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)
 	
-	if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
-		if pawn_Move == True:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-	elif piece_Matrix[row2-1][col2-1] == 2:
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
-		if pawn_Move == False:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-	else:
-		if pawn_Move == False:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-		else:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
 	
-	if W_promotion == True:
-		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-	# print(piece_Matrix)
+	print(piece_Matrix)
 
 		
 	
@@ -238,7 +218,7 @@ while True:
 	row1 = 9-row1
 	row2 = 9-row2
 	
-	# print(piece_Matrix)
+	print(piece_Matrix)
 
 	
 	if piece_Matrix[row1-1][col1-1] == 2:
@@ -281,7 +261,7 @@ while True:
 	# else:
 		# piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
 	
-	# print(piece_Matrix)
+	print(piece_Matrix)
 	
 		
 	runRobot.movePiece(stockMove)

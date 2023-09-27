@@ -40,6 +40,7 @@ B_promoted_Piece = ''
 en_passant_P = ''
 en_passant_R = ''
 
+count = 1
 
 while True:
 	# print(piece_Matrix)
@@ -63,7 +64,7 @@ while True:
 	
 	FEN_Stock1= runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-	print(FEN_Stock1)
+	#print(FEN_Stock1)
 	
 	Line1 = runRobot.extract_Text(FEN_Stock1," ")
 	
@@ -108,7 +109,7 @@ while True:
 	
 	FEN_Stock2 = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-	print(FEN_Stock2)
+	#print(FEN_Stock2)
 	
 	Line1 = runRobot.extract_Text(FEN_Stock2," ")
 	
@@ -126,12 +127,13 @@ while True:
 	cpp_process.stdout.close()
 	cpp_process.wait()
 		
-	
+	print(count + ". " + stock1Move + " " + stock2Move)
+	count = count + 1
 	
 	# turns the player move into the correct matrix references
 	row1, row2, col1, col2 = operations.orientSquares(stock1Move)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	# Required to store information about the pawn move for en passant later
 	if piece_Matrix[row1-1][col1-1] == 2:
@@ -146,7 +148,7 @@ while True:
 	# Adjust the matrix for the player move 
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)
 		
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	# Make the player move
 	final = runRobot.movePiece(stock1Move)
@@ -179,7 +181,7 @@ while True:
 
 	row1, row2, col1, col2 = operations.orientSquares(stock2Move)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	if piece_Matrix[row1-1][col1-1] == 2:
 		pawn_Move = True
@@ -192,7 +194,7 @@ while True:
 	
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, B_promotion)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 	
 	#Do Stockfishes move	
 	runRobot.movePiece(stock2Move)

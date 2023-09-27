@@ -39,9 +39,15 @@ B_promoted_Piece = ''
 en_passant_P = ''
 en_passant_R = ''
 
-def mode1_call(playerMove,message_to_cpp, turn):
+def mode1_call(inputMove,message_to_cpp, turn):
 	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 	
+	promotion = False
+	promoted_Piece = ""
+	en_passant = ""
+	Castle_Fen = ""
+	stockMove = ""
+
     # message_to_cpp = message_to_cpp + fakeUserMove
     # Needs to include previous move. When this function is called, message_to_cpp needs to be complete"
     
@@ -51,21 +57,21 @@ def mode1_call(playerMove,message_to_cpp, turn):
 	
 	#fake user move is length 4 or 5 if promotion
 	#playerMove is length 4 always
-	if turn = 'w':
-		if len(playerMove) == 5:
-			W_promoted_Piece = playerMove[4]
-			W_promotion = True
-			playerMove = playerMove[:4]
+	if turn == 'w':
+		if len(inputMove) == 5:
+			promoted_Piece = inputMove[4]
+			promotion = True
+			inputMove = inputMove[:4]
+			stockMove = "N/A"
 	
-	if turn = 'b':
+	if turn == 'b':
 		if response_from_cpp[4] == ' ':
 			stockMove = response_from_cpp[:4]
-			else:
-				stockMove = response_from_cpp[:5]
-				# print("Promotion Detected")
-				B_promoted_Piece = stockMove[4]
-				B_promotion = True
-		message_to_cpp = message_to_cpp + " " + stockMove + " "
+		else:
+			stockMove = response_from_cpp[:5]
+			# print("Promotion Detected")
+			promoted_Piece = stockMove[4]
+			promotion = True
 		
 	
 	FEN_Player = runRobot.extract_Text(response_from_cpp,"Fen: ")
@@ -74,17 +80,15 @@ def mode1_call(playerMove,message_to_cpp, turn):
 	
 	Line2 = runRobot.extract_Text(Line1," ")
 	
-	en_passant_P = runRobot.extract_eP(Line2)
-	en_passant_R = runRobot.extract_eP(Line2)
 	
-	Castle_Player_Fen = runRobot.del_Text_After(Line2," ")
+	en_passant = runRobot.extract_eP(Line2)
 	Castle_Fen = runRobot.del_Text_After(Line2," ")
-		
+	
 	cpp_process.stdin.close()
 	cpp_process.stdout.close()
 	cpp_process.wait()
 	
-	return None
+	return [stockMove, promoted_Piece, promotion,en_passant, Castle_Fen]
 
 def orientSquares(Move):
 	moveLocations = runRobot.convertToNumber(Move)
@@ -99,9 +103,8 @@ def orientSquares(Move):
 	
 	return row1, row2, col1, col2  
 
-while True
-	
-	
+def adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, turn, promotion):
+	pawn_Move = False
 	if piece_Matrix[row1-1][col1-1] == 2:
 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
 		pawn_Move = True
@@ -128,9 +131,15 @@ while True
 		else:
 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
 	
-	if W_promotion == True:
+	if promotion == True:
 		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-	# print(piece_Matrix)
+
+
+
+while True:
+	UserMove = input("Make a move:")
+	[stockMove, promoted_Piece, promotion,en_passant, Castle_Fen] = mode1_call(UserMove,message_to_cpp,'w')
+	
 
 		
 	

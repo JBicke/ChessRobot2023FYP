@@ -180,7 +180,7 @@ while True:
 	final = runRobot.movePiece(playerMove)
 	
 	if(en_passant_P == playerMove[-2:]):
-		if pawn_Move == True:
+		if pawn_move == True:
 			# print('en passant happened')
 			runRobot.takePiece(row2+1,col2)
 			piece_Matrix[row2][col2-1] = piece_Matrix[row2][col2-1] - 2
@@ -280,7 +280,7 @@ while True:
 		else:
 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
 	
-	if B_promotion == True:
+	if W_promotion == True:
 		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
 		
 			

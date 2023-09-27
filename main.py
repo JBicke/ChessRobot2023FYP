@@ -133,7 +133,6 @@ while True:
 	print(piece_Matrix)
 
 	if piece_Matrix[row1-1][col1-1] == 2:
-		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
 		pawn_Move = True
 
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)

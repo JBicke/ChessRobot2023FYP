@@ -1,6 +1,6 @@
 from pypose import runRobot
 import subprocess
-#import operations
+import operations
 
 # Run the C++ program as a subprocess
 # message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
@@ -127,22 +127,9 @@ while True:
 		
 	
 	
-	# Comment for now while testing
+	# turns the player ove into the correct matrix references
+	row1, row2, col1, col2 = operations.orientSquares(playerMove)
 	
-	moveLocations = runRobot.convertToNumber(playerMove)
-	# print(playerMove)
-	# print(moveLocations)
-	col1, row1, col2, row2 = moveLocations
-	row1 = int(row1)
-	col1 = int(col1)	
-	row2 = int(row2)
-	col2 = int(col2)
-	
-	row1 = 9-row1
-	row2 = 9-row2
-	
-	# print(piece_Matrix)
-	# print(piece_Matrix[row1-1][col1-1])
 	
 	if piece_Matrix[row1-1][col1-1] == 2:
 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2

@@ -8,9 +8,8 @@ if mode == "1":
     process = subprocess.Popen(['python', 'mode1.py'])
     process.wait()
 elif mode == "2":
-    print("This hasn't been integrated yet")
-    #process = subprocess.Popen(['python', 'mode2.py'])
-    #process.wait()
+    process = subprocess.Popen(['python', 'mode2.py'])
+    process.wait()
 elif mode == "3":
     print("This hasn't been integrated yet")
     #process = subprocess.Popen(['python', 'mode3.py'])

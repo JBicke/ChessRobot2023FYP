@@ -127,7 +127,7 @@ while True:
 	cpp_process.stdout.close()
 	cpp_process.wait()
 		
-	print(count + ". " + stock1Move + " " + stock2Move)
+	print(str(count) + ". " + stock1Move + " " + stock2Move)
 	count = count + 1
 	
 	# turns the player move into the correct matrix references

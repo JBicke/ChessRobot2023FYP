@@ -1,6 +1,5 @@
 from pypose import runRobot
 import subprocess
-import operations
 
 # Run the C++ program as a subprocess
 # message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
@@ -40,98 +39,55 @@ B_promoted_Piece = ''
 en_passant_P = ''
 en_passant_R = ''
 
-
-while True:
-	# print(piece_Matrix)
-	fakeUserMove = input("Make a move:")
+def mode1_call(playerMove,message_to_cpp, turn):
 	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 	
-	# Send a message to the C++ program for player move (for analysing castling & en passent)
-	
+    # message_to_cpp = message_to_cpp + fakeUserMove
+    # Needs to include previous move. When this function is called, message_to_cpp needs to be complete"
+    
 	cpp_process.stdin.write(message_to_cpp + "\n")
 	cpp_process.stdin.flush()
 	response_from_cpp = cpp_process.stdout.readline()
 	
 	#fake user move is length 4 or 5 if promotion
 	#playerMove is length 4 always
+	if turn = 'w':
+		if len(playerMove) == 5:
+			W_promoted_Piece = playerMove[4]
+			W_promotion = True
+			playerMove = playerMove[:4]
 	
-	playerMove = fakeUserMove
-	if len(playerMove) == 5:
-		W_promoted_Piece = playerMove[4]
-		W_promotion = True
-		playerMove = playerMove[:4]
+	if turn = 'b':
+		if response_from_cpp[4] == ' ':
+			stockMove = response_from_cpp[:4]
+			else:
+				stockMove = response_from_cpp[:5]
+				# print("Promotion Detected")
+				B_promoted_Piece = stockMove[4]
+				B_promotion = True
+		message_to_cpp = message_to_cpp + " " + stockMove + " "
+		
 	
 	FEN_Player = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-	# print(FEN_Player)
-	
 	Line1 = runRobot.extract_Text(FEN_Player," ")
-	
-	#print(Line1)
 	
 	Line2 = runRobot.extract_Text(Line1," ")
 	
 	en_passant_P = runRobot.extract_eP(Line2)
-	
-	#print(Line2)
-
-	Castle_Player_Fen = runRobot.del_Text_After(Line2," ")
-	
-	
-	cpp_process.stdin.close()
-	cpp_process.stdout.close()
-	cpp_process.wait()
-	
-	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-
-	# Send a message to the C++ program for stockfish move
-	message_to_cpp = message_to_cpp + fakeUserMove
-	
-	cpp_process.stdin.write(message_to_cpp + "\n")
-	cpp_process.stdin.flush()
-
-	# Read the response from the C++ program
-	response_from_cpp = cpp_process.stdout.readline()
-	# print("Python received:", response_from_cpp)
-	
-	if response_from_cpp[4] == ' ':
-		stockMove = response_from_cpp[:4]
-	else:
-		stockMove = response_from_cpp[:5]
-		# print("Promotion Detected")
-		B_promoted_Piece = stockMove[4]
-		B_promotion = True
-		
-	message_to_cpp = message_to_cpp + " " + stockMove + " "
-	
-	
-	FEN_Stock = runRobot.extract_Text(response_from_cpp,"Fen: ")
-	
-	#print(FEN_Stock)
-	
-	Line1 = runRobot.extract_Text(FEN_Stock," ")
-	
-	#print(Line1)
-	
-	Line2 = runRobot.extract_Text(Line1," ")
-	
 	en_passant_R = runRobot.extract_eP(Line2)
-
-
-	Castle_Fen = runRobot.del_Text_After(Line2," ")
 	
-	# Close the subprocess
+	Castle_Player_Fen = runRobot.del_Text_After(Line2," ")
+	Castle_Fen = runRobot.del_Text_After(Line2," ")
+		
 	cpp_process.stdin.close()
 	cpp_process.stdout.close()
 	cpp_process.wait()
-		
 	
-	
-	# Comment for now while testing
-	
-	moveLocations = runRobot.convertToNumber(playerMove)
-	# print(playerMove)
-	# print(moveLocations)
+	return None
+
+def orientSquares(Move):
+	moveLocations = runRobot.convertToNumber(Move)
 	col1, row1, col2, row2 = moveLocations
 	row1 = int(row1)
 	col1 = int(col1)	
@@ -141,8 +97,10 @@ while True:
 	row1 = 9-row1
 	row2 = 9-row2
 	
-	# print(piece_Matrix)
-	# print(piece_Matrix[row1-1][col1-1])
+	return row1, row2, col1, col2  
+
+while True
+	
 	
 	if piece_Matrix[row1-1][col1-1] == 2:
 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2

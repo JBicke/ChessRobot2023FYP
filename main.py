@@ -1,7 +1,7 @@
 from pypose import runRobot
 import subprocess
 import operations
-import mode1
+
 mode = 0
 mode = input("Type 1 for input game, 2 for automated game, or 3 for interactive game:")
 if mode == "1":

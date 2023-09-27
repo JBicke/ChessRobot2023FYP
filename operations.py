@@ -109,20 +109,11 @@ def adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, promotion):
 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
 		pawn_Move = True
 	else:
-		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
-	
+		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1	
 	if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
 		if pawn_Move == True:
 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
 	elif piece_Matrix[row2-1][col2-1] == 2:
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
 		if pawn_Move == False:
 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
 	else:
@@ -136,6 +127,20 @@ def adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, promotion):
 	
 	return piece_Matrix
 
+def adjust_Piece_Matrix_Castle(piece_Matrix,castleType):
+	if castleType == "K":
+		piece_Matrix[7][7] = piece_Matrix[7][7] - 1
+		piece_Matrix[7][5] = piece_Matrix[7][5] + 1
+	if castleType == "Q":
+		piece_Matrix[7][0] = piece_Matrix[7][0] - 1
+		piece_Matrix[7][3] = piece_Matrix[7][3] + 1
+	if castleType == "k":
+		piece_Matrix[0][7] = piece_Matrix[0][7] - 1
+		piece_Matrix[0][5] = piece_Matrix[0][5] + 1	
+	if castleType == "q":
+		piece_Matrix[0][0] = piece_Matrix[0][0] - 1
+		piece_Matrix[0][3] = piece_Matrix[0][3] + 1
+	return piece_Matrix
 
 # while True:
 # 	UserMove = input("Make a move:")

@@ -346,8 +346,8 @@ def pickUpPromote(p1,p2,servo1_togoback,servo2_togoback):
 	pg1 = servo1_angle_graveyard
 	pg2 = servo2_angle_graveyard
 
-	driver.setReg(1,P_GOAL_POSITION_L, [pg1%256,p1>>8])
-	driver.setReg(2,P_GOAL_POSITION_L, [pg2%256,p2>>8])
+	driver.setReg(1,P_GOAL_POSITION_L, [pg1%256,pg1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [pg2%256,pg2>>8])
 
 	time.sleep(5)
 
@@ -399,3 +399,25 @@ def extract_eP(text):
 	words = text.split()
 	return words[-3]
 		
+def CastleCheckWhite(Castle_Fen):
+	if Castle_Fen.find('K') != -1:
+		Castle_K = True
+	else:
+		Castle_K = False
+	if Castle_Fen.find('Q') != -1:
+		Castle_Q = True
+	else:
+		Castle_Q = False
+	return Castle_K, Castle_Q
+
+def CastleCheckBlack(Castle_Fen):
+	if Castle_Fen.find('k') != -1:
+		Castle_K = True
+	else:
+		Castle_K = False
+	if Castle_Fen.find('q') != -1:
+		Castle_Q = True
+	else:
+		Castle_Q = False
+	return Castle_K, Castle_Q
+

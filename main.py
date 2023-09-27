@@ -71,6 +71,7 @@ while True:
 	
 	Line2 = runRobot.extract_Text(Line1," ")
 	
+	#Store player en passant possibility from Fen_Player
 	en_passant_P = runRobot.extract_eP(Line2)
 	
 	#print(Line2)
@@ -111,10 +112,10 @@ while True:
 	
 	Line1 = runRobot.extract_Text(FEN_Stock," ")
 	
-	#print(Line1)
-	
 	Line2 = runRobot.extract_Text(Line1," ")
 	
+	#Store robot en passant possibility from Fen_Stock
+
 	en_passant_R = runRobot.extract_eP(Line2)
 
 
@@ -127,144 +128,76 @@ while True:
 		
 	
 	
-	# turns the player ove into the correct matrix references
+	# turns the player move into the correct matrix references
 	row1, row2, col1, col2 = operations.orientSquares(playerMove)
 	
 	print(piece_Matrix)
 
+	# Required to store information about the pawn move for en passant later
 	if piece_Matrix[row1-1][col1-1] == 2:
 		pawn_Move = True
 
+	# Remove piece if in the way
+	if piece_Matrix[row2-1][col2-1] == 1:
+		runRobot.takePiece(row2,col2)
+	elif piece_Matrix[row2-1][col2-1] == 2:
+		runRobot.takePiece(row2,col2)
+	
+	# Adjust the matrix for the player move 
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)
-	
-	
+		
 	print(piece_Matrix)
 
-		
-	
-	
+	# Make the player move
 	final = runRobot.movePiece(playerMove)
 	
+	#Check if special case for en passant is required
 	if(en_passant_P == playerMove[-2:]):
-		if pawn_Move == True:
-			# print('en passant happened')
+		if pawn_Move == True: # en passant happened			
 			runRobot.takePiece(row2+1,col2)
 			piece_Matrix[row2][col2-1] = piece_Matrix[row2][col2-1] - 2
-				
+
+	#Reset pawn move check			
 	pawn_Move = False
-	#print(piece_Matrix)
 	
-	if Castle_Player_Fen.find('K') != -1:
-		W_Castle_K = True
-	else:
-		W_Castle_K = False
+	W_Castle_K, W_Castle_Q = operations.CastleCheckWhite(Castle_Player_Fen)
 	
-	if Castle_Player_Fen.find('Q') != -1:
-		W_Castle_Q = True
-	else:
-		W_Castle_Q = False
-	
-	if Castle_Player_Fen.find('k') != -1:
-		B_Castle_K = True
-	else:
-		B_Castle_K = False
-	
-	if Castle_Player_Fen.find('q') != -1:
-		B_Castle_Q = True
-	else:
-		B_Castle_Q = False
-	
-	# print(playerMove)
-	# print(W_Castle_K)
-	
+	# If it is a castle move and they can castle, then castle and update piece matrix
 	if playerMove == "e1g1":
 		if W_Castle_K == True:
 			runRobot.castle("K")
-			piece_Matrix[7][7] = piece_Matrix[7][7] - 1
-			piece_Matrix[7][5] = piece_Matrix[7][5] + 1
+			operations.adjust_Piece_Matrix_Castle(piece_Matrix,"K")
 	if playerMove == "e1c1":
 		if W_Castle_Q == True:
 			runRobot.castle("Q")
-			piece_Matrix[7][0] = piece_Matrix[7][0] - 1
-			piece_Matrix[7][3] = piece_Matrix[7][3] + 1
-		
-	if playerMove == "e8g8":
-		if B_Castle_K == True:
-			runRobot.castle("k")
-			piece_Matrix[0][7] = piece_Matrix[0][7] - 1
-			piece_Matrix[0][5] = piece_Matrix[0][5] + 1			
-		
-	if playerMove == "e8c8":
-		if B_Castle_Q == True:
-			runRobot.castle("q")
-			piece_Matrix[0][0] = piece_Matrix[0][0] - 1
-			piece_Matrix[0][3] = piece_Matrix[0][3] + 1
+			operations.adjust_Piece_Matrix_Castle(piece_Matrix,"Q")
 	
+	# Special case for if a promotion occurs
 	if W_promotion == True:
 		runRobot.promotion(playerMove[2:4],'w'+W_promoted_Piece)
 	
-	moveLocations = runRobot.convertToNumber(stockMove)
-	
-	# print(stockMove)
-	# print(moveLocations)
-	
-	col1, row1, col2f, row2f = moveLocations[:4]
-	row1 = int(row1)
-	col1 = int(col1)	
-	row2 = int(row2f)
-	col2 = int(col2f)
-	
-	row1 = 9-row1
-	row2 = 9-row2
+
+	row1, row2, col1, col2 = operations.orientSquares(stockMove)
 	
 	print(piece_Matrix)
 
-	
 	if piece_Matrix[row1-1][col1-1] == 2:
-		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
 		pawn_Move = True
-	else:
-		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
-	
-	if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
-		if pawn_Move == True:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-	elif piece_Matrix[row2-1][col2-1] == 2:
-		collision = True
-		runRobot.takePiece(row2,col2)
-		# print("Collision Detected")
-		collision = False
-		if pawn_Move == False:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-	else:
-		if pawn_Move == False:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-		else:
-			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
-	
-	if B_promotion == True:
-		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-		
-			
-	# piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
 
+	# Remove piece if in the way
+	if piece_Matrix[row2-1][col2-1] == 1:
+		runRobot.takePiece(row2,col2)
+	elif piece_Matrix[row2-1][col2-1] == 2:
+		runRobot.takePiece(row2,col2)
 	
-	# if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
-		# collision = True
-		# runRobot.takePiece(row2,col2)
-		# collision = False
-	# else:
-		# piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
+	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, B_promotion)
 	
 	print(piece_Matrix)
 	
-		
+	#Do Stockfishes move	
 	runRobot.movePiece(stockMove)
 	
+	#Special case for en passant
 	if(en_passant_R == stockMove[-2:]):
 		if pawn_Move == True:
 			# print('en passant happened')
@@ -273,57 +206,25 @@ while True:
 	
 	pawn_Move = False
 	
-	if Castle_Fen.find('K') != -1:
-		W_Castle_K = True
-	else:
-		W_Castle_K = False
-	
-	if Castle_Fen.find('Q') != -1:
-		W_Castle_Q = True
-	else:
-		W_Castle_Q = False
-	
-	if Castle_Fen.find('k') != -1:
-		B_Castle_K = True
-	else:
-		B_Castle_K = False
-	
-	if Castle_Fen.find('q') != -1:
-		B_Castle_Q = True
-	else:
-		B_Castle_Q = False
-	
-	if stockMove == "e1g1":
-		if W_Castle_K == True:
-			runRobot.castle("K")
-			piece_Matrix[7][7] = piece_Matrix[7][7] - 1
-			piece_Matrix[7][5] = piece_Matrix[7][5] + 1
-	if stockMove == "e1c1":
-		if W_Castle_Q == True:
-			runRobot.castle("Q")
-			piece_Matrix[7][0] = piece_Matrix[7][0] - 1
-			piece_Matrix[7][3] = piece_Matrix[7][3] + 1
-		
+	B_Castle_K, B_Castle_Q = operations.CastleCheckBlack(Castle_Fen)
+
+	# If a castling move is made and castling has not happened yet	
 	if stockMove == "e8g8":
 		if B_Castle_K == True:
 			runRobot.castle("k")
-			piece_Matrix[0][7] = piece_Matrix[0][7] - 1
-			piece_Matrix[0][5] = piece_Matrix[0][5] + 1			
+			operations.adjust_Piece_Matrix_Castle(piece_Matrix,"k")		
 		
 	if stockMove == "e8c8":
 		if B_Castle_Q == True:
 			runRobot.castle("q")
-			piece_Matrix[0][0] = piece_Matrix[0][0] - 1
-			piece_Matrix[0][3] = piece_Matrix[0][3] + 1
-	
+			operations.adjust_Piece_Matrix_Castle(piece_Matrix,"q")
+
+	#Special case for promotion
 	if B_promotion == True:
 		runRobot.promotion(stockMove[2:4],'b'+B_promoted_Piece)
 	
+	#Reset variables
 	W_promotion = False
 	B_promotion = False
 	W_promoted_Piece = ''
 	B_promoted_Piece = ''
-	
-	# print(final)
-
-	

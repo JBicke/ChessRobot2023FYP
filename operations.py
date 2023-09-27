@@ -142,6 +142,27 @@ def adjust_Piece_Matrix_Castle(piece_Matrix,castleType):
 		piece_Matrix[0][3] = piece_Matrix[0][3] + 1
 	return piece_Matrix
 
+def CastleCheckWhite(Castle_Fen):
+	if Castle_Fen.find('K') != -1:
+		Castle_K = True
+	else:
+		Castle_K = False
+	if Castle_Fen.find('Q') != -1:
+		Castle_Q = True
+	else:
+		Castle_Q = False
+	return Castle_K, Castle_Q
+
+def CastleCheckBlack(Castle_Fen):
+	if Castle_Fen.find('k') != -1:
+		Castle_K = True
+	else:
+		Castle_K = False
+	if Castle_Fen.find('q') != -1:
+		Castle_Q = True
+	else:
+		Castle_Q = False
+	return Castle_K, Castle_Q
 # while True:
 # 	UserMove = input("Make a move:")
 # 	[stockMove, promoted_Piece, promotion,en_passant, Castle_Fen] = mode1_call(UserMove,message_to_cpp,'w')

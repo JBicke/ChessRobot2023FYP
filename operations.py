@@ -103,37 +103,38 @@ def orientSquares(Move):
 	
 	return row1, row2, col1, col2  
 
-# def adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, turn, promotion):
-# 	pawn_Move = False
-# 	if piece_Matrix[row1-1][col1-1] == 2:
-# 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
-# 		pawn_Move = True
-# 	else:
-# 		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
+def adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, promotion):
+	pawn_Move = False
+	if piece_Matrix[row1-1][col1-1] == 2:
+		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 2
+		pawn_Move = True
+	else:
+		piece_Matrix[row1-1][col1-1] = piece_Matrix[row1-1][col1-1] - 1
 	
-# 	if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
-# 		collision = True
-# 		runRobot.takePiece(row2,col2)
-# 		# print("Collision Detected")
-# 		collision = False
-# 		if pawn_Move == True:
-# 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-# 	elif piece_Matrix[row2-1][col2-1] == 2:
-# 		collision = True
-# 		runRobot.takePiece(row2,col2)
-# 		# print("Collision Detected")
-# 		collision = False
-# 		if pawn_Move == False:
-# 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-# 	else:
-# 		if pawn_Move == False:
-# 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
-# 		else:
-# 			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
+	if piece_Matrix[row2-1][col2-1] == 1: # This is true if a piece is to be taken
+		collision = True
+		runRobot.takePiece(row2,col2)
+		# print("Collision Detected")
+		collision = False
+		if pawn_Move == True:
+			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
+	elif piece_Matrix[row2-1][col2-1] == 2:
+		collision = True
+		runRobot.takePiece(row2,col2)
+		# print("Collision Detected")
+		collision = False
+		if pawn_Move == False:
+			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
+	else:
+		if pawn_Move == False:
+			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 1
+		else:
+			piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] + 2
 	
-# 	if promotion == True:
-# 		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
-
+	if promotion == True:
+		piece_Matrix[row2-1][col2-1] = piece_Matrix[row2-1][col2-1] - 1
+	
+	return piece_Matrix
 
 
 # while True:

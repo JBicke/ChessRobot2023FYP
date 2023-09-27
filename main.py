@@ -4,14 +4,14 @@ import operations
 import mode1
 
 mode = input("Type 1 for input game, 2 for automated game, or 3 for interactive game:")
-if mode == 1:
+if mode == "1":
     process = subprocess.Popen(['python', 'mode1.py'])
     process.wait()
-elif mode == 2:
+elif mode == "2":
     print("This hasn't been integrated yet")
     #process = subprocess.Popen(['python', 'mode2.py'])
     #process.wait()
-elif mode == 3:
+elif mode == "3":
     print("This hasn't been integrated yet")
     #process = subprocess.Popen(['python', 'mode3.py'])
     #process.wait()

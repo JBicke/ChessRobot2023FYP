@@ -327,332 +327,340 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-cv::Mat CVRunMain()
-{
-    // Declare the output variables
-    Mat dst, cdst, cdstP;
+cv::Mat CVRunMain(){
+    try {
+        // Declare the output variables
+        Mat dst, cdst, cdstP;
 
-    const char* filename ="/home/fyp2023jb/ChessRobot2023FYP/1001.jpg";
-    //const char* filename = argc >=2 ? argv[1] : default_file;
-    // Loads an image
-    Mat src = imread( samples::findFile( filename ));
-    // Check if image is loaded fine
-    if(src.empty()){
-        printf(" Error opening image\n");
-        printf(" Program Arguments: [image_name -- default %s] \n", filename);
-        //return 0;
-    }
-    //imshow("src", src);
-    // Locate green square positions
-    std::vector<cv::Point> crop_points = locateGreenSquares(src);
-    int numberOfGreenSquares = crop_points.size();
-
-    /*
-    for (const cv::Point& point : crop_points) {
-        std::cout << "Points: (" << point.x << ", " << point.y << ")" << std::endl;
-    }   
-    //cout << numberOfGreenSquares << endl;
-    */
-
-    std::vector<cv::Point> filteredCropPoints;
-    std::vector<cv::Point> filteredGreenPoints;
-
-    double minDistance = 100.0; // Points within 100 pixels of each other
-    double maxDistance = 500.0;
-
-   //filtering out unnecessary points
-    for (const Point& point : crop_points) {
-        if (point.x > minDistance && point.y > minDistance) {
-            bool keepPoint = true;
-
-            for (const Point& filteredPoint : filteredCropPoints) {
-                double distance = calculateDistance(point, filteredPoint);
-
-                if (distance < minDistance) {
-                    // If the point is within 100 pixels of another point, remove it
-                    keepPoint = false;
-                    break; // No need to check other points
-                } else if (distance < maxDistance) {
-                    // If the point is within 500 pixels of another point, remove it
-                    keepPoint = false;
-                    break; // No need to check other points
-                }
-            }
- 
-            if (keepPoint) {
-                filteredCropPoints.push_back(point);
-                //std::cout << "Saved point: (" << point.x << ", " << point.y << ")" << std::endl;
-            }
+        const char* filename ="E:/UNI/ece4078/ChessRobot2023FYP/1003.jpg";
+        //const char* filename = argc >=2 ? argv[1] : default_file;
+        // Loads an image
+        Mat src = imread( samples::findFile( filename ));
+        // Check if image is loaded fine
+        if(src.empty()){
+            printf(" Error opening image\n");
+            printf(" Program Arguments: [image_name -- default %s] \n", filename);
+            //return 0;
         }
-    }
+        //imshow("src", src);
+        // Locate green square positions
+        std::vector<cv::Point> crop_points = locateGreenSquares(src);
+        int numberOfGreenSquares = crop_points.size();
 
-    // Print the filtered points
-    /*
-    for (const cv::Point& point : filteredCropPoints) {
-        std::cout << "Point: (" << point.x << ", " << point.y << ")" << std::endl;
-    }
-    */
+        /*
+        for (const cv::Point& point : crop_points) {
+            std::cout << "Points: (" << point.x << ", " << point.y << ")" << std::endl;
+        }   
+        //cout << numberOfGreenSquares << endl;
+        */
 
+        std::vector<cv::Point> filteredCropPoints;
+        std::vector<cv::Point> filteredGreenPoints;
 
-
-    //finding points
-    cv::Point2f  point1 = filteredCropPoints[0];
-    cv::Point2f  point2 = filteredCropPoints[1];
-    cv::Point2f  point3 = filteredCropPoints[2];
-    cv::Point2f  point4 = filteredCropPoints[3];
-    //cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
-
-    // Initialize min_crop_point and min_crop_point_ind with large values
-    int min_crop_point = INT_MAX;
-    int min_crop_point_ind = -1;
-
-    // First loop to find the minimum y-value and its index
-    for (int i = 0; i < 4; i++) {
-        if (filteredCropPoints[i].y < min_crop_point) {
-            min_crop_point = filteredCropPoints[i].y;
-            min_crop_point_ind = i;
-        }
-    }
-
-    // Initialize two_min_crop_point and two_min_crop_point_ind with large values
-    int two_min_crop_point = INT_MAX;
-    int two_min_crop_point_ind = -1;
-
-    // Second loop to find the second minimum y-value and its index, excluding the index found in the first loop
-    for (int i = 0; i < 4; i++) {
-        if (i != min_crop_point_ind && filteredCropPoints[i].y < two_min_crop_point) {
-            two_min_crop_point = filteredCropPoints[i].y;
-            two_min_crop_point_ind = i;
-        }
-    }
-    //cout << min_crop_point_ind << " " << two_min_crop_point_ind << endl;
-    //cout << crop_points[min_crop_point_ind + 1] << " " << crop_points[two_min_crop_point_ind + 1] << endl;
-    
-     // rotate image
-    
-    cv::Mat rotatedImage = rotateImageToStraight(src, crop_points[min_crop_point_ind], crop_points[two_min_crop_point_ind]);
-    
-    int Rwidth = rotatedImage.cols;
-    int Rheight = rotatedImage.rows;
-
-    //std::cout << "Width: " << Rwidth << std::endl;
-    //std::cout << "Height: " << Rheight << std::endl;
-
-    //display rotated image
-    //cv::imshow("Rotated Image", rotatedImage);
-    
-    //locate green squares in rotated image
-    std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
-
-    /*Display the detected green square positions
-    for (const auto& position : greenSquarePositions)
-    {
-        std::cout << "Green square position: (" << position.x << ", " << position.y << ")" << std::endl;
-    }
-    */
+        double minDistance = 100.0; // Points within 100 pixels of each other
+        double maxDistance = 500.0;
 
     //filtering out unnecessary points
-    for (const Point& point1 : greenSquarePositions) {
-        if (point1.x > 200 && point1.y > 100) {
-            bool keepPoint = true;
+        for (const Point& point : crop_points) {
+            if (point.x > minDistance && point.y > minDistance) {
+                bool keepPoint = true;
 
-            for (const Point& filteredGPoint : filteredGreenPoints) {
-                double distance = calculateDistance(point1, filteredGPoint);
+                for (const Point& filteredPoint : filteredCropPoints) {
+                    double distance = calculateDistance(point, filteredPoint);
 
-                if (distance < minDistance) {
-                    // If the point is within 100 pixels of another point, remove it
-                    keepPoint = false;
-                    break; // No need to check other points
-                } else if (distance < maxDistance) {
-                    // If the point is within 500 pixels of another point, remove it
-                    keepPoint = false;
-                    break; // No need to check other points
+                    if (distance < minDistance) {
+                        // If the point is within 100 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    } else if (distance < maxDistance) {
+                        // If the point is within 500 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    }
+                }
+    
+                if (keepPoint) {
+                    filteredCropPoints.push_back(point);
+                    //std::cout << "Saved point: (" << point.x << ", " << point.y << ")" << std::endl;
                 }
             }
+        }
 
-            if (keepPoint) {
-                filteredGreenPoints.push_back(point1);
-                //std::cout << "Saved point: (" << point1.x << ", " << point1.y << ")" << std::endl;
+        // Print the filtered points
+        /*
+        for (const cv::Point& point : filteredCropPoints) {
+            std::cout << "Point: (" << point.x << ", " << point.y << ")" << std::endl;
+        }
+        */
+
+
+
+        //finding points
+        cv::Point2f  point1 = filteredCropPoints[0];
+        cv::Point2f  point2 = filteredCropPoints[1];
+        cv::Point2f  point3 = filteredCropPoints[2];
+        cv::Point2f  point4 = filteredCropPoints[3];
+        //cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
+
+        // Initialize min_crop_point and min_crop_point_ind with large values
+        int min_crop_point = INT_MAX;
+        int min_crop_point_ind = -1;
+
+        // First loop to find the minimum y-value and its index
+        for (int i = 0; i < 4; i++) {
+            if (filteredCropPoints[i].y < min_crop_point) {
+                min_crop_point = filteredCropPoints[i].y;
+                min_crop_point_ind = i;
             }
         }
-    }
 
-    //finding positions of chess board corners
-    int position1_x = filteredGreenPoints[0].x;
-    int position1_y = filteredGreenPoints[0].y;
+        // Initialize two_min_crop_point and two_min_crop_point_ind with large values
+        int two_min_crop_point = INT_MAX;
+        int two_min_crop_point_ind = -1;
 
-    int position2_x = filteredGreenPoints[1].x;
-    int position2_y = filteredGreenPoints[1].y;
-
-    int position3_x = filteredGreenPoints[2].x;
-    int position3_y = filteredGreenPoints[2].y;
-
-    int position4_x = filteredGreenPoints[3].x;
-    int position4_y = filteredGreenPoints[3].y;
-
-    int width = 0;
-    int height = 0;
-    int temp_width, temp_height;
-
-    for (int i=0; i<4; i++){
-        temp_width = filteredGreenPoints[0].x - filteredGreenPoints[i].x;
-        temp_height = filteredGreenPoints[0].y - filteredGreenPoints[i].y;
-
-        if (temp_width < 0){
-            temp_width = temp_width * -1;
+        // Second loop to find the second minimum y-value and its index, excluding the index found in the first loop
+        for (int i = 0; i < 4; i++) {
+            if (i != min_crop_point_ind && filteredCropPoints[i].y < two_min_crop_point) {
+                two_min_crop_point = filteredCropPoints[i].y;
+                two_min_crop_point_ind = i;
+            }
         }
-
-        if (temp_height < 0){
-            temp_height = temp_height * -1;
-        }
-
-        if (temp_width > width){
-            width = temp_width;
-        }
-
-        if (temp_height > height){
-            height = temp_height;
-        }
-    }
-
-    int min_x = 10000;
-    int min_y = 10000;
-
-    for (int i=0; i<4; i++){
-        if(filteredGreenPoints[i].x < min_x)
-            min_x = filteredGreenPoints[i].x;
+        //cout << min_crop_point_ind << " " << two_min_crop_point_ind << endl;
+        //cout << crop_points[min_crop_point_ind + 1] << " " << crop_points[two_min_crop_point_ind + 1] << endl;
         
-        if(filteredGreenPoints[i].y < min_y)
-            min_y = filteredGreenPoints[i].y;
-    }
-    
-
-    //cout << min_x << " " << min_y << " " << width << " " << height << endl;
-
-    cv::Rect crop_region(min_x, min_y, width, height);
-
-    cv::Mat croppedImage = rotatedImage(crop_region);
-
-    //cv::imshow("Cropped Image", croppedImage);
-    
-    //convert to gray_scale
-    cv::Mat src_gray;
-    cvtColor(croppedImage, src_gray, COLOR_BGR2GRAY);
-    
-    //canny edge detection
-    FilteredPoints filteredPoints = cannyEdgeDetection(src_gray);
-
-    std::vector<int> filtered_x_points = filteredPoints.x;
-    std::vector<int> filtered_y_points = filteredPoints.y;
-    
-    /*std::cout << "Filtered y_points : ";
-    for (int y : filtered_y_points) {
-        std::cout << y << " ";
-    }
-    */
-
-
-    CenterPoints centerPoints = processAndShowContours(croppedImage);
-
-    std::vector<cv::Point> pinkCenterPoints = centerPoints.pink;
-    std::vector<cv::Point> blueCenterPoints = centerPoints.blue;
-
-
-    //std::cout << "Blue Center Points :" << std::endl;
-    for (const cv::Point& center : pinkCenterPoints) {
-        int centerX = center.x;
-        int centerY = center.y;
-        //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
-    }
-
-    int chessboardPosition[8][8] = {0};
-
-    //pink chessboard positions
-
-    for(int i=0; i<pinkCenterPoints.size(); i++){
-        int pos_x_point_p = pinkCenterPoints.at(i).x;
-        int pos_y_point_p = pinkCenterPoints.at(i).y;
+        // rotate image
         
-        //cout << "index x:" << pos_x_point_p << " index y: " << pos_y_point_p << endl;
-        // Find the insertion position in the sorted vector
-        auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
+        cv::Mat rotatedImage = rotateImageToStraight(src, crop_points[min_crop_point_ind], crop_points[two_min_crop_point_ind]);
+        
+        int Rwidth = rotatedImage.cols;
+        int Rheight = rotatedImage.rows;
 
-        // Calculate the index where the point would sit
-        int index_x_p = std::distance(filtered_x_points.begin(), it_x_p);
+        //std::cout << "Width: " << Rwidth << std::endl;
+        //std::cout << "Height: " << Rheight << std::endl;
 
-        // Find the insertion position in the sorted vector
-        auto it_y_p = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_p);
+        //display rotated image
+        //cv::imshow("Rotated Image", rotatedImage);
+        
+        //locate green squares in rotated image
+        std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
 
-        // Calculate the index where the point would sit
-        int index_y_p = std::distance(filtered_y_points.begin(), it_y_p);
-
-        //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
-
-        if(index_x_p > 0 && index_y_p > 0 && index_y_p < 9 && index_x_p < 9){
-            //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
-            chessboardPosition[index_x_p-1][index_y_p-1] = -1;
+        //Display the detected green square positions
+        for (const auto& position : greenSquarePositions)
+        {
+            std::cout << "Green square position: (" << position.x << ", " << position.y << ")" << std::endl;
         }
-    }
-
-    //blue chessboard positions
-    int pos_x_point_b = 0;
-    int pos_y_point_b = 0;
-    int index_x_b = 0;
-    int index_y_b = 0;
-
-    for(int i=0; i<blueCenterPoints.size(); ++i){
-        pos_x_point_b = blueCenterPoints[i].x;
-        pos_y_point_b = blueCenterPoints[i].y;
         
-        if (pos_x_point_b > 0 && pos_x_point_b < 10000 && pos_y_point_b > 0 && pos_y_point_b < 10000){
-        
-            //cout << " x:" << pos_x_point_b << "  y: " << pos_y_point_b << endl;
+
+        //filtering out unnecessary points
+        for (const Point& point1 : greenSquarePositions) {
+            if (point1.x > 200 && point1.y > 50) {
+                bool keepPoint = true;
+
+                for (const Point& filteredGPoint : filteredGreenPoints) {
+                    double distance = calculateDistance(point1, filteredGPoint);
+
+                    if (distance < minDistance) {
+                        // If the point is within 100 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    } else if (distance < maxDistance) {
+                        // If the point is within 500 pixels of another point, remove it
+                        keepPoint = false;
+                        break; // No need to check other points
+                    }
+                }
+
+                if (keepPoint) {
+                    filteredGreenPoints.push_back(point1);
+                    //std::cout << "Saved point: (" << point1.x << ", " << point1.y << ")" << std::endl;
+                }
+            }
+        }
+
+        //finding positions of chess board corners
+        int position1_x = filteredGreenPoints[0].x;
+        int position1_y = filteredGreenPoints[0].y;
+
+        int position2_x = filteredGreenPoints[1].x;
+        int position2_y = filteredGreenPoints[1].y;
+
+        int position3_x = filteredGreenPoints[2].x;
+        int position3_y = filteredGreenPoints[2].y;
+
+        int position4_x = filteredGreenPoints[3].x;
+        int position4_y = filteredGreenPoints[3].y;
+
+        int width = 0;
+        int height = 0;
+        int temp_width, temp_height;
+
+        for (int i=0; i<4; i++){
+            temp_width = filteredGreenPoints[0].x - filteredGreenPoints[i].x;
+            temp_height = filteredGreenPoints[0].y - filteredGreenPoints[i].y;
+
+            if (temp_width < 0){
+                temp_width = temp_width * -1;
+            }
+
+            if (temp_height < 0){
+                temp_height = temp_height * -1;
+            }
+
+            if (temp_width > width){
+                width = temp_width;
+            }
+
+            if (temp_height > height){
+                height = temp_height;
+            }
+        }
+
+        int min_x = 10000;
+        int min_y = 10000;
+
+        for (int i=0; i<4; i++){
+            if(filteredGreenPoints[i].x < min_x)
+                min_x = filteredGreenPoints[i].x;
             
+            if(filteredGreenPoints[i].y < min_y)
+                min_y = filteredGreenPoints[i].y;
+        }
+        
+
+        //cout << min_x << " " << min_y << " " << width << " " << height << endl;
+
+        cv::Rect crop_region(min_x, min_y, width, height);
+
+        cv::Mat croppedImage = rotatedImage(crop_region);
+
+        //cv::imshow("Cropped Image", croppedImage);
+        
+        //convert to gray_scale
+        cv::Mat src_gray;
+        cvtColor(croppedImage, src_gray, COLOR_BGR2GRAY);
+        
+        //canny edge detection
+        FilteredPoints filteredPoints = cannyEdgeDetection(src_gray);
+
+        std::vector<int> filtered_x_points = filteredPoints.x;
+        std::vector<int> filtered_y_points = filteredPoints.y;
+        
+        /*std::cout << "Filtered y_points : ";
+        for (int y : filtered_y_points) {
+            std::cout << y << " ";
+        }
+        */
+
+
+        CenterPoints centerPoints = processAndShowContours(croppedImage);
+
+        std::vector<cv::Point> pinkCenterPoints = centerPoints.pink;
+        std::vector<cv::Point> blueCenterPoints = centerPoints.blue;
+
+
+        //std::cout << "Blue Center Points :" << std::endl;
+        for (const cv::Point& center : pinkCenterPoints) {
+            int centerX = center.x;
+            int centerY = center.y;
+            //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+        }
+
+        int chessboardPosition[8][8] = {0};
+
+        //pink chessboard positions
+
+        for(int i=0; i<pinkCenterPoints.size(); i++){
+            int pos_x_point_p = pinkCenterPoints.at(i).x;
+            int pos_y_point_p = pinkCenterPoints.at(i).y;
+            
+            //cout << "index x:" << pos_x_point_p << " index y: " << pos_y_point_p << endl;
             // Find the insertion position in the sorted vector
-            auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
+            auto it_x_p = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_p);
 
             // Calculate the index where the point would sit
-            int index_x_b = std::distance(filtered_x_points.begin(), it_x_b);
+            int index_x_p = std::distance(filtered_x_points.begin(), it_x_p);
 
             // Find the insertion position in the sorted vector
-            auto it_y_b = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_b);
+            auto it_y_p = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_p);
 
             // Calculate the index where the point would sit
-            int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
+            int index_y_p = std::distance(filtered_y_points.begin(), it_y_p);
 
-            //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
-            if(index_x_b > 0 && index_y_b > 0 && index_y_b < 9 && index_x_b < 9){
-                //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
-                chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+            //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
+
+            if(index_x_p > 0 && index_y_p > 0 && index_y_p < 9 && index_x_p < 9){
+                //cout << "index x:" << index_x_p << " index y: " << index_y_p << endl;
+                chessboardPosition[index_x_p-1][index_y_p-1] = -1;
             }
         }
-    }
-    
-    int chessboardPositionFinal[8][8] = {0};
-    int chessboardPositionTemp[8][8] = {0};
-    int chessboardPositionTemp2[8][8] = {0};
 
-    for (int i = 0; i < 8; ++i){
-      for (int j = 0; j < 8; ++j) {
-         chessboardPositionFinal[i][j] = chessboardPosition[i][j];
-      }
-    }
+        //blue chessboard positions
+        int pos_x_point_b = 0;
+        int pos_y_point_b = 0;
+        int index_x_b = 0;
+        int index_y_b = 0;
 
-    rotateChessboard(chessboardPosition);
-    reflectYAxis(chessboardPosition);
+        for(int i=0; i<blueCenterPoints.size(); ++i){
+            pos_x_point_b = blueCenterPoints[i].x;
+            pos_y_point_b = blueCenterPoints[i].y;
+            
+            if (pos_x_point_b > 0 && pos_x_point_b < 10000 && pos_y_point_b > 0 && pos_y_point_b < 10000){
+            
+                //cout << " x:" << pos_x_point_b << "  y: " << pos_y_point_b << endl;
+                
+                // Find the insertion position in the sorted vector
+                auto it_x_b = std::lower_bound(filtered_x_points.begin(), filtered_x_points.end(), pos_x_point_b);
 
+                // Calculate the index where the point would sit
+                int index_x_b = std::distance(filtered_x_points.begin(), it_x_b);
 
-    cv::Mat chessboardMat(8, 8, CV_32S);
-    for (int i = 0; i < 8; ++i) {
-        for (int j = 0; j < 8; ++j) {
-            chessboardMat.at<int>(i, j) = chessboardPosition[i][j];
+                // Find the insertion position in the sorted vector
+                auto it_y_b = std::lower_bound(filtered_y_points.begin(), filtered_y_points.end(), pos_y_point_b);
+
+                // Calculate the index where the point would sit
+                int index_y_b = std::distance(filtered_y_points.begin(), it_y_b);
+
+                //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+                if(index_x_b > 0 && index_y_b > 0 && index_y_b < 9 && index_x_b < 9){
+                    //cout << "index x:" << index_x_b << " index y: " << index_y_b << endl;
+                    chessboardPosition[index_x_b-1][index_y_b-1] = 1;
+                }
+            }
         }
+        
+        int chessboardPositionFinal[8][8] = {0};
+        int chessboardPositionTemp[8][8] = {0};
+        int chessboardPositionTemp2[8][8] = {0};
+
+        for (int i = 0; i < 8; ++i){
+        for (int j = 0; j < 8; ++j) {
+            chessboardPositionFinal[i][j] = chessboardPosition[i][j];
+        }
+        }
+
+        rotateChessboard(chessboardPosition);
+        reflectYAxis(chessboardPosition);
+
+
+        cv::Mat chessboardMat(8, 8, CV_32S);
+        for (int i = 0; i < 8; ++i) {
+            for (int j = 0; j < 8; ++j) {
+                chessboardMat.at<int>(i, j) = chessboardPosition[i][j];
+            }
+        }
+
+        // Print the array
+        std::cout << chessboardMat << std::endl;
+        //cout << "finished" << endl;
+        //cv::waitKey(0);
+        //return 0;
+        return chessboardMat;
+    } catch (const cv::Exception& e) {
+        std::cerr << "OpenCV error: " << e.what() << std::endl;
+    } catch (const std::exception& e) {
+        std::cerr << "Error: " << e.what() << std::endl;
+    } catch (...) {
+        std::cerr << "Unknown error occurred." << std::endl;
     }
 
-    // Print the array
-    std::cout << chessboardMat << std::endl;
-    //cout << "finished" << endl;
-    // cv::waitKey(0);
-    //return 0;
-    return chessboardMat;
 }

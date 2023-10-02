@@ -12,6 +12,11 @@ GPIO.setup(21, GPIO.OUT)
 GPIO.setup(20, GPIO.OUT)
 GPIO.setup(26, GPIO.OUT)
 
+magnetPin = 20
+GPIO.setup(magnetPin, GPIO.OUT)
+GPIO.output(magnetPin, GPIO.LOW)
+
+
 driver = Driver(port='/dev/ttyUSB0')
 
 from pypose.ax12 import P_MOVING, P_GOAL_SPEED_L, P_GOAL_POSITION_L, P_BAUD_RATE, P_ID

@@ -34,6 +34,10 @@ driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
 while True:
     p1 = input("Servo Angle 1:")
     p2 = input("Servo Angle 2:")
+
+    p1 = int(p1)
+    p2 = int(p2)
+    
     driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
     driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
 

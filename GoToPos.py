@@ -1,6 +1,7 @@
 from pypose.driver import Driver
 import time
 import RPi.GPIO as GPIO
+from pypose import runRobot
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -37,8 +38,15 @@ while True:
 
     p1 = int(p1)
     p2 = int(p2)
-    
+
     driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
     driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])
+
+    confirm = input("Put Down:")
+
+    runRobot.motorDown()
+    time.sleep(1)
+    runRobot.motorUp()
+    time.sleep(1)
 
 

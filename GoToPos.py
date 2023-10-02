@@ -51,7 +51,14 @@ while True:
 
     runRobot.motorDown()
     time.sleep(1)
+    GPIO.output(magnetPin, GPIO.HIGH)
+
+
     runRobot.motorUp()
     time.sleep(1)
+    runRobot.motorDown()
+    time.sleep(1)
+    GPIO.output(magnetPin, GPIO.LOW)
+
 
 

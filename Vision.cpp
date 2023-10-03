@@ -331,26 +331,11 @@ int main(int argc, char** argv){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
+        std::string version = cv::getVersionString();
 
-        cv::VideoCapture cap(0);
-
-        if (!cap.isOpened()){
-            cout << "Error: could not open camera" << endl;
-            return -1;
-        }
-
-
-        cv::Mat frame;
-
-        if (!cap.read(frame)){
-            cout << "Error: could not capture frame" << endl;
-            cap.release();
-            return -1;
-        }
-
-        cv::imwrite("image.jpg", frame);
-
-        const char* filename ="image.jpg";
+        // Print the version information
+        std::cout << "OpenCV version: " << version << std::endl;
+        const char* filename ="1001.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -673,10 +658,6 @@ int main(int argc, char** argv){
         //cv::waitKey(0);
         return 0;
         //return chessboardMat;
-    } catch (const cv::Exception& e) {
-        std::cerr << "OpenCV error: " << e.what() << std::endl;
-    } catch (const std::exception& e) {
-        std::cerr << "Error: " << e.what() << std::endl;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

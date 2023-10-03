@@ -5,9 +5,12 @@
 
 using namespace std;
 
-int main() {
-	system("fswebcam -r 1280x960 1004.jpg"); //Captures image and saves to file
-	cout << "Image Captured" << endl;
+int main(int argc, char* argv[]) {
+
+	string filename = argv[1];
+
+	system("fswebcam -r 1280x960 " + filename + ".jpg"); //Captures image and saves to file
+	// cout << "Image Captured" << endl;
 	return 0;
 }
 	

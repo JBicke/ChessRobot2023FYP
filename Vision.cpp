@@ -332,7 +332,7 @@ cv::Mat CVRunMain(){
         // Declare the output variables
         Mat dst, cdst, cdstP;
 
-        const char* filename ="E:/UNI/ece4078/ChessRobot2023FYP/1003.jpg";
+        const char* filename ="1003.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));

@@ -2,7 +2,7 @@
 // g++ -o chessRobot main.cpp deltaInterpretation.cpp callStockfish.cpp -I/usr/include/opencv4 `pkg-config --cflags --libs opencv4`
 #include "deltaInterpretation.h"
 #include "Vision.h"
-#include "opencv2/opencv.hpp"
+#include <opencv2/opencv.hpp>
 #include <iostream>
 #include <string>
 #include <array>

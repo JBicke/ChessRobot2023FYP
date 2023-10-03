@@ -327,14 +327,15 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-int main(int argc, char** argv){
+cv::Mat CVRunMain(){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
-        std::string version = cv::getVersionString();
+        //std::string version = cv::getVersionString();
 
         // Print the version information
-        std::cout << "OpenCV version: " << version << std::endl;
+        //std::cout << "OpenCV version: " << version << std::endl;
+        
         const char* filename ="1001.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
@@ -653,11 +654,11 @@ int main(int argc, char** argv){
         }
 
         // Print the array
-        std::cout << chessboardMat << std::endl;
+        //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
         //cv::waitKey(0);
-        return 0;
-        //return chessboardMat;
+        //return 0;
+        return chessboardMat;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

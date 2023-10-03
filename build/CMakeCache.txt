@@ -118,7 +118,7 @@ CMAKE_PROJECT_DESCRIPTION:STATIC=
 CMAKE_PROJECT_HOMEPAGE_URL:STATIC=
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=opencvtest
+CMAKE_PROJECT_NAME:STATIC=opencv
 
 //Value Computed by CMake
 CMAKE_PROJECT_VERSION:STATIC=0.1.0
@@ -263,6 +263,15 @@ OpenCV_DIR:PATH=E:/UNI/opencv/build/x64/vc16/lib
 
 //Name of the computer/site where compile is being run
 SITE:STRING=Jackson-PC
+
+//Value Computed by CMake
+opencv_BINARY_DIR:STATIC=E:/UNI/ece4078/ChessRobot2023FYP/build
+
+//Value Computed by CMake
+opencv_IS_TOP_LEVEL:STATIC=ON
+
+//Value Computed by CMake
+opencv_SOURCE_DIR:STATIC=E:/UNI/ece4078/ChessRobot2023FYP
 
 //Value Computed by CMake
 opencvtest_BINARY_DIR:STATIC=E:/UNI/ece4078/ChessRobot2023FYP/build

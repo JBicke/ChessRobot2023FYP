@@ -2,7 +2,7 @@ E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/Experimental.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/Nightly.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/Continuous.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/NightlyMemoryCheck.dir
-E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/opencvtest.dir
+E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/opencv.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/PACKAGE.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/RUN_TESTS.dir
 E:/UNI/ece4078/ChessRobot2023FYP/build/CMakeFiles/ALL_BUILD.dir

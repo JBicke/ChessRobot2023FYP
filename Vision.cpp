@@ -327,12 +327,30 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-cv::Mat CVRunMain(){
+int main(int argc, char** argv){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
 
-        const char* filename ="1003.jpg";
+        cv::VideoCapture cap(0);
+
+        if (!cap.isOpened()){
+            cout << "Error: could not open camera" << endl;
+            return -1;
+        }
+
+
+        cv::Mat frame;
+
+        if (!cap.read(frame)){
+            cout << "Error: could not capture frame" << endl;
+            cap.release();
+            return -1;
+        }
+
+        cv::imwrite("image.jpg", frame);
+
+        const char* filename ="image.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -342,7 +360,7 @@ cv::Mat CVRunMain(){
             printf(" Program Arguments: [image_name -- default %s] \n", filename);
             //return 0;
         }
-        //imshow("src", src);
+        imshow("src", src);
         // Locate green square positions
         std::vector<cv::Point> crop_points = locateGreenSquares(src);
         int numberOfGreenSquares = crop_points.size();
@@ -444,12 +462,12 @@ cv::Mat CVRunMain(){
         //locate green squares in rotated image
         std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
 
-        //Display the detected green square positions
+        /*Display the detected green square positions
         for (const auto& position : greenSquarePositions)
         {
             std::cout << "Green square position: (" << position.x << ", " << position.y << ")" << std::endl;
         }
-        
+        */
 
         //filtering out unnecessary points
         for (const Point& point1 : greenSquarePositions) {
@@ -653,8 +671,8 @@ cv::Mat CVRunMain(){
         std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
         //cv::waitKey(0);
-        //return 0;
-        return chessboardMat;
+        return 0;
+        //return chessboardMat;
     } catch (const cv::Exception& e) {
         std::cerr << "OpenCV error: " << e.what() << std::endl;
     } catch (const std::exception& e) {

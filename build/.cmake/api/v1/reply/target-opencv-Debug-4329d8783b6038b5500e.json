@@ -2,10 +2,10 @@
 	"artifacts" : 
 	[
 		{
-			"path" : "Release/opencvtest.exe"
+			"path" : "Debug/opencv.exe"
 		},
 		{
-			"path" : "Release/opencvtest.pdb"
+			"path" : "Debug/opencv.pdb"
 		}
 	],
 	"backtrace" : 1,
@@ -52,7 +52,7 @@
 			"compileCommandFragments" : 
 			[
 				{
-					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG"
+					"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1"
 				}
 			],
 			"includes" : 
@@ -76,97 +76,97 @@
 			"id" : "ZERO_CHECK::@6890427a1f51a3e7e1df"
 		}
 	],
-	"id" : "opencvtest::@6890427a1f51a3e7e1df",
+	"id" : "opencv::@6890427a1f51a3e7e1df",
 	"link" : 
 	{
 		"commandFragments" : 
 		[
 			{
-				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MD /O2 /Ob2 /DNDEBUG",
+				"fragment" : "/DWIN32 /D_WINDOWS /W3 /GR /EHsc /MDd /Zi /Ob0 /Od /RTC1",
 				"role" : "flags"
 			},
 			{
-				"fragment" : "/machine:x64 /INCREMENTAL:NO /subsystem:console",
+				"fragment" : "/machine:x64 /debug /INCREMENTAL /subsystem:console",
 				"role" : "flags"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
 				"backtrace" : 2,
-				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470.lib",
+				"fragment" : "E:\\UNI\\opencv\\build\\x64\\vc16\\lib\\opencv_world470d.lib",
 				"role" : "libraries"
 			},
 			{
@@ -176,8 +176,8 @@
 		],
 		"language" : "CXX"
 	},
-	"name" : "opencvtest",
-	"nameOnDisk" : "opencvtest.exe",
+	"name" : "opencv",
+	"nameOnDisk" : "opencv.exe",
 	"paths" : 
 	{
 		"build" : ".",

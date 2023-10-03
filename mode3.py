@@ -2,8 +2,13 @@ from pypose import runRobot
 import subprocess
 import operations
 
-filename = "1010"
-subprocess.run(["./take_Img", filename])
+cpp_process = subprocess.Popen(["./take_Img"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+cpp_process.stdin.write("140")
+cpp_process.stdin.flush()
+
+cpp_process.stdin.close()
+cpp_process.stdout.close()
+cpp_process.wait()
 
 # Run the C++ program as a subprocess
 # message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "

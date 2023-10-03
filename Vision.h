@@ -15,7 +15,7 @@ std::vector<std::vector<int>> transposeMatrix(const std::vector<std::vector<int>
 double calculateDistance(const cv::Point& point1, const cv::Point& point2);
 void rotateChessboard(int chessboard[8][8]);
 void reflectYAxis(int chessboard[8][8]);
-cv::Mat CVRunMain();
+cv::Mat CVRunMain(std::string photoName);
 
 
 

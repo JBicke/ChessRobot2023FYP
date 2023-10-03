@@ -327,7 +327,7 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-cv::Mat CVRunMain(){
+cv::Mat CVRunMain(std::string photoName){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
@@ -335,8 +335,11 @@ cv::Mat CVRunMain(){
 
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
-        
-        const char* filename ="1001.jpg";
+        std::string filenameStr = "Pictures/" + photoName + ".jpg";
+
+        // Convert std::string to const char*
+        const char* filename = filenameStr.c_str();
+        // const char* filename = "Pictures/1001.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));

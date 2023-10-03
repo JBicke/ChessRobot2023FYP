@@ -5,8 +5,10 @@ import operations
 # Run the C++ program as a subprocess
 # message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
 # message_to_cpp = "g2g4 h7h5 h2h3 h5g4 h1h2 g4h3 h2g2 h3h2 "
-# message_to_cpp = "e2e4 c7c6 e4e5 d7d5 "
-message_to_cpp = ""
+#message_to_cpp = "e2e4 c7c6 e4e5 d7d5 "
+#message_to_cpp = ""
+message_to_cpp = "b1c3 e7e5 b2b3 d8f6 c1b2 f8b4 e2e4 d7d6 d1e2 c8e6 "
+
 piece_Matrix =  [[0 for _ in range(8)] for _ in range(8)]
 #piece_Matrix[0] = [1]*8 # Row 8
 #piece_Matrix[1] = [1]*8 # Row 7
@@ -14,14 +16,14 @@ piece_Matrix =  [[0 for _ in range(8)] for _ in range(8)]
 #piece_Matrix[7] = [1]*8 # Row 1 
 
 piece_Matrix = [
-    [1, 1, 1, 1, 1, 1, 1, 1],
-    [2, 2, 2, 2, 2, 2, 2, 2],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 2, 2, 2, 2, 2, 2, 2],
-    [1, 1, 1, 1, 1, 1, 1, 1]
+    [1, 1, 0, 0, 1, 0, 1, 1],
+    [2, 2, 2, 0, 0, 2, 2, 2],
+    [0, 0, 0, 2, 1, 1, 0, 0],
+    [0, 0, 0, 0, 2, 0, 0, 0],
+    [0, 0, 0, 0, 2, 0, 0, 0],
+    [0, 2, 1, 0, 0, 0, 0, 0],
+    [2, 1, 2, 2, 1, 2, 2, 1],
+    [1, 0, 0, 0, 1, 1, 1, 0]
 ]
 
 collision = False

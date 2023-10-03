@@ -14,11 +14,11 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	// cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
-			if((previousFound == false) && (deltaMatrix.at<float>(i,j) == -1)) {
+			if((previousFound == false) && (deltaMatrix.at<int>(i,j) == -1)) {
 				previousRow = i;
 				previousCol = j;
 				previousFound = true;
-			} else if ((newFound == false) && (deltaMatrix.at<float>(i,j) == 1)) {
+			} else if ((newFound == false) && (deltaMatrix.at<int>(i,j) == 1)) {
 				newRow = i;
 				newCol = j;
 				newFound = true;

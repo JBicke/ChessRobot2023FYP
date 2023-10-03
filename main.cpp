@@ -11,7 +11,7 @@
 using namespace std;
 
 cv::Mat deltaCalc(cv::Mat oldPosition, cv::Mat newPosition) {
-	cv::Mat diffMat;
+	cv::Mat diffMat(8,8,CV_32S);
 	diffMat = newPosition - oldPosition;
 	return diffMat;
 }
@@ -46,32 +46,29 @@ int main() {
 	
 	// Create Sample Move
 	
-	cv::Mat boardnew(8,8,CV_32F,cv::Scalar(0));
+	cv::Mat boardnew(8,8,CV_32S,cv::Scalar(0));
 	
 	for (int i =0; i< 8; i++) {
-		boardnew.at<float>(i,0) = 1;
-		boardnew.at<float>(i,1) = 1;
-		boardnew.at<float>(i,6) = -1;
-		boardnew.at<float>(i,7) = -1;
+		boardnew.at<int>(i,0) = 1;
+		boardnew.at<int>(i,1) = 1;
+		boardnew.at<int>(i,6) = -1;
+		boardnew.at<int>(i,7) = -1;
 	}
 	
-	boardnew.at<float>(4,3) = 1;
-	boardnew.at<float>(4,1) = 0;
+	boardnew.at<int>(4,3) = 1;
+	boardnew.at<int>(4,1) = 0;
 	
 	// Print Example Move
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;
 	
-	// Calculate the move from the moves
-	cv::Mat deltaMatrix = deltaCalc(board, boardnew);
+	// Calculate the move from the moves (currently inverted)
+	cv::Mat deltaMatrix = deltaCalc(boardnew, board);
 	
-	// std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
+	std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
 	
 	// Interpret the information
 	array<int,4> result = deltaInterp(deltaMatrix);
 	
-	// for (auto elem : result) {
-		// cout << elem << " " << endl;
-	// }
 	
 	// Gather data from the information
 	int chessRowOld = get<0>(result);
@@ -84,13 +81,13 @@ int main() {
 	string moveNew = chessNotation(chessRowNew,chessColNew);
 	
 	// Print the move in chess notatin
-	// cout << moveOld << moveNew << endl;
+	cout << moveOld << moveNew << endl;
 	
-	string move = moveOld+moveNew;
+	//string move = moveOld+moveNew;
 	
-	vector<string> moves;
+	//vector<string> moves;
 	
-	moves.push_back(move);
+	//moves.push_back(move);
 	// moves.push_back("c7c5");
 	// moves.push_back("d2d4");
 	// moves.push_back("d7d5");

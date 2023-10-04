@@ -644,6 +644,9 @@ cv::Mat CVRunMain(){
 
         rotateChessboard(chessboardPosition);
         reflectYAxis(chessboardPosition);
+        rotateChessboard(chessboardPosition);
+        rotateChessboard(chessboardPosition);
+        rotateChessboard(chessboardPosition);
 
 
         cv::Mat chessboardMat(8, 8, CV_32S);

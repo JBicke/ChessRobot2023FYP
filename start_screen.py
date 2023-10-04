@@ -4,13 +4,17 @@ import subprocess
 def switch_to_layout_1():
      layout1.show()
      layout2.hide()
+     layout3.hide()
 
 def switch_to_layout_2():
      layout1.hide()
      layout2.show()
+     layout3.hide()
 
-
-
+def switch_to_layout_3():
+     layout1.hide()
+     layout2.hide()
+     layout3.show()
 
 def button_clicked():
     print("Button Clicked")
@@ -23,9 +27,125 @@ def button_clicked():
 def slider_changed(slider_value):
 	print(f"Slider value cahnged to {slider_value}")
 
-def add_character(char):
-      l3_text_box.value += char
-      move_input += char
+def add_a():
+    current_text = l3_logbox.value
+    new_text = "A"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_b():
+    current_text = l3_logbox.value
+    new_text = "B"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_c():
+    current_text = l3_logbox.value
+    new_text = "C"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_d():
+    current_text = l3_logbox.value
+    new_text = "D"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_e():
+    current_text = l3_logbox.value
+    new_text = "E"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_f():
+    current_text = l3_logbox.value
+    new_text = "F"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_g():
+    current_text = l3_logbox.value
+    new_text = "G"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_h():
+    current_text = l3_logbox.value
+    new_text = "H"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_1():
+    current_text = l3_logbox.value
+    new_text = "1"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+      
+def add_2():
+    current_text = l3_logbox.value
+    new_text = "2"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_3():
+    current_text = l3_logbox.value
+    new_text = "3"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_4():
+    current_text = l3_logbox.value
+    new_text = "4"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_5():
+    current_text = l3_logbox.value
+    new_text = "5"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_6():
+    current_text = l3_logbox.value
+    new_text = "6"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_7():
+    current_text = l3_logbox.value
+    new_text = "7"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_8():
+    current_text = l3_logbox.value
+    new_text = "8"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_q():
+    current_text = l3_logbox.value
+    new_text = "Q"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_r():
+    current_text = l3_logbox.value
+    new_text = "R"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def add_n():
+    current_text = l3_logbox.value
+    new_text = "N"
+    updated_text = current_text + new_text
+    l3_logbox.value = updated_text
+
+def submit_move():
+    #move = l3_logbox.value
+    l3_logbox.value = ""
+
+
 
 app = App("dyamic Layout", width=1024, height = 600, bg= "#bbbbbb")
 
@@ -38,10 +158,10 @@ l1_button_box_1 = Box(layout1, grid = [0,1], width=400, height = 100, border = 2
 l1_button = PushButton(l1_button_box_1, text = "Move Pieces Yourself",  command=switch_to_layout_2, width = "fill", height = "fill")
 
 l1_button_box_2 = Box(layout1, grid = [0,2], width=400, height = 100, border = 2)
-l1_button = PushButton(l1_button_box_2, text = "Type Moves",  command=switch_to_layout_2, width = "fill", height = "fill")
+l1_button = PushButton(l1_button_box_2, text = "Type Moves",  command=switch_to_layout_3, width = "fill", height = "fill")
 
 l1_button_box_3 = Box(layout1, grid = [0,3], width=400, height = 100, border = 2)
-l1_button = PushButton(l1_button_box_3, text = "Play Automatically",  command=switch_to_layout_2, width = "fill", height = "fill")
+l1_button = PushButton(l1_button_box_3, text = "Play Automatically",  command=switch_to_layout_1, width = "fill", height = "fill")
 
 l1_slider = Slider(layout1, start=1, end=3500, command = slider_changed, grid = [1,1,1,3], horizontal=False, width = 300, height = 400)
 
@@ -64,12 +184,37 @@ layout2.hide()
 
 #play against bot
 layout3 = Box(app, layout="grid")
-l3_text_box = TextBox(layout3, width=30, height=3)
+l3_logbox = TextBox(layout3, width=100, grid = [0,0, 9, 1])
 
-characters = "ABCDE12345678"
-for char in characters:
-      l3_button = PushButton(layout3, txt=char, padx=10, pady=10)
-      l3_button.when_clicked = add_character(char)
+
+
+l3_buttonA = PushButton(layout3, command=add_a, text = "A",  width = 10, height = 10, padx=10, pady=10, grid = [0, 1])
+l3_buttonB = PushButton(layout3, text = "B", command=add_b, width = 10, height = 10, padx=10, pady=10, grid = [1, 1])
+l3_buttonC = PushButton(layout3, text = "C", command=add_c, width = 10, height = 10, padx=10, pady=10, grid = [2, 1])
+l3_buttonD = PushButton(layout3, text = "D", command=add_d, width = 10, height = 10, padx=10, pady=10, grid = [3, 1])
+l3_buttonE = PushButton(layout3, text = "E", command=add_e, width = 10, height = 10, padx=10, pady=10, grid = [4, 1])
+l3_buttonF = PushButton(layout3, text = "F", command=add_f, width = 10, height = 10, padx=10, pady=10, grid = [5, 1])
+l3_buttonG = PushButton(layout3, text = "G", command=add_g, width = 10, height = 10, padx=10, pady=10, grid = [6, 1])
+l3_buttonH = PushButton(layout3, text = "H", command=add_h, width = 10, height = 10, padx=10, pady=10, grid = [7, 1])
+l3_buttonQ = PushButton(layout3, text = "Promotion: Q", command=add_q, width = 10, height = 10, padx=10, pady=10, grid = [8, 1])
+l3_buttonK = PushButton(layout3, text = "Promotion: K", command=add_n, width = 10, height = 10, padx=10, pady=10, grid = [9, 1])
+
+l3_button1 = PushButton(layout3, text = "1", command=add_1, width = 10, height = 10, padx=10, pady=10, grid = [0, 2])
+l3_button2 = PushButton(layout3, text = "2", command=add_2, width = 10, height = 10, padx=10, pady=10, grid = [1, 2])
+l3_button3 = PushButton(layout3, text = "3", command=add_3, width = 10, height = 10, padx=10, pady=10, grid = [2, 2])
+l3_button4 = PushButton(layout3, text = "4", command=add_4, width = 10, height = 10, padx=10, pady=10, grid = [3, 2])
+l3_button5 = PushButton(layout3, text = "5", command=add_5, width = 10, height = 10, padx=10, pady=10, grid = [4, 2])
+l3_button6 = PushButton(layout3, text = "6", command=add_6, width = 10, height = 10, padx=10, pady=10, grid = [5, 2])
+l3_button7 = PushButton(layout3, text = "7", command=add_7, width = 10, height = 10, padx=10, pady=10, grid = [6, 2])
+l3_button8 = PushButton(layout3, text = "8", command=add_8, width = 10, height = 10, padx=10, pady=10, grid = [7, 2])
+l3_buttonR = PushButton(layout3, text = "Promotion: R", command=add_r, width = 10, height = 10, padx=10, pady=10, grid = [8, 2])
+l3_buttonb = PushButton(layout3, text = "Promotion: B", command=add_b, width = 10, height = 10, padx=10, pady=10, grid = [9, 2])
+
+l3_button_sub = PushButton(layout3, text="Submit Move", command = submit_move, width = 60, height = 10, grid = [0,3,6,1])
+l3_logbox_2 = TextBox(layout3, width = 20, height = 10, multiline = True, grid = [6,3,2,5])
+l3_logbox_3 = TextBox(layout3, width = 20, height = 10, multiline = True, grid = [8,3,2,5])
+layout3.hide()
+
 
 #automatically
 

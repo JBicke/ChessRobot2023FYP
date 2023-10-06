@@ -426,27 +426,22 @@ def CastleCheckBlack(Castle_Fen):
 # Set initial position of the object
 object_position = 500
 
-# Set the movement distance
-movement_distance = 1
 
 # Function to move the object
 def move_object(direction):
     global object_position
-    object_position += direction * movement_distance
-    print(f"Object position: {object_position}")
+    
 
-# Main loop
-def calibrationMode(startingPosition):
-	while True:
-		# Check if the right mouse button is held down
-		if pyautogui.mouseInfo().get('right', False):
-			move_object(1)  # Move right
-		# Check if the left mouse button is held down
-		elif pyautogui.mouseInfo().get('left', False):
-			move_object(-1)  # Move left
+def calibrationModeRight(direction,object_position):
+    object_position += direction * 1
+    #print(f"Object position: {object_position}")
+	driver.setReg(1,P_GOAL_POSITION_L, [object_position%256,object_position>>8])
+    return object_position
 
-		time.sleep(0.1)  # Adjust this delay based on your application's requirements
-
-
+def calibrationModeLeft(direction,object_position):
+    object_position += direction * 1
+	# print(f"Object position: {object_position}")
+	driver.setReg(1,P_GOAL_POSITION_L, [object_position%256,object_position>>8])
+	return object_position
 
 	

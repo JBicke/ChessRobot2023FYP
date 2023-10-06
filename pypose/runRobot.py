@@ -3,6 +3,7 @@ import time
 import re
 import RPi.GPIO as GPIO
 from pypose.ax12 import P_MOVING, P_GOAL_SPEED_L, P_GOAL_POSITION_L, P_BAUD_RATE, P_ID
+import pyautogui
 
 GPIO.setwarnings(False)
 GPIO.setmode(GPIO.BCM)
@@ -421,3 +422,31 @@ def CastleCheckBlack(Castle_Fen):
 		Castle_Q = False
 	return Castle_K, Castle_Q
 
+
+# Set initial position of the object
+object_position = 500
+
+# Set the movement distance
+movement_distance = 1
+
+# Function to move the object
+def move_object(direction):
+    global object_position
+    object_position += direction * movement_distance
+    print(f"Object position: {object_position}")
+
+# Main loop
+def calibrationMode(startingPosition):
+	while True:
+		# Check if the right mouse button is held down
+		if pyautogui.mouseInfo().get('right', False):
+			move_object(1)  # Move right
+		# Check if the left mouse button is held down
+		elif pyautogui.mouseInfo().get('left', False):
+			move_object(-1)  # Move left
+
+		time.sleep(0.1)  # Adjust this delay based on your application's requirements
+
+
+
+	

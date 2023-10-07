@@ -433,13 +433,13 @@ def move_object(direction):
     
 
 def calibrationModeS2(direction,object_position):
-    object_position += direction * 1
-    #print(f"Object position: {object_position}")
+	object_position += direction * 1
+	#print(f"Object position: {object_position}")
 	driver.setReg(2,P_GOAL_POSITION_L, [object_position%256,object_position>>8])
-    return object_position
+	return object_position
 
 def calibrationModeS1(direction,object_position):
-    object_position += direction * 1
+	object_position += direction * 1
 	# print(f"Object position: {object_position}")
 	driver.setReg(1,P_GOAL_POSITION_L, [object_position%256,object_position>>8])
 	return object_position

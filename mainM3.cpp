@@ -32,37 +32,48 @@ int main() {
 	//Take the input
 	std::string photoName;
 	
-	
-	
 	std::getline(std::cin, photoName);
 	
-	// Create Example Board
-	cv::Mat board = CVRunMain(photoName);
+	// Create New Board
+	cv::Mat boardNew = CVRunMain(photoName);
 	
-	std::cout << board << std::endl;
+	std::cout << boardNew << std::endl;
+
+	// Obtain Old Board
+	// Extract the non-numeric and numeric parts
+	non_numeric_part, numeric_part = photoName[0], photoName[1:]
+	// Subtract 1 from the numeric part and concatenate
+	previous_photoName = non_numeric_part + str(int(numeric_part) - 1)
+
+	
+	cv::Mat boardOld(8,8,CV_32S,cv::Scalar(0));
+	cv::Mat boardOld = CVRunMain(previous_photoName);
+
+
+	
 	
 	// Print Example Board
 	// cout << "M = " << endl << " " << board << endl << endl;
 	
 	// Create Sample Move
 	
-	cv::Mat boardnew(8,8,CV_32S,cv::Scalar(0));
 	
-	for (int i =0; i< 8; i++) {
-		boardnew.at<int>(i,0) = 1;
-		boardnew.at<int>(i,1) = 1;
-		boardnew.at<int>(i,6) = -1;
-		boardnew.at<int>(i,7) = -1;
-	}
 	
-	// boardnew.at<int>(4,3) = 1;
-	// boardnew.at<int>(4,1) = 0;
+	// for (int i =0; i< 8; i++) {
+	// 	boardOld.at<int>(i,0) = 1;
+	// 	boardOld.at<int>(i,1) = 1;
+	// 	boardOld.at<int>(i,6) = -1;
+	// 	boardOld.at<int>(i,7) = -1;
+	// }
+	
+	// boardOld.at<int>(4,3) = 1;
+	// boardOld.at<int>(4,1) = 0;
 	
 	// Print Example Move
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;
 	
 	// Calculate the move from the moves (currently inverted)
-	cv::Mat deltaMatrix = deltaCalc(boardnew, board);
+	cv::Mat deltaMatrix = deltaCalc(boardOld, boardNew);
 	
 	std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
 	

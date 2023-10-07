@@ -19,12 +19,12 @@ piece_Matrix =  [[0 for _ in range(8)] for _ in range(8)]
 
 piece_Matrix = [
     [1, 1, 1, 1, 1, 1, 1, 1],
-    [2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 0, 2, 2, 2, 2],
     [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 2, 0, 0, 0, 0],
+    [0, 0, 0, 2, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [2, 2, 2, 2, 2, 2, 2, 2],
+    [2, 2, 2, 0, 2, 2, 2, 2],
     [1, 1, 1, 1, 1, 1, 1, 1]
 ]
 
@@ -76,7 +76,7 @@ while True:
     
     FEN_Player = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-    print(FEN_Player)
+    #print(FEN_Player)
 	
     Line1 = runRobot.extract_Text(FEN_Player," ")
 	
@@ -121,7 +121,7 @@ while True:
 	
     FEN_Stock = runRobot.extract_Text(response_from_cpp,"Fen: ")
 	
-    print(FEN_Stock)
+    #print(FEN_Stock)
 	
     Line1 = runRobot.extract_Text(FEN_Stock," ")
 	
@@ -144,30 +144,33 @@ while True:
 	# turns the player move into the correct matrix references
     row1, row2, col1, col2 = operations.orientSquares(playerMove)
 	
-    print(piece_Matrix)
+    #print(piece_Matrix)
 
 	# Required to store information about the pawn move for en passant later
     if piece_Matrix[row1-1][col1-1] == 2:
         pawn_Move = True
 
 	# Remove piece if in the way
-    if piece_Matrix[row2-1][col2-1] == 1:
-        runRobot.takePiece(row2,col2)
-    elif piece_Matrix[row2-1][col2-1] == 2:
-        runRobot.takePiece(row2,col2)
+    # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY
+    # if piece_Matrix[row2-1][col2-1] == 1:
+    #     runRobot.takePiece(row2,col2)
+    # elif piece_Matrix[row2-1][col2-1] == 2:
+    #     runRobot.takePiece(row2,col2)
 	
 	# Adjust the matrix for the player move 
     piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)
 		
-    print(piece_Matrix)
+    #print(piece_Matrix)
 
 	# Make the player move
-    final = runRobot.movePiece(playerMove)
+    # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY
+    # final = runRobot.movePiece(playerMove)
 	
 	#Check if special case for en passant is required
     if(en_passant_P == playerMove[-2:]):
-        if pawn_Move == True: # en passant happened			
-            runRobot.takePiece(row2+1,col2)
+        if pawn_Move == True: # en passant happened
+            # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY			
+            # runRobot.takePiece(row2+1,col2)
             piece_Matrix[row2][col2-1] = piece_Matrix[row2][col2-1] - 2
 
 	#Reset pawn move check			
@@ -178,21 +181,26 @@ while True:
 	# If it is a castle move and they can castle, then castle and update piece matrix
     if playerMove == "e1g1":
         if W_Castle_K == True:
-            runRobot.castle("K")
+            # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY		
+            # runRobot.castle("K")
             operations.adjust_Piece_Matrix_Castle(piece_Matrix,"K")
     if playerMove == "e1c1":
         if W_Castle_Q == True:
-            runRobot.castle("Q")
+            # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY	
+            # runRobot.castle("Q")
             operations.adjust_Piece_Matrix_Castle(piece_Matrix,"Q")
 	
 	# Special case for if a promotion occurs
-    if W_promotion == True:
-        runRobot.promotion(playerMove[2:4],'w'+W_promoted_Piece)
+    # REMOVED AS PHYSICAL PLAYER MOVE NOT NECESSARY	
+
+    # WILL NEED TO INCLUDE SECTION HERE ABOUT ASKING THE GUI FOR WHAT PROMOTION THE PIECE SHOULD BE
+    # if W_promotion == True:
+    #     runRobot.promotion(playerMove[2:4],'w'+W_promoted_Piece)
 	
 
     row1, row2, col1, col2 = operations.orientSquares(stockMove)
 	
-    print(piece_Matrix)
+    #print(piece_Matrix)
 
     if piece_Matrix[row1-1][col1-1] == 2:
         pawn_Move = True
@@ -205,7 +213,7 @@ while True:
 	
     piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, B_promotion)
 	
-    print(piece_Matrix)
+    #print(piece_Matrix)
 	
 	#Do Stockfishes move	
     runRobot.movePiece(stockMove)

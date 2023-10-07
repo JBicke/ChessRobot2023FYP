@@ -23,7 +23,7 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 			}
         }
     }
-
+    cout << "-1: " << countOld << ", 1:" << countNew << endl;
 
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {

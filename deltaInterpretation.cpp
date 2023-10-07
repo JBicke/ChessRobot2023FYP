@@ -46,8 +46,13 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 		}
 	}
 	
+	// Enpasssent would be a 1 in column 7, and 2 -1 in column 6.
+	// Castling would be 2 -1 and 2 1s in column 1. 
+	// Promotion would be just like a normal move from row 7 to row 8, which makes it hard. Make it so you have to press the piece it promotes to, hence different intepretation is not needed.
+
 	// std::cout << "Found -1 at row " << previousRow << " and column " << previousCol << std::endl;
 	// std::cout << "Found 1 at row " << newRow << " and column " << newCol << std::endl;
+
 
 	array<int,4> positions = {previousRow, previousCol, newRow, newCol};
 	

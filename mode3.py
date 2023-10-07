@@ -47,8 +47,12 @@ en_passant_R = ''
 
 while True:
 	# print(piece_Matrix)
+    # CHANGE TO INPUT HAVE YOU MADE YOUR MOVE
     photoName = input("Name for photo:")
 	
+    # INSERT SECTION HERE FOR TAKE A PHOTO WITH THE NEW NAME, PHOTO NAME WILL INCREMENT EACH TIME
+    # There needs to be a photo in the database called P1000 that has the original setup that the code can reliably interpret.
+
     cpp_process = subprocess.Popen(["./chessRobot7"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     cpp_process.stdin.write(photoName +"\n")
     cpp_process.stdin.flush()

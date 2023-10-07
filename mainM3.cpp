@@ -98,9 +98,6 @@ int main() {
 	string moveOld = chessNotation(chessRowOld,chessColOld);
 	string moveNew = chessNotation(chessRowNew,chessColNew);
 	
-	// Print the move in chess notatin
-	cout << moveOld << moveNew << endl;
-	
 	//string move = moveOld+moveNew;
 	
 	//vector<string> moves;

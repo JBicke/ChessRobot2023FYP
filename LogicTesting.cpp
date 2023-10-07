@@ -45,15 +45,21 @@ int main() {
 	
 	
 	
-	// for (int i =0; i< 8; i++) {
-	// 	boardOld.at<int>(i,0) = 1;
-	// 	boardOld.at<int>(i,1) = 1;
-	// 	boardOld.at<int>(i,6) = -1;
-	// 	boardOld.at<int>(i,7) = -1;
-	// }
+	for (int i =0; i< 8; i++) {
+	 	boardOld.at<int>(i,0) = 1;
+		boardOld.at<int>(i,1) = 1;
+	 	boardOld.at<int>(i,6) = -1;
+	 	boardOld.at<int>(i,7) = -1;
+	}
 	
-	// boardOld.at<int>(4,3) = 1;
-	// boardOld.at<int>(4,1) = 0;
+    for (int i =0; i< 8; i++) {
+	 	boardNew.at<int>(i,0) = 1;
+		boardNew.at<int>(i,1) = 1;
+	 	boardNew.at<int>(i,6) = -1;
+	 	boardNew.at<int>(i,7) = -1;
+	}
+	boardNew.at<int>(4,3) = 1;
+	boardNew.at<int>(4,1) = 0;
 	
 	// Print Example Move
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;

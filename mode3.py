@@ -9,6 +9,7 @@ import operations
 #message_to_cpp = "e2e4 c7c6 e4e5 d7d5 "
 #message_to_cpp = ""
 #message_to_cpp = "b1c3 e7e5 b2b3 d8f6 c1b2 f8b4 e2e4 d7d6 d1e2 c8e6 "
+message_to_cpp = "d2d4 d7d5 "
 
 piece_Matrix =  [[0 for _ in range(8)] for _ in range(8)]
 #piece_Matrix[0] = [1]*8 # Row 8

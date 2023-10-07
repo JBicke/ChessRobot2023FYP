@@ -58,7 +58,7 @@ int main() {
 	 	boardNew.at<int>(i,6) = -1;
 	 	boardNew.at<int>(i,7) = -1;
 	}
-	boardNew.at<int>(4,3) = 1;
+	boardNew.at<int>(4,6) = 1;
 	boardNew.at<int>(4,1) = 0;
 	
 	// Print Example Move

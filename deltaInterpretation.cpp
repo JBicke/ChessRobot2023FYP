@@ -26,7 +26,7 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
         }
     }
     cout << "-1: " << countOld << ", 1:" << countNew << endl;
-	if ((countOld == 1) && (countNew == 1))) {
+	if ((countOld == 1) && (countNew == 1)) {
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
 				if((previousFound == false) && (deltaMatrix.at<int>(i,j) == -1)) {

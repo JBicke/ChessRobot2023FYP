@@ -20,22 +20,29 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
                 countOld++;
             } else if (deltaMatrix.at<int>(i, j) == 1) {
                 countNew++;
+			} else if (deltaMatrix.at<int>(i, j) == 2) {
+                countNew++;
 			}
         }
     }
     cout << "-1: " << countOld << ", 1:" << countNew << endl;
-
-	for (int i = 0; i < 8; i++) {
-		for (int j = 0; j < 8; j++) {
-			if((previousFound == false) && (deltaMatrix.at<int>(i,j) == -1)) {
-				previousRow = i;
-				previousCol = j;
-				previousFound = true;
-			} else if ((newFound == false) && (deltaMatrix.at<int>(i,j) == 1)) {
-				newRow = i;
-				newCol = j;
-				newFound = true;
-			} 
+	if ((countOld == 1) && (countNew == 1))) {
+		for (int i = 0; i < 8; i++) {
+			for (int j = 0; j < 8; j++) {
+				if((previousFound == false) && (deltaMatrix.at<int>(i,j) == -1)) {
+					previousRow = i;
+					previousCol = j;
+					previousFound = true;
+				} else if ((newFound == false) && (deltaMatrix.at<int>(i,j) == 1)) {
+					newRow = i;
+					newCol = j;
+					newFound = true;
+				} else if ((newFound == false) && (deltaMatrix.at<int>(i,j) == 2)) {
+					newRow = i;
+					newCol = j;
+					newFound = true;
+				} 
+			}
 		}
 	}
 	

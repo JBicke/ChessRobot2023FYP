@@ -111,10 +111,6 @@ int main() {
 	// moves.push_back("d7d5");
 	
 	// Provide the output move (Should say moves)
-	string message = "";
-	vector<string> messages;
-	messages.push_back(message);
-	string outputMove = runStock(messages);
-	
-	cout << outputMove << endl;
+	string message = moveOld+moveNew;
+	cout << message << endl;
 }

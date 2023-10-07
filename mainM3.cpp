@@ -49,6 +49,8 @@ int main() {
 	cv::Mat boardOld(8,8,CV_32S,cv::Scalar(0));
 	cv::Mat boardOld = CVRunMain(previous_photoName);
 
+	std::cout << boardOld << std::endl;
+
 
 	
 	

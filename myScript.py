@@ -12,10 +12,11 @@ key_o_held = False
 key_p_held = False
 key_l_held = False
 key_k_held = False
+key_m_held = False
 
 
 def on_press(key):
-    global key_o_held, key_p_held, key_l_held, key_k_held
+    global key_o_held, key_p_held, key_l_held, key_k_held, key_m_held, object_position1, object_position2
     try:
         if key.char == 'o':
             key_o_held = True
@@ -29,6 +30,9 @@ def on_press(key):
         elif key.char == 'k':
             key_k_held = True
             #print("Key 'k' pressed")
+        elif key.char == 'm':
+            key_m_held = True
+            print(str(object_position1) + ", " + str(object_position2))
     except AttributeError:
         pass
 

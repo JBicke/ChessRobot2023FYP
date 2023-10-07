@@ -41,9 +41,14 @@ int main() {
 
 	// Obtain Old Board
 	// Extract the non-numeric and numeric parts
-	non_numeric_part, numeric_part = photoName[0], photoName[1:]
-	// Subtract 1 from the numeric part and concatenate
-	previous_photoName = non_numeric_part + str(int(numeric_part) - 1)
+    char non_numeric_part = photoName[0];
+    std::string numeric_part = photoName.substr(1);
+
+    // Subtract 1 from the numeric part and convert it back to a string
+    int numeric_value = std::stoi(numeric_part) - 1;
+
+    // Concatenate the non-numeric part and the new numeric part
+    std::string previous_photoName = non_numeric_part + std::to_string(numeric_value);
 
 	
 	cv::Mat boardOld(8,8,CV_32S,cv::Scalar(0));

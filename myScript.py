@@ -55,19 +55,19 @@ def check_key_presses():
     global object_position2
     while True:
         if key_o_held:
-            object_position = runRobot.calibrationModeS1(-1,object_position1)
+            object_position1 = runRobot.calibrationModeS1(-1,object_position1)
             time.sleep(0.01)  # Adjust the sleep duration as needed
 
         if key_p_held:
-            object_position = runRobot.calibrationModeS1(1,object_position1)
+            object_position1 = runRobot.calibrationModeS1(1,object_position1)
             time.sleep(0.01)  # Adjust the sleep duration as needed
 
         if key_l_held:
-            object_position = runRobot.calibrationModeS2(-1,object_position2)
+            object_position2 = runRobot.calibrationModeS2(-1,object_position2)
             time.sleep(0.01)  # Adjust the sleep duration as needed
 
         if key_k_held:
-            object_position = runRobot.calibrationModeS2(1,object_position2)
+            object_position2 = runRobot.calibrationModeS2(1,object_position2)
             time.sleep(0.01)  # Adjust the sleep duration as needed
 
 

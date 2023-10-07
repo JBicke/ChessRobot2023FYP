@@ -45,6 +45,8 @@ en_passant_R = ''
 
 
 while True:
+	# print(piece_Matrix)
+    photoName = input("Name for photo:")
 	
     cpp_process = subprocess.Popen(["./chessRobot7"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     cpp_process.stdin.write(photoName)

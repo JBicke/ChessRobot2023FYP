@@ -12,6 +12,19 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	bool previousFound = false;
 	bool newFound = false;
 	// cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
+	int countOld;
+	int countNew;
+	for (int i = 0; i < deltaMatrix.rows; i++) {
+        for (int j = 0; j < deltaMatrix.cols; j++) {
+            if (deltaMatrix.at<int>(i, j) == -1) {
+                countOld++;
+            } else if (deltaMatrix.at<int>(i, j) == 1) {
+                countNew++;
+			}
+        }
+    }
+
+
 	for (int i = 0; i < 8; i++) {
 		for (int j = 0; j < 8; j++) {
 			if((previousFound == false) && (deltaMatrix.at<int>(i,j) == -1)) {

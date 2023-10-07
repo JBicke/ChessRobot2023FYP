@@ -37,7 +37,7 @@ int main() {
 	// Create New Board
 	cv::Mat boardNew = CVRunMain(photoName);
 	
-	std::cout << boardNew << std::endl;
+	//std::cout << boardNew << std::endl;
 
 	// Obtain Old Board
 	// Extract the non-numeric and numeric parts
@@ -54,7 +54,7 @@ int main() {
 	cv::Mat boardOld(8,8,CV_32S,cv::Scalar(0));
 	boardOld = CVRunMain(previous_photoName);
 
-	std::cout << boardOld << std::endl;
+	//std::cout << boardOld << std::endl;
 
 
 	
@@ -82,7 +82,7 @@ int main() {
 	// Calculate the move from the moves (currently inverted)
 	cv::Mat deltaMatrix = deltaCalc(boardOld, boardNew);
 	
-	std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
+	//std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
 	
 	// Interpret the information
 	array<int,4> result = deltaInterp(deltaMatrix);

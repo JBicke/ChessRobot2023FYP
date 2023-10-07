@@ -51,11 +51,11 @@ while True:
     cpp_process = subprocess.Popen(["./chessRobot7"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     cpp_process.stdin.write(photoName)
     cpp_process.stdin.flush()
-		
+    detectedMove = cpp_process.stdout.readline()	
     cpp_process.stdin.close()
     cpp_process.stdout.close()
     cpp_process.wait()
-    detectedMove = cpp_process.stdout.readline()
+    
 	
     cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 	# Send a message to the C++ program for player move (for analysing castling & en passent)

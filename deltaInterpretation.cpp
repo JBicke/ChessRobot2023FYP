@@ -18,7 +18,7 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	int enCol2 = 0;
 	int enRow3 = 0;
 	int enCol3 = 0;
-	// cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
+	cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
 	int countOld = 0;
 	int countNew = 0;
 	for (int i = 0; i < deltaMatrix.rows; i++) {
@@ -51,32 +51,35 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 				} 
 			}
 		}
-	} else if ((countOld == 2) && (countNew == 1)) { // This if statement only occurs during Enpassant
+	} else if ((countOld == 1) && (countNew == 2)) { // This if statement only occurs during Enpassant
 		for (int i = 0; i < 8; i++) {
 			for (int j = 0; j < 8; j++) {
-				if (deltaMatrix.at<int>(i,j) == 1) {
+				if (deltaMatrix.at<int>(i,j) == -1) {
 					enRow1 = i;
 					enCol1 = j;
-				} else if ((enPass1 == false) && (deltaMatrix.at<int>(i,j) == -1)) {
+				} else if ((enPass1 == false) && (deltaMatrix.at<int>(i,j) == 1)) {
 					enRow2 = i;
 					enCol2 = j;
-					enPass1 == true;
-				} else if ((enPass1 == true) && (deltaMatrix.at<int>(i,j) == -1)) {
+					enPass1 = true;
+				} else if ((enPass1 == true) && (deltaMatrix.at<int>(i,j) == 1)) {
 					enRow3 = i;
 					enCol3 = j;
 					enPass1 == false;
 				}
 			}
 		}
-		if (enRow1 == enRow2) {
-			previousRow = enRow3;
-			previousCol = enCol3;
-		} else if (enRow1 == enRow3) {
-			previousRow = enRow2;
-			previousCol = enCol2;
+		cout << enCol1 << endl;
+		cout << enCol2 << endl;
+		cout << enCol3 << endl;
+		if (enCol1 == enCol2) {
+			newRow = enRow3;
+			newCol = enCol3;
+		} else if (enCol1 == enCol3) {
+			newRow = enRow2;
+			newCol = enCol2;
 		}
-		newRow = enRow1;
-		newCol = enCol1;
+		previousRow = enRow1;
+		previousCol = enCol1;
 
 	}
 	

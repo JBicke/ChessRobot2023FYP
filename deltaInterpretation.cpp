@@ -81,6 +81,18 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 		previousRow = enRow1;
 		previousCol = enCol1;
 
+	} else if ((countOld == 2) && (countNew == 2)) { // This if statement only occurs during castling
+		if (deltaMatrix.at<int>(0,0) == -1) {
+			previousRow = 4;
+			previousCol = 0;
+			newRow = 2;
+			newCol = 0;
+		} else if (deltaMatrix.at<int>(7,0) == -1) {
+			previousRow = 4;
+			previousCol = 0;
+			newRow = 6;
+			newCol = 0;
+		}
 	}
 	
 	// Enpasssent would be a 1 in column 7, and 2 -1 in column 6.

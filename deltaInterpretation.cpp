@@ -18,7 +18,7 @@ array<int,4> deltaInterp(cv::Mat deltaMatrix) {
 	int enCol2 = 0;
 	int enRow3 = 0;
 	int enCol3 = 0;
-	cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
+	// cout << "delta = " << endl << " " << deltaMatrix << endl << endl;
 	int countOld = 0;
 	int countNew = 0;
 	for (int i = 0; i < deltaMatrix.rows; i++) {

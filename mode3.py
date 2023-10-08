@@ -71,7 +71,10 @@ while True:
 	
     response_from_cpp = cpp_process.stdout.readline()
 	
-    playerMove = detectedMove   
+    playerMove = detectedMove 
+
+    # NEED TO ADD SECTION HERE TO ADD QRBN TO END OF DETECTEDMOVE IF IT IS A PROMOTION
+      
     if len(playerMove) == 5:
         W_promoted_Piece = playerMove[4]
         W_promotion = True

@@ -68,14 +68,14 @@ int main() {
 	boardOld.at<int>(6,0) = 0;
 	boardOld.at<int>(7,0) = 1;
 	
-	boardNew.at<int>(0,0) = 0;
+	boardNew.at<int>(0,0) = 1;
 	boardNew.at<int>(1,0) = 0;
-	boardNew.at<int>(2,0) = 1;
-	boardNew.at<int>(3,0) = 1;
+	boardNew.at<int>(2,0) = 0;
+	boardNew.at<int>(3,0) = 0;
 	boardNew.at<int>(4,0) = 0;
-	boardNew.at<int>(5,0) = 0;
-	boardNew.at<int>(6,0) = 0;
-	boardNew.at<int>(7,0) = 1;
+	boardNew.at<int>(5,0) = 1;
+	boardNew.at<int>(6,0) = 1;
+	boardNew.at<int>(7,0) = 0;
 	
 	// Print Example Move
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;

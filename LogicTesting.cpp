@@ -58,16 +58,24 @@ int main() {
 	 	boardNew.at<int>(i,6) = -1;
 	 	boardNew.at<int>(i,7) = -1;
 	}
-	boardOld.at<int>(2,4) = 1;
-	boardOld.at<int>(3,4) = -1;
-	boardOld.at<int>(4,1) = 0;
-	boardOld.at<int>(3,6) = 0;
+
+	boardOld.at<int>(0,0) = 1;
+	boardOld.at<int>(1,0) = 0;
+	boardOld.at<int>(2,0) = 0;
+	boardOld.at<int>(3,0) = 0;
+	boardOld.at<int>(4,0) = 1;
+	boardOld.at<int>(5,0) = 0;
+	boardOld.at<int>(6,0) = 0;
+	boardOld.at<int>(7,0) = 1;
 	
-	boardNew.at<int>(4,4) = 0;
-	boardNew.at<int>(3,4) = 0;
-	boardNew.at<int>(4,1) = 0;
-	boardNew.at<int>(3,6) = 0;
-	boardNew.at<int>(3,5) = 1;
+	boardNew.at<int>(0,0) = 0;
+	boardNew.at<int>(1,0) = 0;
+	boardNew.at<int>(2,0) = 1;
+	boardNew.at<int>(3,0) = 1;
+	boardNew.at<int>(4,0) = 0;
+	boardNew.at<int>(5,0) = 0;
+	boardNew.at<int>(6,0) = 0;
+	boardNew.at<int>(7,0) = 1;
 	
 	// Print Example Move
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;

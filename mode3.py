@@ -44,6 +44,9 @@ B_promoted_Piece = ''
 en_passant_P = ''
 en_passant_R = ''
 
+moveCount = 1
+photoName = "P1000"
+
 
 while True:
 	# print(piece_Matrix)

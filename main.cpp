@@ -37,9 +37,9 @@ int main() {
 	std::getline(std::cin, message);
 	
 	// Create Example Board
-	cv::Mat board = CVRunMain();
+	//cv::Mat board = CVRunMain();
 	
-	std::cout << board << std::endl;
+	//std::cout << board << std::endl;
 	
 	// Print Example Board
 	// cout << "M = " << endl << " " << board << endl << endl;
@@ -62,26 +62,26 @@ int main() {
 	// std::cout << "M = " << std::endl << " " << boardnew << std::endl << std::endl;
 	
 	// Calculate the move from the moves (currently inverted)
-	cv::Mat deltaMatrix = deltaCalc(boardnew, board);
+	//::Mat deltaMatrix = deltaCalc(boardnew, board);
 	
-	std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
+	//std::cout << "M = " << std::endl << " " << deltaMatrix << std::endl << std::endl;
 	
 	// Interpret the information
-	array<int,4> result = deltaInterp(deltaMatrix);
+	//array<int,4> result = deltaInterp(deltaMatrix);
 	
 	
 	// Gather data from the information
-	int chessRowOld = get<0>(result);
-	int chessColOld = get<1>(result);
-	int chessRowNew = get<2>(result);
-	int chessColNew = get<3>(result);
+	//int chessRowOld = get<0>(result);
+	//int chessColOld = get<1>(result);
+	//int chessRowNew = get<2>(result);
+	//int chessColNew = get<3>(result);
 	
 	// Convert the move to chess notation
-	string moveOld = chessNotation(chessRowOld,chessColOld);
-	string moveNew = chessNotation(chessRowNew,chessColNew);
+	//string moveOld = chessNotation(chessRowOld,chessColOld);
+	//string moveNew = chessNotation(chessRowNew,chessColNew);
 	
 	// Print the move in chess notatin
-	cout << moveOld << moveNew << endl;
+	//cout << moveOld << moveNew << endl;
 	
 	//string move = moveOld+moveNew;
 	

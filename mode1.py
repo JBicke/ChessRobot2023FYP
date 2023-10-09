@@ -46,7 +46,7 @@ en_passant_R = ''
 while True:
 	# print(piece_Matrix)
 	UserMove = input("Make a move:")
-	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+	cpp_process = subprocess.Popen(["./chessRobot1400"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 	
 	# Send a message to the C++ program for player move (for analysing castling & en passent)
 	
@@ -85,7 +85,7 @@ while True:
 	cpp_process.stdout.close()
 	cpp_process.wait()
 	
-	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+	cpp_process = subprocess.Popen(["./chessRobot1400"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 
 	# Send a message to the C++ program for stockfish move
 	message_to_cpp = message_to_cpp + UserMove

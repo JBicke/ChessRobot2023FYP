@@ -217,6 +217,8 @@ std::string runStock(std::vector<std::string> moves)
         moveInput += move + " ";
     }
     
+    fprintf(out, "setoption name UCI_LimitStrength value true\n");
+    fprintf(out, "setoption name UCI_Elo value 1400\n");
     
     fprintf(out, "position startpos moves %s\n", moveInput.c_str());
     fprintf(out, "go depth 10 \n");

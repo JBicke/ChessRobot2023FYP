@@ -84,7 +84,7 @@ while True:
 	cpp_process.stdout.close()
 	cpp_process.wait()
 	
-	cpp_process = subprocess.Popen(["./chessRobot2"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+	cpp_process = subprocess.Popen(["./chessRobot1400"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
 
 	# Send a message to the C++ program for stockfish2 move
 	message_to_cpp = message_to_cpp + " " + stock1Move

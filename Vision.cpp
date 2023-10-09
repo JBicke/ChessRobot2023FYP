@@ -197,10 +197,10 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
     //cv::imshow("HSV Image", hsvImage);
 
-    cv::Scalar lowerRed1(0, 100, 150);
+    cv::Scalar lowerRed1(0, 100, 20);
     cv::Scalar upperRed1(30, 255, 255);
 
-    cv::Scalar lowerRed2(140, 50, 50);
+    cv::Scalar lowerRed2(140, 100, 20);
     cv::Scalar upperRed2(179, 255, 255);
 
     cv::Scalar lowerBlue(100, 150, 150);

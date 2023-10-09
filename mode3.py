@@ -45,7 +45,7 @@ en_passant_P = ''
 en_passant_R = ''
 
 moveCount = 1
-photoName = "T1000"
+photoName = "S1000"
 
 
 while True:

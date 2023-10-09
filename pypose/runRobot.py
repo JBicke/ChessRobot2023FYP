@@ -460,8 +460,8 @@ def reset():
 	driver.setReg(2,P_GOAL_SPEED_L, [speed2%256,speed2>>8])
 
 
-	p1 = 100
-	p2 = 1000
+	p1 = 900
+	p2 = 800
 
 	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
 	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])

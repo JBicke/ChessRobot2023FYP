@@ -409,7 +409,7 @@ cv::Mat CVRunMain(std::string photoName){
         // Declare the output variables
         Mat dst, cdst, cdstP;
         //std::string version = cv::getVersionString();
-        std::string photoName = "B1000";
+        //std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
         std::string filenameStr = "Pictures/" + photoName + ".jpg";

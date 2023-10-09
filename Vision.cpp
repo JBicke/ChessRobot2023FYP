@@ -197,7 +197,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
     //cv::imshow("HSV Image", hsvImage);
 
-    cv::Scalar lowerRed1(0, 150, 150);
+    cv::Scalar lowerRed1(0, 100, 150);
     cv::Scalar upperRed1(30, 255, 255);
 
     cv::Scalar lowerRed2(140, 50, 50);
@@ -237,23 +237,98 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Calculate center point
         int centerX = (boundingRect.x + boundingRect.x + boundingRect.width) / 2;
         int centerY = (boundingRect.y + boundingRect.y + boundingRect.height) / 2;
-        if (boundingRect.area() > 400){
-            // Determine the contour color based on the region
-            if (cv::countNonZero(redMask(boundingRect)) > 0)
-                contourColour = pinkColour;
-            else
-                contourColour = blueColour;
+         if (boundingRect.area() > 250) {
+            // Check if the bounding box is too wide
+            if (boundingRect.width > 100) {
+                cv::Rect leftRect(boundingRect.x, boundingRect.y, boundingRect.width / 2, boundingRect.height);
+                cv::Rect rightRect(boundingRect.x + boundingRect.width / 2, boundingRect.y, boundingRect.width / 2, boundingRect.height);
 
-            // Draw rectangle and center point
-            cv::rectangle(resultImage, boundingRect, contourColour, 2);
-            cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-            imshow("Result", resultImage);
-            
-            // Store center point in the appropriate vector
-            if (contourColour == pinkColour) {
-                pinkCenterPoints.push_back(cv::Point(centerX, centerY));
+                // Process and store the left rectangle
+                if (cv::countNonZero(redMask(leftRect)) > 0)
+                    contourColour = pinkColour;
+                else
+                    contourColour = blueColour;
+
+                cv::rectangle(resultImage, leftRect, contourColour, 2);
+                cv::circle(resultImage, cv::Point(centerX - boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
+                imshow("Result", resultImage);
+
+                if (contourColour == pinkColour) {
+                    pinkCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
+                } else {
+                    blueCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
+                }
+
+                // Process and store the right rectangle
+                if (cv::countNonZero(redMask(rightRect)) > 0)
+                    contourColour = pinkColour;
+                else
+                    contourColour = blueColour;
+
+                cv::rectangle(resultImage, rightRect, contourColour, 2);
+                cv::circle(resultImage, cv::Point(centerX + boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
+                imshow("Result", resultImage);
+
+                if (contourColour == pinkColour) {
+                    pinkCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
+                } else {
+                    blueCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
+                }
+
+            } else if (boundingRect.height > 100) {
+                // Check if the bounding box is too tall
+                cv::Rect topRect(boundingRect.x, boundingRect.y, boundingRect.width, boundingRect.height / 2);
+                cv::Rect bottomRect(boundingRect.x, boundingRect.y + boundingRect.height / 2, boundingRect.width, boundingRect.height / 2);
+
+                // Process and store the top rectangle
+                if (cv::countNonZero(redMask(topRect)) > 0)
+                    contourColour = pinkColour;
+                else
+                    contourColour = blueColour;
+
+                cv::rectangle(resultImage, topRect, contourColour, 2);
+                cv::circle(resultImage, cv::Point(centerX, centerY - boundingRect.height / 4), 4, contourColour, -1); // Draw center point
+                imshow("Result", resultImage);
+
+                if (contourColour == pinkColour) {
+                    pinkCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
+                } else {
+                    blueCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
+                }
+
+                // Process and store the bottom rectangle
+                if (cv::countNonZero(redMask(bottomRect)) > 0)
+                    contourColour = pinkColour;
+                else
+                    contourColour = blueColour;
+
+                cv::rectangle(resultImage, bottomRect, contourColour, 2);
+                cv::circle(resultImage, cv::Point(centerX, centerY + boundingRect.height / 4), 4, contourColour, -1); // Draw center point
+                imshow("Result", resultImage);
+
+                if (contourColour == pinkColour) {
+                    pinkCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
+                } else {
+                    blueCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
+                }
             } else {
-                blueCenterPoints.push_back(cv::Point(centerX, centerY));
+                // Determine the contour color based on the region
+                if (cv::countNonZero(redMask(boundingRect)) > 0)
+                    contourColour = pinkColour;
+                else
+                    contourColour = blueColour;
+
+                // Draw rectangle and center point
+                cv::rectangle(resultImage, boundingRect, contourColour, 2);
+                cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
+                imshow("Result", resultImage);
+                
+                // Store center point in the appropriate vector
+                if (contourColour == pinkColour) {
+                    pinkCenterPoints.push_back(cv::Point(centerX, centerY));
+                } else {
+                    blueCenterPoints.push_back(cv::Point(centerX, centerY));
+                }
             }
         }
     }
@@ -328,20 +403,20 @@ void reflectYAxis(int chessboard[8][8]) {
 }
 
 
-//cv::Mat CVRunMain(std::string photoName){
-int main(){
+cv::Mat CVRunMain(std::string photoName){
+//int main(){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
         //std::string version = cv::getVersionString();
-        //std::string photoName = "B1000";
+        std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
-        //std::string filenameStr = "Pictures/" + photoName + ".jpg";
+        std::string filenameStr = "Pictures/" + photoName + ".jpg";
 
         // Convert std::string to const char*
-        //const char* filename = filenameStr.c_str();
-        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1100.jpg";
+        const char* filename = filenameStr.c_str();
+        //const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/Y1605.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -351,6 +426,13 @@ int main(){
             printf(" Program Arguments: [image_name -- default %s] \n", filename);
             //return 0;
         }
+
+         // Brightness factor (increase to brighten, decrease to darken)
+        //double brightness_factor = 1.5;  // Adjust this value to control brightness
+
+        // Perform addition to brighten the image
+        //src = src + cv::Scalar(brightness_factor, brightness_factor, brightness_factor);
+
         //imshow("src", src);
         // Locate green square positions
         std::vector<cv::Point> crop_points = locateGreenSquares(src);
@@ -702,11 +784,11 @@ int main(){
         }
 
         // Print the array
-        std::cout << chessboardMat << std::endl;
+        //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
-        cv::waitKey(0);
-        return 0;
-        //return chessboardMat;
+        //cv::waitKey(0);
+        //return 0;
+        return chessboardMat;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

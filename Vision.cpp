@@ -237,7 +237,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Calculate center point
         int centerX = (boundingRect.x + boundingRect.x + boundingRect.width) / 2;
         int centerY = (boundingRect.y + boundingRect.y + boundingRect.height) / 2;
-         if (boundingRect.area() > 250) {
+         if (boundingRect.area() > 200) {
             // Check if the bounding box is too wide
             if (boundingRect.width > 100) {
                 cv::Rect leftRect(boundingRect.x, boundingRect.y, boundingRect.width / 2, boundingRect.height);
@@ -409,7 +409,7 @@ cv::Mat CVRunMain(std::string photoName){
         // Declare the output variables
         Mat dst, cdst, cdstP;
         //std::string version = cv::getVersionString();
-        std::string photoName = "B1000";
+        //std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
         std::string filenameStr = "Pictures/" + photoName + ".jpg";

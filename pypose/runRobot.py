@@ -451,3 +451,17 @@ def calibrationModeS1(direction,object_position):
 	# print(f"Object position: {object_position}")
 	driver.setReg(1,P_GOAL_POSITION_L, [object_position%256,object_position>>8])
 	return object_position
+	
+def reset():
+	
+	speed1 = 50
+	speed2 = 30
+	driver.setReg(1,P_GOAL_SPEED_L, [speed1%256,speed1>>8])
+	driver.setReg(2,P_GOAL_SPEED_L, [speed2%256,speed2>>8])
+
+
+	p1 = 100
+	p2 = 1000
+
+	driver.setReg(1,P_GOAL_POSITION_L, [p1%256,p1>>8])
+	driver.setReg(2,P_GOAL_POSITION_L, [p2%256,p2>>8])

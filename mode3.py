@@ -45,21 +45,36 @@ en_passant_P = ''
 en_passant_R = ''
 
 moveCount = 1
-photoName = "P1000"
+photoName = "T1000"
 
 
 while True:
 	# print(piece_Matrix)
     # CHANGE TO INPUT HAVE YOU MADE YOUR MOVE
-    photoName = input("Name for photo:")
-	
-    # INSERT SECTION HERE FOR TAKE A PHOTO WITH THE NEW NAME, PHOTO NAME WILL INCREMENT EACH TIME
-    # There needs to be a photo in the database called P1000 that has the original setup that the code can reliably interpret.
+    go = input("enter to go")
+    
+    prefix = photoName[0]  # Assuming the prefix is a single character
+    numeric_part = int(photoName[1:])  # Extract the numeric part and convert to an integer
+
+    # Increment the numeric part by 1
+    numeric_part += 1
+
+    # Concatenate the prefix and the incremented numeric part
+    photoName = f"{prefix}{numeric_part}"
+    print(photoName)
+    cpp_process = subprocess.Popen(["./take_Img"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    cpp_process.stdin.write(photoName)
+    cpp_process.stdin.flush()
+
+    cpp_process.stdin.close()
+    cpp_process.stdout.close()
+    cpp_process.wait()
 
     cpp_process = subprocess.Popen(["./chessRobot7"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     cpp_process.stdin.write(photoName +"\n")
     cpp_process.stdin.flush()
     detectedMove = cpp_process.stdout.readline()
+    print(detectedMove)
 
     cpp_process.stdin.close()
     cpp_process.stdout.close()
@@ -259,3 +274,4 @@ while True:
     B_promotion = False
     W_promoted_Piece = ''
     B_promoted_Piece = ''
+    runRobot.reset()

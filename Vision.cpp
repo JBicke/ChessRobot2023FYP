@@ -775,14 +775,14 @@ cv::Mat CVRunMain(std::string photoName){
         //rotateChessboard(chessboardPosition);
         reflectYAxis(chessboardPosition);
 
-        /*
+        
         cv::Mat chessboardMat(8, 8, CV_32S);
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 chessboardMat.at<int>(i, j) = chessboardPosition[i][j];
             }
         }
-        */
+        
         // Print the array
         //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;

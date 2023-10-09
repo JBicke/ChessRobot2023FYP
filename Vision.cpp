@@ -288,7 +288,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
 
                 cv::rectangle(resultImage, topRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY - boundingRect.height / 4), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
 
                 if (contourColour == pinkColour) {
                     pinkCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
@@ -304,7 +304,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
 
                 cv::rectangle(resultImage, bottomRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY + boundingRect.height / 4), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
 
                 if (contourColour == pinkColour) {
                     pinkCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
@@ -321,7 +321,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
                 // Draw rectangle and center point
                 cv::rectangle(resultImage, boundingRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
                 
                 // Store center point in the appropriate vector
                 if (contourColour == pinkColour) {
@@ -491,7 +491,7 @@ cv::Mat CVRunMain(std::string photoName){
         cv::Point2f  point2 = filteredCropPoints[1];
         cv::Point2f  point3 = filteredCropPoints[2];
         cv::Point2f  point4 = filteredCropPoints[3];
-        cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
+        //cout << point1 << " " << point2 << " " << point3 << " " << point4 << endl;
 
         // Initialize min_crop_point and min_crop_point_ind with large values
         int min_crop_point = INT_MAX;
@@ -642,7 +642,7 @@ cv::Mat CVRunMain(std::string photoName){
 
         std::vector<int> filtered_x_points = filteredPoints.x;
         std::vector<int> filtered_y_points = filteredPoints.y;
-        
+        /*
         std::cout << "Filtered y_points : ";
         for (int y : filtered_y_points) {
             std::cout << y << " ";
@@ -652,7 +652,7 @@ cv::Mat CVRunMain(std::string photoName){
         for (int x : filtered_x_points) {
             std::cout << x << " ";
         }
-
+        */
 
         CenterPoints centerPoints = processAndShowContours(croppedImage);
 
@@ -686,7 +686,7 @@ cv::Mat CVRunMain(std::string photoName){
                 filteredBlueCenterPoints.push_back(point1);
         }
 
-        // Print the filtered points
+        /* Print the filtered points
         std::cout << "Filtered Pink Center Points:" << std::endl;
         for (const auto& point : filteredPinkCenterPoints)
             std::cout << point << std::endl;
@@ -695,7 +695,7 @@ cv::Mat CVRunMain(std::string photoName){
         for (const auto& point : filteredBlueCenterPoints)
             std::cout << point << std::endl;
 
-        /*std::cout << "Blue Center Points :" << std::endl;
+        std::cout << "Blue Center Points :" << std::endl;
         for (const cv::Point& center : pinkCenterPoints) {
             int centerX = center.x;
             int centerY = center.y;
@@ -764,25 +764,25 @@ cv::Mat CVRunMain(std::string photoName){
                 }
             }
         }
-        
+        /*
         for (int i = 0; i < 8; ++i) {
         for (int j = 0; j < 8; ++j) {
             std::cout << std::setw(3) << chessboardPosition[i][j] << " ";
         }
         std::cout << "\n";
     }
-
+        */
         //rotateChessboard(chessboardPosition);
         reflectYAxis(chessboardPosition);
 
-
+        /*
         cv::Mat chessboardMat(8, 8, CV_32S);
         for (int i = 0; i < 8; ++i) {
             for (int j = 0; j < 8; ++j) {
                 chessboardMat.at<int>(i, j) = chessboardPosition[i][j];
             }
         }
-
+        */
         // Print the array
         //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;

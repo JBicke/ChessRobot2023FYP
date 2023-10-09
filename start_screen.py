@@ -5,16 +5,26 @@ def switch_to_layout_1():
      layout1.show()
      layout2.hide()
      layout3.hide()
+     layout4.hide()
 
 def switch_to_layout_2():
      layout1.hide()
      layout2.show()
      layout3.hide()
+     layout4.hide()
 
 def switch_to_layout_3():
      layout1.hide()
      layout2.hide()
      layout3.show()
+     layout4.hide()
+
+def switch_to_layout_4():
+     layout1.hide()
+     layout2.hide()
+     layout3.hide()
+     layout4.show()
+
 
 def button_clicked():
     print("Button Clicked")
@@ -163,7 +173,7 @@ l1_button = PushButton(l1_button_box_2, text = "Type Moves",  command=switch_to_
 l1_button_box_3 = Box(layout1, grid = [0,3], width=400, height = 100, border = 2)
 l1_button = PushButton(l1_button_box_3, text = "Play Automatically",  command=switch_to_layout_1, width = "fill", height = "fill")
 
-l1_slider = Slider(layout1, start=1, end=3500, command = slider_changed, grid = [1,1,1,3], horizontal=False, width = 300, height = 400)
+l1_slider = Slider(layout1, start=1350, end=3100, command = slider_changed, grid = [1,1,1,3], horizontal=False, width = 300, height = 400)
 
 
 #play against bot manually
@@ -172,8 +182,8 @@ layout2 = Box(app, layout="auto")
 l2_title_box = Box(layout2, align="top", border= False)
 Text(l2_title_box, text="Chester            ", size=48, color = "#607D3B", align="left")
 
-l2_drawing = Drawing(l2_title_box)
-l2_drawing.rectangle(10,10,100,100, color = 'blue')
+l2_reset = PushButton(l2_title_box, align = "right", height = 5, width = 10, text = "Restart", command = switch_to_layout_1)
+
 
 l2_log_box = Box(layout2, align="left", width=500, height = 400, border = 2)
 l2_logbox = TextBox(l2_log_box, width = 'fill', height = 'fill', multiline = True)
@@ -211,11 +221,13 @@ l3_buttonR = PushButton(layout3, text = "Promotion: R", command=add_r, width = 1
 l3_buttonb = PushButton(layout3, text = "Promotion: B", command=add_b, width = 10, height = 10, padx=10, pady=10, grid = [9, 2])
 
 l3_button_sub = PushButton(layout3, text="Submit Move", command = submit_move, width = 60, height = 10, grid = [0,3,6,1])
-l3_logbox_2 = TextBox(layout3, width = 20, height = 10, multiline = True, grid = [6,3,2,5])
-l3_logbox_3 = TextBox(layout3, width = 20, height = 10, multiline = True, grid = [8,3,2,5])
+l3_logbox_2 = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [6,3,1,5])
+l3_logbox_3 = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [7,3,1,5])
+l3_button_reset = PushButton(layout3, width = 10, height = 5, text = "Restart", command = switch_to_layout_1, grid = [8, 3, 2, 5])
 layout3.hide()
 
 
 #automatically
+layout4 = Box(app, layout = "grid")
 
 app.display()

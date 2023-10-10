@@ -192,15 +192,79 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
     return filteredPoints;
 }
 
+void adaptiveHSVThreshold(cv::Mat& hsvImage, cv::Scalar& lowerBound, cv::Scalar& upperBound) {
+    cv::Scalar meanHSV = cv::mean(hsvImage);
+    cv::Scalar stdDevHSV;
+    cv::meanStdDev(hsvImage, cv::noArray(), stdDevHSV);
+
+    // Calculate lower and upper bounds based on mean and standard deviation
+    lowerBound = cv::Scalar(meanHSV[0] - stdDevHSV[0], meanHSV[1] - stdDevHSV[1], meanHSV[2] - stdDevHSV[2]);
+    upperBound = cv::Scalar(meanHSV[0] + stdDevHSV[0], meanHSV[1] + stdDevHSV[1], meanHSV[2] + stdDevHSV[2]);
+}
+
 CenterPoints processAndShowContours(const cv::Mat& src) {
+
+        // Convert the image to HSV color space
     cv::Mat hsvImage;
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
-    //cv::imshow("HSV Image", hsvImage);
+/*
+    // Get image dimensions
+    int height = hsvImage.rows;
+    int width = hsvImage.cols;
 
-    cv::Scalar lowerRed1(0, 30, 10);
-    cv::Scalar upperRed1(40, 255, 255);
+    // Split the image into top and bottom halves
+    cv::Rect topHalfRect(0, 0, width, height / 2);
+    cv::Rect bottomHalfRect(0, height / 2, width, height / 2);
 
-    cv::Scalar lowerRed2(130, 40, 10);
+    cv::Mat topHalf = hsvImage(topHalfRect);
+    cv::Mat bottomHalf = hsvImage(bottomHalfRect);
+
+    // Adaptive thresholding for HSV ranges in the top and bottom halves
+    cv::Scalar lowerRedTop1, upperRedTop1;
+    cv::Scalar lowerRedBottom1, upperRedBottom1;
+    cv::Scalar lowerRedTop2, upperRedTop2;
+    cv::Scalar lowerRedBottom2, ipperRedBottom2;
+    cv::Scalar lowerBlueTop, upperBlueTop;
+    cv::Scalar lowerBlueBottom, upperBlueBottom;
+
+    adaptiveHSVThreshold(topHalf, lowerRedTop1, upperRedTop1);
+    adaptiveHSVThreshold(bottomHalf, lowerRedBottom1, upperRedBottom1);
+
+    // Adjust saturation and value thresholds as needed
+    lowerRedTop1[1] = 30;
+    lowerRedBottom1[1] = 30;
+    upperRedTop1[1] = 255;
+    upperRedBottom1[1] = 255;
+
+    lowerBlueTop[1] = 100;
+    lowerBlueBottom[1] = 100;
+    upperBlueTop[1] = 255;
+    upperBlueBottom[1] = 255;
+
+    // Create masks for the top and bottom halves
+    cv::Mat redMaskTop, redMaskBottom;
+    cv::Mat blueMaskTop, blueMaskBottom;
+
+    cv::inRange(hsvImage, lowerRedTop1, upperRedTop1, redMaskTop);
+    cv::inRange(hsvImage, lowerRedBottom1, upperRedBottom1, redMaskBottom);
+    cv::inRange(hsvImage, lowerBlueTop, upperBlueTop, blueMaskTop);
+    cv::inRange(hsvImage, lowerBlueBottom, upperBlueBottom, blueMaskBottom);
+
+    cv::Mat resultMaskTop = redMaskTop | blueMaskTop;
+    cv::Mat resultMaskBottom = redMaskBottom | blueMaskBottom;
+    
+    // Merge the enhanced corners with the original image
+    cv::Mat enhancedImage;
+    src.copyTo(enhancedImage);
+
+    enhancedImage.setTo(cv::Scalar(100, 100, 100), resultMaskTop);
+    enhancedImage.setTo(cv::Scalar(200, 200, 200), resultMaskBottom);
+    cv::imshow("enhanced", enhancedImage);
+    */
+    cv::Scalar lowerRed1(0, 30, 20);
+    cv::Scalar upperRed1(30, 255, 255);
+
+    cv::Scalar lowerRed2(140, 50, 50);
     cv::Scalar upperRed2(179, 255, 255);
 
     cv::Scalar lowerBlue(100, 150, 150);
@@ -214,6 +278,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::inRange(hsvImage, lowerBlue, upperBlue, blueMask);
 
     cv::Mat resultMask = redMask | blueMask;
+
 
     int morphSize = 2;
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(morphSize, morphSize));
@@ -237,81 +302,155 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Calculate center point
         int centerX = (boundingRect.x + boundingRect.x + boundingRect.width) / 2;
         int centerY = (boundingRect.y + boundingRect.y + boundingRect.height) / 2;
-         if (boundingRect.area() > 200) {
+        if (boundingRect.area() > 200) {
             // Check if the bounding box is too wide
-            if (boundingRect.width > 100) {
+            if (boundingRect.width > 100 && boundingRect.height > 80) {
                 cv::Rect leftRect(boundingRect.x, boundingRect.y, boundingRect.width / 2, boundingRect.height);
                 cv::Rect rightRect(boundingRect.x + boundingRect.width / 2, boundingRect.y, boundingRect.width / 2, boundingRect.height);
 
+                cv::Rect leftRectTop(leftRect.x, leftRect.y, leftRect.width, leftRect.height / 2);
+                cv::Rect rightRectTop(rightRect.x, rightRect.y, rightRect.width, rightRect.height / 2);
+                cv::Rect leftRectBottom(leftRect.x, leftRect.y + leftRect.height / 2, leftRect.width, leftRect.height / 2);
+                cv::Rect rightRectBottom(rightRect.x, rightRect.y + rightRect.height / 2, rightRect.width, rightRect.height / 2);
+
                 // Process and store the left rectangle
-                if (cv::countNonZero(redMask(leftRect)) > 0)
-                    contourColour = pinkColour;
-                else
-                    contourColour = blueColour;
+                    if (cv::countNonZero(redMask(leftRectTop)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
 
-                cv::rectangle(resultImage, leftRect, contourColour, 2);
-                cv::circle(resultImage, cv::Point(centerX - boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
-                //imshow("Result", resultImage);
+                    cv::rectangle(resultImage, leftRectTop, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX - leftRect.width / 2, centerY - leftRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
 
-                if (contourColour == pinkColour) {
-                    pinkCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
-                } else {
-                    blueCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX - leftRect.width / 2, centerY - leftRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX - leftRect.width / 2, centerY - leftRect.height / 4));
+                    }
+
+                    // Process and store the right rectangle
+                    if (cv::countNonZero(redMask(rightRectTop)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, rightRectTop, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX + rightRect.width / 2, centerY - rightRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX + rightRect.width / 2, centerY - rightRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX + rightRect.width / 2, centerY - rightRect.height / 4));
+                    }
+
+                    if (cv::countNonZero(redMask(leftRectBottom)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, leftRectBottom, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX - leftRect.width / 2, centerY + leftRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX - leftRect.width / 2, centerY + leftRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX - leftRect.width / 2, centerY + leftRect.height / 4));
+                    }
+
+                    // Process and store the right rectangle
+                    if (cv::countNonZero(redMask(rightRectBottom)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, rightRectBottom, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX + rightRect.width / 2, centerY + rightRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX + rightRect.width / 2, centerY + rightRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX + rightRect.width / 2, centerY + rightRect.height / 4));
+                    }
+            }
+            else if (boundingRect.width > 100){
+                    cv::Rect leftRect(boundingRect.x, boundingRect.y, boundingRect.width / 2, boundingRect.height);
+                    cv::Rect rightRect(boundingRect.x + boundingRect.width / 2, boundingRect.y, boundingRect.width / 2, boundingRect.height);
+
+                    // Process and store the left rectangle
+                    if (cv::countNonZero(redMask(leftRect)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, leftRect, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX - boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
+                    }
+
+                    // Process and store the right rectangle
+                    if (cv::countNonZero(redMask(rightRect)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, rightRect, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX + boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
+                    }
                 }
+                else if (boundingRect.height > 80) {
+                    // Check if the bounding box is too tall
+                    cv::Rect topRect(boundingRect.x, boundingRect.y, boundingRect.width, boundingRect.height / 2);
+                    cv::Rect bottomRect(boundingRect.x, boundingRect.y + boundingRect.height / 2, boundingRect.width, boundingRect.height / 2);
 
-                // Process and store the right rectangle
-                if (cv::countNonZero(redMask(rightRect)) > 0)
-                    contourColour = pinkColour;
-                else
-                    contourColour = blueColour;
+                    // Process and store the top rectangle
+                    if (cv::countNonZero(redMask(topRect)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
 
-                cv::rectangle(resultImage, rightRect, contourColour, 2);
-                cv::circle(resultImage, cv::Point(centerX + boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
-                //imshow("Result", resultImage);
+                    cv::rectangle(resultImage, topRect, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX, centerY - boundingRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
 
-                if (contourColour == pinkColour) {
-                    pinkCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
-                } else {
-                    blueCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
+                    }
+
+                    // Process and store the bottom rectangle
+                    if (cv::countNonZero(redMask(bottomRect)) > 0)
+                        contourColour = pinkColour;
+                    else
+                        contourColour = blueColour;
+
+                    cv::rectangle(resultImage, bottomRect, contourColour, 2);
+                    cv::circle(resultImage, cv::Point(centerX, centerY + boundingRect.height / 4), 4, contourColour, -1); // Draw center point
+                    //imshow("Result", resultImage);
+
+                    if (contourColour == pinkColour) {
+                        pinkCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
+                    } else {
+                        blueCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
+                    }
                 }
-
-            } else if (boundingRect.height > 100) {
-                // Check if the bounding box is too tall
-                cv::Rect topRect(boundingRect.x, boundingRect.y, boundingRect.width, boundingRect.height / 2);
-                cv::Rect bottomRect(boundingRect.x, boundingRect.y + boundingRect.height / 2, boundingRect.width, boundingRect.height / 2);
-
-                // Process and store the top rectangle
-                if (cv::countNonZero(redMask(topRect)) > 0)
-                    contourColour = pinkColour;
-                else
-                    contourColour = blueColour;
-
-                cv::rectangle(resultImage, topRect, contourColour, 2);
-                cv::circle(resultImage, cv::Point(centerX, centerY - boundingRect.height / 4), 4, contourColour, -1); // Draw center point
-                //imshow("Result", resultImage);
-
-                if (contourColour == pinkColour) {
-                    pinkCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
-                } else {
-                    blueCenterPoints.push_back(cv::Point(centerX, centerY - boundingRect.height / 4));
-                }
-
-                // Process and store the bottom rectangle
-                if (cv::countNonZero(redMask(bottomRect)) > 0)
-                    contourColour = pinkColour;
-                else
-                    contourColour = blueColour;
-
-                cv::rectangle(resultImage, bottomRect, contourColour, 2);
-                cv::circle(resultImage, cv::Point(centerX, centerY + boundingRect.height / 4), 4, contourColour, -1); // Draw center point
-                //imshow("Result", resultImage);
-
-                if (contourColour == pinkColour) {
-                    pinkCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
-                } else {
-                    blueCenterPoints.push_back(cv::Point(centerX, centerY + boundingRect.height / 4));
-                }
-            } else {
+            
+            else {
                 // Determine the contour color based on the region
                 if (cv::countNonZero(redMask(boundingRect)) > 0)
                     contourColour = pinkColour;
@@ -333,18 +472,18 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         }
     }
     //std::cout << "Pink Center Points:" << std::endl;
-for (const cv::Point& center : pinkCenterPoints) {
-    int centerX = center.x;
-    int centerY = center.y;
-    //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
-}
+    for (const cv::Point& center : pinkCenterPoints) {
+        int centerX = center.x;
+        int centerY = center.y;
+        //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+    }
 
-//std::cout << "Blue Center Points:" << std::endl;
-for (const cv::Point& center : blueCenterPoints) {
-    int centerX = center.x;
-    int centerY = center.y;
-    //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
-}
+    //std::cout << "Blue Center Points:" << std::endl;
+    for (const cv::Point& center : blueCenterPoints) {
+        int centerX = center.x;
+        int centerY = center.y;
+        //std::cout << "Center Point: (" << centerX << ", " << centerY << ")" << std::endl;
+    }
 
     CenterPoints centerPoints;
     
@@ -415,7 +554,7 @@ int main(){
 
         // Convert std::string to const char*
         //const char* filename = filenameStr.c_str();
-        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/S1001.jpg";
+        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/R1000.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));

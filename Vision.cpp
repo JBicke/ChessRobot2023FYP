@@ -554,7 +554,7 @@ int main(){
 
         // Convert std::string to const char*
         //const char* filename = filenameStr.c_str();
-        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/R1000.jpg";
+        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1000.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));

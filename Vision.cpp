@@ -197,10 +197,10 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
     //cv::imshow("HSV Image", hsvImage);
 
-    cv::Scalar lowerRed1(0, 100, 150);
-    cv::Scalar upperRed1(30, 255, 255);
+    cv::Scalar lowerRed1(0, 30, 10);
+    cv::Scalar upperRed1(40, 255, 255);
 
-    cv::Scalar lowerRed2(140, 50, 20);
+    cv::Scalar lowerRed2(130, 40, 10);
     cv::Scalar upperRed2(179, 255, 255);
 
     cv::Scalar lowerBlue(100, 150, 150);
@@ -215,7 +215,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
 
     cv::Mat resultMask = redMask | blueMask;
 
-    int morphSize = 3;
+    int morphSize = 2;
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_RECT, cv::Size(morphSize, morphSize));
     cv::morphologyEx(resultMask, resultMask, cv::MORPH_OPEN, kernel);
 
@@ -237,7 +237,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
         // Calculate center point
         int centerX = (boundingRect.x + boundingRect.x + boundingRect.width) / 2;
         int centerY = (boundingRect.y + boundingRect.y + boundingRect.height) / 2;
-         if (boundingRect.area() > 350) {
+         if (boundingRect.area() > 200) {
             // Check if the bounding box is too wide
             if (boundingRect.width > 100) {
                 cv::Rect leftRect(boundingRect.x, boundingRect.y, boundingRect.width / 2, boundingRect.height);
@@ -321,7 +321,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
                 // Draw rectangle and center point
                 cv::rectangle(resultImage, boundingRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-                //imshow("Result", resultImage);
+                imshow("Result", resultImage);
                 
                 // Store center point in the appropriate vector
                 if (contourColour == pinkColour) {
@@ -402,8 +402,8 @@ void reflectYAxis(int chessboard[8][8]) {
     }
 }
 
-cv::Mat CVRunMain(std::string photoName){
-//int main(){
+//cv::Mat CVRunMain(std::string photoName){
+int main(){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
@@ -411,11 +411,11 @@ cv::Mat CVRunMain(std::string photoName){
         //std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
-        std::string filenameStr = "Pictures/" + photoName + ".jpg";
+        //std::string filenameStr = "Pictures/" + photoName + ".jpg";
 
         // Convert std::string to const char*
-        const char* filename = filenameStr.c_str();
-        //const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1001.jpg";
+        //const char* filename = filenameStr.c_str();
+        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/S1001.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -426,6 +426,7 @@ cv::Mat CVRunMain(std::string photoName){
             //return 0;
         }
 
+        
          // Brightness factor (increase to brighten, decrease to darken)
         //double brightness_factor = 1.5;  // Adjust this value to control brightness
 
@@ -629,8 +630,40 @@ cv::Mat CVRunMain(std::string photoName){
         cv::Rect crop_region(min_x, min_y, width, height);
 
         cv::Mat croppedImage = rotatedImage(crop_region);
+        /*
+        // Get image dimensions
+        int height_s = croppedImage.rows;
+        int width_s = croppedImage.cols;
 
-        //cv::imshow("Cropped Image", croppedImage);
+        // Create a mask for the top and bottom corners
+        int cornerSize = 50;  // Size of the corner region
+        cv::Mat mask = cv::Mat::zeros(height_s, width_s, CV_8U);
+
+        // Top left corner
+        mask(cv::Rect(0, 0, cornerSize, cornerSize)).setTo(255);
+
+        // Top right corner
+        mask(cv::Rect(width_s - cornerSize, 0, cornerSize, cornerSize)).setTo(255);
+
+        // Bottom left corner
+        mask(cv::Rect(0, height_s - cornerSize, cornerSize, cornerSize)).setTo(255);
+
+        // Bottom right corner
+        mask(cv::Rect(width_s - cornerSize, height_s - cornerSize, cornerSize, cornerSize)).setTo(255);
+
+        // Enhance the brightness of the corners
+        //cv::Mat enhancedImage;
+        //cv::add(src, cv::Scalar(100, 100, 100), enhancedImage, mask);
+        croppedImage.setTo(cv::Scalar(100, 100, 100), mask); 
+        */
+        cv::Mat croppedImageBright;
+        double brightness_factor = 2;  // Adjust this value to control brightness
+
+        // Perform addition to brighten the image
+        croppedImage.convertTo(croppedImageBright, -1, 1, 25);
+
+
+        cv::imshow("Cropped Image", croppedImageBright);
         
         //convert to gray_scale
         cv::Mat src_gray;
@@ -653,7 +686,7 @@ cv::Mat CVRunMain(std::string photoName){
         }
         */
 
-        CenterPoints centerPoints = processAndShowContours(croppedImage);
+        CenterPoints centerPoints = processAndShowContours(croppedImageBright);
 
         std::vector<cv::Point> pinkCenterPoints = centerPoints.pink;
         std::vector<cv::Point> blueCenterPoints = centerPoints.blue;
@@ -783,11 +816,11 @@ cv::Mat CVRunMain(std::string photoName){
         }
         
         // Print the array
-        //std::cout << chessboardMat << std::endl;
+        std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
-        //cv::waitKey(0);
-        //return 0;
-        return chessboardMat;
+        cv::waitKey(0);
+        return 0;
+        //return chessboardMat;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

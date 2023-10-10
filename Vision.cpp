@@ -541,8 +541,8 @@ void reflectYAxis(int chessboard[8][8]) {
     }
 }
 
-//cv::Mat CVRunMain(std::string photoName){
-int main(){
+cv::Mat CVRunMain(std::string photoName){
+//int main(){
     try {
         // Declare the output variables
         Mat dst, cdst, cdstP;
@@ -550,11 +550,11 @@ int main(){
         //std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
-        //std::string filenameStr = "Pictures/" + photoName + ".jpg";
+        std::string filenameStr = "Pictures/" + photoName + ".jpg";
 
         // Convert std::string to const char*
-        //const char* filename = filenameStr.c_str();
-        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1000.jpg";
+        const char* filename = filenameStr.c_str();
+        //const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1000.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -955,11 +955,11 @@ int main(){
         }
         
         // Print the array
-        std::cout << chessboardMat << std::endl;
+        //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
-        cv::waitKey(0);
-        return 0;
-        //return chessboardMat;
+        //cv::waitKey(0);
+        //return 0;
+        return chessboardMat;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

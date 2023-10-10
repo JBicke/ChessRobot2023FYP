@@ -77,7 +77,7 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
     cv::Mat c_cannyEdges, p_cannyEdges;
     cv::Mat cannyEdges;
     Canny(image, cannyEdges, 100, 150, 3);
-    imshow("edges", cannyEdges);
+    //imshow("edges", cannyEdges);
     cvtColor(cannyEdges, c_cannyEdges, COLOR_GRAY2BGR);
     p_cannyEdges = cannyEdges.clone();
 
@@ -101,7 +101,7 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
         line( c_cannyEdges, pt1, pt2, Scalar(0,0,255), 3, LINE_AA);
     }
 
-    imshow("Canny edges", c_cannyEdges);
+    //imshow("Canny edges", c_cannyEdges);
 
     vector<double> x_points;
     vector<double> y_points;
@@ -195,7 +195,7 @@ FilteredPoints cannyEdgeDetection(const cv::Mat& image){
 CenterPoints processAndShowContours(const cv::Mat& src) {
     cv::Mat hsvImage;
     cv::cvtColor(src, hsvImage, cv::COLOR_BGR2HSV);
-    cv::imshow("HSV Image", hsvImage);
+    //cv::imshow("HSV Image", hsvImage);
 
     cv::Scalar lowerRed1(0, 100, 150);
     cv::Scalar upperRed1(30, 255, 255);
@@ -251,7 +251,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
 
                 cv::rectangle(resultImage, leftRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX - boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
 
                 if (contourColour == pinkColour) {
                     pinkCenterPoints.push_back(cv::Point(centerX - boundingRect.width / 4, centerY));
@@ -267,7 +267,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
 
                 cv::rectangle(resultImage, rightRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX + boundingRect.width / 4, centerY), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
 
                 if (contourColour == pinkColour) {
                     pinkCenterPoints.push_back(cv::Point(centerX + boundingRect.width / 4, centerY));
@@ -321,7 +321,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
                 // Draw rectangle and center point
                 cv::rectangle(resultImage, boundingRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
                 
                 // Store center point in the appropriate vector
                 if (contourColour == pinkColour) {
@@ -402,8 +402,7 @@ void reflectYAxis(int chessboard[8][8]) {
     }
 }
 
-int main(){
-//cv::Mat CVRunMain(std::string photoName){
+cv::Mat CVRunMain(std::string photoName){
 //int main(){
     try {
         // Declare the output variables
@@ -412,11 +411,11 @@ int main(){
         //std::string photoName = "B1000";
         // Print the version information
         //std::cout << "OpenCV version: " << version << std::endl;
-        //std::string filenameStr = "Pictures/" + photoName + ".jpg";
+        std::string filenameStr = "Pictures/" + photoName + ".jpg";
 
         // Convert std::string to const char*
-        //const char* filename = filenameStr.c_str();
-        const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1001.jpg";
+        const char* filename = filenameStr.c_str();
+        //const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1001.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -433,7 +432,7 @@ int main(){
         // Perform addition to brighten the image
         //src = src + cv::Scalar(brightness_factor, brightness_factor, brightness_factor);
 
-        imshow("src", src);
+        //imshow("src", src);
         // Locate green square positions
         std::vector<cv::Point> crop_points = locateGreenSquares(src);
         int numberOfGreenSquares = crop_points.size();
@@ -537,7 +536,7 @@ int main(){
         //std::cout << "Height: " << Rheight << std::endl;
 
         //display rotated image
-        cv::imshow("Rotated Image", rotatedImage);
+        //cv::imshow("Rotated Image", rotatedImage);
         
         //locate green squares in rotated image
         std::vector<cv::Point> greenSquarePositions = locateGreenSquares(rotatedImage);
@@ -631,7 +630,7 @@ int main(){
 
         cv::Mat croppedImage = rotatedImage(crop_region);
 
-        cv::imshow("Cropped Image", croppedImage);
+        //cv::imshow("Cropped Image", croppedImage);
         
         //convert to gray_scale
         cv::Mat src_gray;
@@ -784,11 +783,11 @@ int main(){
         }
         
         // Print the array
-        std::cout << chessboardMat << std::endl;
+        //std::cout << chessboardMat << std::endl;
         //cout << "finished" << endl;
-        cv::waitKey(0);
-        return 0;
-        //return chessboardMat;
+        //cv::waitKey(0);
+        //return 0;
+        return chessboardMat;
     } catch (...) {
         std::cerr << "Unknown error occurred." << std::endl;
     }

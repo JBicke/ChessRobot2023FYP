@@ -6,6 +6,10 @@ def switch_to_layout_1():
      layout2.hide()
      layout3.hide()
      layout4.hide()
+     l2_logbox.value = ""
+     l3_logbox.value = ""
+     l3_logbox_move.value = ""
+     l3_logbox_tt.value = ""
 
 def switch_to_layout_2():
      layout1.hide()
@@ -152,9 +156,21 @@ def add_n():
     l3_logbox.value = updated_text
 
 def submit_move():
-    #move = l3_logbox.value
+    move = l3_logbox.value
     l3_logbox.value = ""
+    
+    current_text = l3_logbox_move.value
+    new_text = move
+    updated_text = new_text + "\n" + current_text
+    l3_logbox_move.value = updated_text
+    
+    current_text = l3_logbox_tt.value
+    new_text = "hello"
+    updated_text = new_text + "\n" + current_text
+    l3_logbox_tt.value = updated_text
 
+def clear_move():
+    l3_logbox.value = ""
 
 
 app = App("dyamic Layout", width=1024, height = 600, bg= "#bbbbbb")
@@ -171,7 +187,7 @@ l1_button_box_2 = Box(layout1, grid = [0,2], width=400, height = 100, border = 2
 l1_button = PushButton(l1_button_box_2, text = "Type Moves",  command=switch_to_layout_3, width = "fill", height = "fill")
 
 l1_button_box_3 = Box(layout1, grid = [0,3], width=400, height = 100, border = 2)
-l1_button = PushButton(l1_button_box_3, text = "Play Automatically",  command=switch_to_layout_1, width = "fill", height = "fill")
+l1_button = PushButton(l1_button_box_3, text = "Play Automatically",  command=switch_to_layout_4, width = "fill", height = "fill")
 
 l1_slider = Slider(layout1, start=1350, end=3100, command = slider_changed, grid = [1,1,1,3], horizontal=False, width = 300, height = 400)
 
@@ -221,13 +237,34 @@ l3_buttonR = PushButton(layout3, text = "Promotion: R", command=add_r, width = 1
 l3_buttonb = PushButton(layout3, text = "Promotion: B", command=add_b, width = 10, height = 10, padx=10, pady=10, grid = [9, 2])
 
 l3_button_sub = PushButton(layout3, text="Submit Move", command = submit_move, width = 60, height = 10, grid = [0,3,6,1])
-l3_logbox_2 = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [6,3,1,5])
-l3_logbox_3 = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [7,3,1,5])
-l3_button_reset = PushButton(layout3, width = 10, height = 5, text = "Restart", command = switch_to_layout_1, grid = [8, 3, 2, 5])
+l3_logbox_move = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [6,3,1,5])
+l3_logbox_tt = TextBox(layout3, width = 10, height = 10, multiline = True, grid = [7,3,1,5])
+l3_button_reset = PushButton(layout3, width = 10, height = 3, text = "Restart", command = switch_to_layout_1, grid = [9, 3, 1, 5])
+l3_button_clear = PushButton(layout3, width = 10, height = 3, text = "Clear Move", command = clear_move, grid = [8,3,1,5])
+
 layout3.hide()
 
 
 #automatically
 layout4 = Box(app, layout = "grid")
+
+l4_logbox = TextBox(layout4, width=20, height = 20, multiline = True, grid = [0,0,1 , 4])
+
+
+
+l3_buttonA = PushButton(layout4, command=add_a, text = " ",  width = 10, height = 10, padx=10, pady=10, grid = [1, 0])
+l3_buttonB = PushButton(layout4, text = "", command=add_b, width = 10, height = 10, padx=10, pady=10, grid = [2, 0])
+l3_buttonC = PushButton(layout4, text = "", command=add_c, width = 10, height = 10, padx=10, pady=10, grid = [3, 0])
+l3_buttonD = PushButton(layout4, text = "", command=add_d, width = 10, height = 10, padx=10, pady=10, grid = [4, 0])
+l3_buttonE = PushButton(layout4, text = "", command=add_e, width = 10, height = 10, padx=10, pady=10, grid = [5, 0])
+l3_buttonF = PushButton(layout4, text = "", command=add_f, width = 10, height = 10, padx=10, pady=10, grid = [1, 1])
+l3_buttonG = PushButton(layout4, text = "", command=add_g, width = 10, height = 10, padx=10, pady=10, grid = [2, 1])
+l3_buttonH = PushButton(layout4, text = "", command=add_h, width = 10, height = 10, padx=10, pady=10, grid = [3, 1])
+l3_buttonQ = PushButton(layout4, text = "", command=add_q, width = 10, height = 10, padx=10, pady=10, grid = [4, 1])
+l3_buttonK = PushButton(layout4, text = "", command=add_n, width = 10, height = 10, padx=10, pady=10, grid = [5, 1])
+
+layout4.hide()
+
+
 
 app.display()

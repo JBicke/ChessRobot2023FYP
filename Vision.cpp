@@ -50,7 +50,6 @@ std::vector<cv::Point> locateGreenSquares(const cv::Mat& inputImage)
             {
                 cv::Point centroid(moments.m10 / moments.m00, moments.m01 / moments.m00);
                 greenSquarePositions.push_back(centroid);
-
             }
         }
     }
@@ -554,7 +553,7 @@ cv::Mat CVRunMain(std::string photoName){
 
         // Convert std::string to const char*
         const char* filename = filenameStr.c_str();
-        //const char* filename = "C:/Users/James/Documents/Coding/ChessRobot2023FYP/Pictures/B1000.jpg";
+        //const char* filename = "E:/UNI/ece4078/ChessRobot2023FYP/Pictures/K1011.jpg";
         //const char* filename = argc >=2 ? argv[1] : default_file;
         // Loads an image
         Mat src = imread( samples::findFile( filename ));
@@ -581,8 +580,8 @@ cv::Mat CVRunMain(std::string photoName){
         for (const cv::Point& point : crop_points) {
             std::cout << "Points: (" << point.x << ", " << point.y << ")" << std::endl;
         }   
+*/
         //cout << numberOfGreenSquares << endl;
-        */
 
         std::vector<cv::Point> filteredCropPoints;
         std::vector<cv::Point> filteredGreenPoints;
@@ -591,31 +590,35 @@ cv::Mat CVRunMain(std::string photoName){
         double maxDistance = 500.0;
 
     //filtering out unnecessary points
-        for (const Point& point : crop_points) {
-            if (point.x > minDistance && point.y > minDistance) {
-                bool keepPoint = true;
+        if (numberOfGreenSquares > 5){
+            for (const Point& point : crop_points) {
+                if (point.x > minDistance && point.y > minDistance) {
+                    bool keepPoint = true;
 
-                for (const Point& filteredPoint : filteredCropPoints) {
-                    double distance = calculateDistance(point, filteredPoint);
+                    for (const Point& filteredPoint : filteredCropPoints) {
+                        double distance = calculateDistance(point, filteredPoint);
 
-                    if (distance < minDistance) {
-                        // If the point is within 100 pixels of another point, remove it
-                        keepPoint = false;
-                        break; // No need to check other points
-                    } else if (distance < maxDistance) {
-                        // If the point is within 500 pixels of another point, remove it
-                        keepPoint = false;
-                        break; // No need to check other points
+                        if (distance < minDistance) {
+                            // If the point is within 100 pixels of another point, remove it
+                            keepPoint = false;
+                            break; // No need to check other points
+                        } else if (distance < maxDistance) {
+                            // If the point is within 500 pixels of another point, remove it
+                            keepPoint = false;
+                            break; // No need to check other points
+                        }
                     }
-                }
-    
-                if (keepPoint) {
-                    filteredCropPoints.push_back(point);
-                    //std::cout << "Saved point: (" << point.x << ", " << point.y << ")" << std::endl;
+        
+                    if (keepPoint) {
+                        filteredCropPoints.push_back(point);
+                        std::cout << "Saved point: (" << point.x << ", " << point.y << ")" << std::endl;
+                    }
                 }
             }
         }
-
+        else {
+            filteredCropPoints = crop_points; 
+        }
         // Print the filtered points
         /*
         for (const cv::Point& point : filteredCropPoints) {

@@ -4,14 +4,14 @@
 
 
 # Configuration directories and files
-SourceDirectory: C:/Users/James/Documents/Coding/ChessRobot2023FYP
-BuildDirectory: C:/Users/James/Documents/Coding/ChessRobot2023FYP/build
+SourceDirectory: E:/UNI/ece4078/ChessRobot2023FYP
+BuildDirectory: E:/UNI/ece4078/ChessRobot2023FYP/build
 
 # Where to place the cost data store
 CostDataFile: 
 
 # Site is something like machine.domain, i.e. pragmatic.crd
-Site: DESKTOP-F9UG9N2
+Site: Jackson-PC
 
 # Build name is osname-revision-compiler, i.e. Linux-2.4.2-2smp-c++
 BuildName: Win32-MSBuild
@@ -27,7 +27,7 @@ SubmitInactivityTimeout:
 NightlyStartTime: 00:00:00 EDT
 
 # Commands for the build/test/submit cycle
-ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "C:/Users/James/Documents/Coding/ChessRobot2023FYP"
+ConfigureCommand: "C:/Program Files/CMake/bin/cmake.exe" "E:/UNI/ece4078/ChessRobot2023FYP"
 MakeCommand: "C:\Program Files\CMake\bin\cmake.exe" --build . --config "${CTEST_CONFIGURATION_TYPE}"
 DefaultCTestConfigurationType: Release
 
@@ -45,7 +45,7 @@ SVNOptions:
 SVNUpdateOptions: 
 
 # Git options
-GITCommand: C:/Program Files/Git/cmd/git.exe
+GITCommand: GITCOMMAND-NOTFOUND
 GITInitSubmodules: 
 GITUpdateOptions: 
 GITUpdateCustom: 
@@ -58,13 +58,13 @@ P4UpdateOptions:
 P4UpdateCustom: 
 
 # Generic update command
-UpdateCommand: C:/Program Files/Git/cmd/git.exe
+UpdateCommand: GITCOMMAND-NOTFOUND
 UpdateOptions: 
 UpdateType: git
 
 # Compiler info
-Compiler: C:/Program Files/Microsoft Visual Studio/2022/Community/VC/Tools/MSVC/14.35.32215/bin/Hostx64/x64/cl.exe
-CompilerVersion: 19.35.32217.1
+Compiler: D:/Visual Studios/VC/Tools/MSVC/14.31.31103/bin/Hostx64/x64/cl.exe
+CompilerVersion: 19.31.31104.0
 
 # Dynamic analysis (MemCheck)
 PurifyCommand: 
@@ -81,7 +81,7 @@ MemoryCheckCommandOptions:
 MemoryCheckSuppressionFile: 
 
 # Coverage
-CoverageCommand: COVERAGE_COMMAND-NOTFOUND
+CoverageCommand: C:/MinGW/bin/gcov.exe
 CoverageExtraFlags: -l
 
 # Testing options

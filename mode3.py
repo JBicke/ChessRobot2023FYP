@@ -1,7 +1,7 @@
 from pypose import runRobot
 import subprocess
 import operations
-
+import time
 
 #Run the C++ program as a subprocess
 #message_to_cpp = "h2h4 g7g5 h4g5 h7h6 g5h6 h8h7 h1h2 h7g7 h6h7 g8f6 "
@@ -45,14 +45,14 @@ en_passant_P = ''
 en_passant_R = ''
 
 moveCount = 1
-photoName = "S1000"
+photoName = "K1000"
 
 
 while True:
 	# print(piece_Matrix)
     # CHANGE TO INPUT HAVE YOU MADE YOUR MOVE
     go = input("enter to go")
-    
+    print(photoName)
     prefix = photoName[0]  # Assuming the prefix is a single character
     numeric_part = int(photoName[1:])  # Extract the numeric part and convert to an integer
 
@@ -63,19 +63,20 @@ while True:
     photoName = f"{prefix}{numeric_part}"
     print(photoName)
     cpp_process = subprocess.Popen(["./take_Img"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-    cpp_process.stdin.write(photoName)
+    cpp_process.stdin.write(photoName+"\n")
     cpp_process.stdin.flush()
 
     cpp_process.stdin.close()
     cpp_process.stdout.close()
     cpp_process.wait()
-
+    time.sleep(3)
     cpp_process = subprocess.Popen(["./chessRobot7"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
     cpp_process.stdin.write(photoName +"\n")
     cpp_process.stdin.flush()
     detectedMove = cpp_process.stdout.readline()
-    print(detectedMove)
-
+    print(detectedMove.strip())
+    print("OK")
+    detectedMove = detectedMove.strip()
     cpp_process.stdin.close()
     cpp_process.stdout.close()
     cpp_process.wait()
@@ -125,7 +126,7 @@ while True:
 
 	# Send a message to the C++ program for stockfish move
     message_to_cpp = message_to_cpp + detectedMove
-	
+    print(message_to_cpp)
     cpp_process.stdin.write(message_to_cpp + "\n")
     cpp_process.stdin.flush()
 
@@ -275,3 +276,21 @@ while True:
     W_promoted_Piece = ''
     B_promoted_Piece = ''
     runRobot.reset()
+    
+    prefix = photoName[0]  # Assuming the prefix is a single character
+    numeric_part = int(photoName[1:])  # Extract the numeric part and convert to an integer
+
+    # Increment the numeric part by 1
+    numeric_part += 1
+
+    # Concatenate the prefix and the incremented numeric part
+    photoName = f"{prefix}{numeric_part}"
+    
+    cpp_process = subprocess.Popen(["./take_Img"], stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
+    cpp_process.stdin.write(photoName)
+    cpp_process.stdin.flush()
+
+    cpp_process.stdin.close()
+    cpp_process.stdout.close()
+    cpp_process.wait()
+    print(message_to_cpp)

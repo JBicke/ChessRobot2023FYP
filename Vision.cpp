@@ -460,7 +460,7 @@ CenterPoints processAndShowContours(const cv::Mat& src) {
                 // Draw rectangle and center point
                 cv::rectangle(resultImage, boundingRect, contourColour, 2);
                 cv::circle(resultImage, cv::Point(centerX, centerY), 4, contourColour, -1); // Draw center point
-                imshow("Result", resultImage);
+                //imshow("Result", resultImage);
                 
                 // Store center point in the appropriate vector
                 if (contourColour == pinkColour) {
@@ -802,7 +802,7 @@ cv::Mat CVRunMain(std::string photoName){
         croppedImage.convertTo(croppedImageBright, -1, 1, 25);
 
 
-        cv::imshow("Cropped Image", croppedImageBright);
+        //cv::imshow("Cropped Image", croppedImageBright);
         
         //convert to gray_scale
         cv::Mat src_gray;

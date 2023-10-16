@@ -282,7 +282,7 @@ def castle(location):
 		castle_p1 = "a8"
 		castle_p2 = "d8"
 	
-	print(castle_p1+castle_p2)
+	#print(castle_p1+castle_p2)
 	movePiece(castle_p1+castle_p2)
 	return "Castle Complete"
 

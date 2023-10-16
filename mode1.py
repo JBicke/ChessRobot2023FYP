@@ -133,7 +133,7 @@ while True:
 	# turns the player move into the correct matrix references
 	row1, row2, col1, col2 = operations.orientSquares(playerMove)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	# Required to store information about the pawn move for en passant later
 	if piece_Matrix[row1-1][col1-1] == 2:
@@ -148,7 +148,7 @@ while True:
 	# Adjust the matrix for the player move 
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, W_promotion)
 		
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	# Make the player move
 	final = runRobot.movePiece(playerMove)
@@ -181,7 +181,7 @@ while True:
 
 	row1, row2, col1, col2 = operations.orientSquares(stockMove)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 
 	if piece_Matrix[row1-1][col1-1] == 2:
 		pawn_Move = True
@@ -194,7 +194,7 @@ while True:
 	
 	piece_Matrix = operations.adjust_Piece_Matrix(piece_Matrix, row1, col1, row2, col2, B_promotion)
 	
-	print(piece_Matrix)
+	#print(piece_Matrix)
 	
 	#Do Stockfishes move	
 	runRobot.movePiece(stockMove)
